@@ -3,10 +3,6 @@ package s.hfad.com.myapplicationpaveltest;
 
 import android.view.View;
 
-import java.util.HashMap;
-
-import io.reactivex.Observable;
-
 public class MainPresenterPurse {
     private ModelPurseTop model;
     private IViewPurse view;

@@ -2,13 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="s.hfad.com.myapplicationpaveltest">
 
-    <uses-permission android:name="ANDROID.PERMISSION.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE "/>
-
-
-
-
 
     <application
 
@@ -18,8 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivityTest">
+        <activity android:name=".MainActivityTest">
 
         </activity>
         <activity android:name=".HomePage">
@@ -30,8 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MonetaryAssets">
+        <activity android:name=".MonetaryAssets">
 
         </activity>
     </application>
