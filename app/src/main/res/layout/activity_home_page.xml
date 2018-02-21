@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gray_with_tone"
+    tools:context="s.hfad.com.myapplicationpaveltest.HomePage">
+
+    <ImageView
+        android:id="@+id/imageHome_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/home_page_photo"
+        android:contentDescription="@string/stringHome_page" />
+
+    <ListView
+        android:background="@drawable/corners_gray"
+        android:id="@+id/LIst_homePage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageHome_page"
+        android:entries="@array/Home_pageString"
+        >
+
+    </ListView>
+
+
+</RelativeLayout>
+
+

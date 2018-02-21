@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    tools:context="s.hfad.com.myapplicationpaveltest.MonetaryAssets">
+
+    <EditText
+        android:id="@+id/editTextAssets_sum"
+        android:layout_marginTop="16dp"
+        android:background="@color/wait"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:inputType="number" />
+
+
+    <EditText
+        android:id="@+id/editTextAssets_text"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/editTextAssets_sum"
+        android:layout_marginTop="10dp"
+        android:background="@color/wait"
+        android:inputType="text" />
+
+
+    <LinearLayout
+        android:id="@+id/lineAssets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextAssets_text"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/buttonOkAssets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Ok"
+            android:background="@drawable/roundrect"/>
+
+        <Button
+            android:id="@+id/buttonAllTrAssets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/All_transactions"
+            android:background="@drawable/roundrect"/>
+
+    </LinearLayout>
+
+
+    <com.jjoe64.graphview.GraphView
+
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/wait" />
+
+
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">My ApplicationPavelTest</string>
+    <string name="sum">SUM</string>
+    <string name="text"></string>
+    <string name="button_sum">Sum</string>
+    <string name="stringUSD">USD</string>
+    <string name="stringHome_page">home page</string>
+    <string name="Ok">Ok</string>
+    <string name="All_transactions">All</string>
+    <string name="action_settings">new time</string>
+
+    <string-array name="spinner_valuta">
+        <item>USD</item>
+        <item>RUB</item>
+        <item>EUR</item>
+        <item>CHF</item>
+
+    </string-array>
+
+    <string-array name="spinner_valuta2">
+        <item>USD</item>
+        <item>RUB</item>
+        <item>EUR</item>
+        <item>CHF</item>
+
+    </string-array>
+
+
+    <string-array name="Home_pageString">
+        <item>Currency Converter</item>
+        <item>Monetary assets</item>
+        <item>Cash expenses</item>
+    </string-array>
+
+</resources>

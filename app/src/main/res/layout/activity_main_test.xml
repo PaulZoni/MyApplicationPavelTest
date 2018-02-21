@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context="s.hfad.com.myapplicationpaveltest.MainActivityTest">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="16dp"
+       android:paddingLeft="16dp"
+       android:paddingRight="16dp"
+       android:paddingTop="16dp"
+       android:background="@color/gray">
+
+
+      <EditText
+          android:id="@+id/edit_number1"
+          android:layout_width="100dp"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_centerHorizontal="true"
+          android:hint="@string/sum"
+          android:inputType="number"
+          android:textSize="20sp"/>
+
+
+      <Spinner
+          android:id="@+id/spinner_left"
+          android:layout_width="120dp"
+          android:layout_height="100dp"
+          android:layout_toLeftOf="@+id/edit_number1"
+          android:layout_toStartOf="@+id/edit_number1"
+          android:entries="@array/spinner_valuta" />
+
+
+      <Spinner
+          android:id="@+id/spinner_right"
+          android:layout_width="120dp"
+          android:layout_height="100dp"
+          android:layout_toRightOf="@+id/edit_number1"
+          android:layout_toEndOf="@+id/edit_number1"
+          android:entries="@array/spinner_valuta2" />
+
+
+      <Button
+          android:id="@+id/button_Sum"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/spinner_right"
+          android:layout_centerInParent="true"
+          android:text="@string/button_sum"
+          android:background="@drawable/roundrect" />
+
+      <TextView
+          android:id="@+id/textView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/text"
+          android:layout_below="@+id/button_Sum"
+          android:layout_marginBottom="10dp"
+          />
+      
+
+      <View
+          android:id="@+id/ViewUsd"
+          android:layout_below="@+id/textView"
+          android:layout_width="wrap_content"
+          android:background="@drawable/separator"
+          android:layout_height="3dp"/>
+      
+      <ImageView
+          android:id="@+id/usdImage"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
+          android:contentDescription="@string/stringUSD"
+          android:layout_below="@+id/ViewUsd"
+          android:src="@mipmap/usd"
+          android:background="@color/green"/>
+
+      <TextView
+          android:id="@+id/usdTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/ViewUsd"
+          android:layout_centerInParent="true"
+          android:layout_marginTop="40dp" />
+
+
+
+
+      <View
+          android:id="@+id/ViewEuro"
+          android:layout_below="@+id/usdImage"
+          android:background="@drawable/separator"
+          android:layout_width="wrap_content"
+          android:layout_height="3dp"/>
+
+      <ImageView
+          android:id="@+id/euroImage"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
+          android:contentDescription="@string/stringUSD"
+          android:layout_below="@+id/ViewEuro"
+          android:src="@mipmap/euro" />
+
+
+      <TextView
+          android:id="@+id/euroTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/ViewEuro"
+          android:layout_centerInParent="true"
+          android:layout_marginTop="40dp" />
+
+
+
+
+      <View
+          android:id="@+id/ViewFranc"
+          android:layout_below="@+id/euroImage"
+          android:background="@drawable/separator"
+          android:layout_width="wrap_content"
+          android:layout_height="3dp"/>
+
+      <ImageView
+          android:id="@+id/CHFImage"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
+          android:contentDescription="@string/stringUSD"
+          android:layout_below="@+id/ViewFranc"
+          android:src="@mipmap/chf"
+          android:background="@color/dark_gray"/>
+
+
+      <TextView
+          android:id="@+id/CHFTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/ViewFranc"
+          android:layout_centerInParent="true"
+          android:layout_marginTop="40dp" />
+
+
+
+
+      <View
+          android:id="@+id/ViewPound"
+          android:layout_below="@+id/CHFImage"
+          android:background="@drawable/separator"
+          android:layout_width="wrap_content"
+          android:layout_height="3dp"/>
+
+      <ImageView
+          android:id="@+id/poundImage"
+          android:layout_width="100dp"
+          android:layout_height="100dp"
+          android:contentDescription="@string/stringUSD"
+          android:layout_below="@+id/ViewPound"
+          android:src="@mipmap/pound"
+          android:background="@color/dark_gray"/>
+
+      <TextView
+          android:id="@+id/poundTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/ViewPound"
+          android:layout_centerInParent="true"
+          android:layout_marginTop="40dp" />
+
+
+   </RelativeLayout>
+
+
+
+
+</ScrollView>
