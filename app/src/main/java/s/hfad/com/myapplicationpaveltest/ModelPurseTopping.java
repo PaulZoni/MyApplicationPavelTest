@@ -1,18 +1,33 @@
 package s.hfad.com.myapplicationpaveltest;
 
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ModelPurseTopping implements ModelPurseTop{
+import io.reactivex.Observable;
+
+public class ModelPurseTopping  implements ModelPurseTop{
+    Context context;
+
+    public ModelPurseTopping(Context context) {
+        this.context=context;
+    }
 
     @Override
     public void buttonOk(int sum,String comment) {
+
         ModelPurse modelPurse=new AssetsPurse();
         ArrayList<Transaction> list=new ArrayList();
 
-        list=modelPurse.input(list);
+        if (MonetaryAssets.STAT){
 
+            list=modelPurse.input(context,list);
+
+        }
+
+        MonetaryAssets.STAT=true;
 
         Date date=new Date();
         Transaction transaction=new Transaction();
@@ -22,7 +37,7 @@ public class ModelPurseTopping implements ModelPurseTop{
 
         list.add(transaction);
 
-        modelPurse.output(list);
+        modelPurse.output(context,list);
 
     }
 
@@ -31,7 +46,7 @@ public class ModelPurseTopping implements ModelPurseTop{
         ModelPurse modelPurse=new AssetsPurse();
         ArrayList<Transaction> list=new ArrayList<>();
 
-        list=modelPurse.input(list);
+        list=modelPurse.input(context,list);
 
         ArrayList<String> listText=new ArrayList<>();
         ArrayList<String> listData=new ArrayList<>();
@@ -55,36 +70,12 @@ public class ModelPurseTopping implements ModelPurseTop{
 
         return st;
     }
+
+
 }
 
 
 
-
-class Test{
-    public static void main(String[] args) {
-        ModelPurse modelPurse=new AssetsPurse();
-
-        Transaction transaction=new Transaction();
-        transaction.setDat("dq");
-        transaction.setComment("ew");
-        transaction.setSum(123);
-
-
-
-
-        ArrayList list=new ArrayList();
-
-        list.add(transaction);
-
-
-        modelPurse.output(list);
-
-        //ModelPurseTop modl=new ModelPurseTopping();
-
-        //modl.buttonOk(23,"ew");
-        //System.out.println(modl.buttonAll());
-    }
-}
 
 
 

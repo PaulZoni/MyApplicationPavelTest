@@ -1,6 +1,8 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,15 +10,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Date;
 
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -30,6 +32,9 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
     protected EditText editTextNumber;
     protected EditText editTextTx;
 
+    private static final String START_KEY="START_KEY";
+    SharedPreferences sPref;
+    static boolean STAT=false;
 
 
     @Override
@@ -38,7 +43,7 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         setContentView(R.layout.activity_monetary_assets);
 
         if (presenter==null){
-            presenter=new MainPresenterPurse(this);
+            presenter=new MainPresenterPurse(this,this);
         }
         buttonOk=(Button)findViewById(R.id.buttonOkAssets);
         buttonOk.setOnClickListener(this);
@@ -46,19 +51,60 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         buttonAll.setOnClickListener(this);
 
         graphV();
+        settings();
 
     }
 
 
-    public void graphV(){
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3)
-        });
+    public void settings(){
+        sPref=getPreferences(MODE_PRIVATE);
+        STAT=sPref.getBoolean(START_KEY,false );
+    }
 
-        graph.addSeries(series);
+
+
+
+
+
+
+
+
+    public void graphV(){
+
+
+        new Graph(this).getGraph()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(listX -> {
+
+                    DataPoint[] points=new DataPoint[listX.size()];
+                    for (int i = 0; i <points.length ; i++) {
+                        points[i]=new DataPoint(listX.get(i),i);
+                    }
+
+
+                    GraphView graph = (GraphView) findViewById(R.id.graph);
+
+                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+
+                    graph.getViewport().setYAxisBoundsManual(true);
+                    graph.getViewport().setMinY(-150);
+                    graph.getViewport().setMaxY(150);
+
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setMinX(4);
+                    graph.getViewport().setMaxX(80);
+
+                    // enable scaling and scrolling
+                    graph.getViewport().setScalable(true);
+                    graph.getViewport().setScalableY(true);
+
+                    graph.addSeries(series);
+
+                });
+
+
+
     }
 
 
@@ -94,6 +140,17 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         return editTextTx=(EditText)findViewById(R.id.editTextAssets_text);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+
+        sPref=getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed=sPref.edit();
+        ed.putBoolean(START_KEY,STAT);
+        ed.apply();
+    }
 }
 
 

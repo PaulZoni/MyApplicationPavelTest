@@ -59,6 +59,7 @@
           android:id="@+id/textView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:textSize="30sp"
           android:text="@string/text"
           android:layout_below="@+id/button_Sum"
           android:layout_marginBottom="10dp"
@@ -85,6 +86,7 @@
           android:id="@+id/usdTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:textSize="30sp"
           android:layout_below="@+id/ViewUsd"
           android:layout_centerInParent="true"
           android:layout_marginTop="40dp" />
@@ -112,6 +114,7 @@
           android:id="@+id/euroTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:textSize="30sp"
           android:layout_below="@+id/ViewEuro"
           android:layout_centerInParent="true"
           android:layout_marginTop="40dp" />
@@ -140,6 +143,7 @@
           android:id="@+id/CHFTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:textSize="30sp"
           android:layout_below="@+id/ViewFranc"
           android:layout_centerInParent="true"
           android:layout_marginTop="40dp" />
@@ -167,6 +171,7 @@
           android:id="@+id/poundTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:textSize="30sp"
           android:layout_below="@+id/ViewPound"
           android:layout_centerInParent="true"
           android:layout_marginTop="40dp" />
