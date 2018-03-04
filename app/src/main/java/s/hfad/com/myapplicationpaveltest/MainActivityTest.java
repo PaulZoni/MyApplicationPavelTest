@@ -3,6 +3,9 @@ package s.hfad.com.myapplicationpaveltest;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,7 +24,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.Observable;
@@ -31,11 +36,12 @@ import io.reactivex.schedulers.Schedulers;
 
 
 
-public class MainActivityTest extends Activity implements IView,View.OnClickListener{
+public class MainActivityTest extends FragmentActivity implements IView,View.OnClickListener{
 
     protected     HashMap<String,Double> v=new HashMap<>();
 
     private MainPresenter presenter;
+    private RVAdapter adapter;
 
     protected TextView textView;
     protected EditText editText;
@@ -44,18 +50,13 @@ public class MainActivityTest extends Activity implements IView,View.OnClickList
 
      Button buttonSum;
      TextView textViewEUR,textViewCHF,textViewUSD;
-
+    private List<ValutaModel> persons;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_test);
-
-        textViewUSD=(TextView)findViewById(R.id.usdTextView);
-        textViewEUR=(TextView)findViewById(R.id.euroTextView);
-        textViewCHF=(TextView)findViewById(R.id.CHFTextView);
-
 
 
         parserValute();
@@ -70,6 +71,30 @@ public class MainActivityTest extends Activity implements IView,View.OnClickList
 
     }
 
+    public void lisnerAdapterPerson(){
+
+        adapter.setListener(new RVAdapter.Listener() {
+            @Override
+            public void onClick(int position) {
+
+
+
+                if (position==0){
+                    android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+
+                    android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
+
+
+                    transaction.replace(R.id.fragmentContainer,new BlankFragmentInformation());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
+            }
+        });
+    }
+
+
     public void parserValute(){
 
         try {
@@ -79,27 +104,31 @@ public class MainActivityTest extends Activity implements IView,View.OnClickList
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(strings -> {
 
-                        for (HashMap.Entry<String,Double>map:strings.entrySet()){
-                            v.put(map.getKey(),map.getValue());
-                        }
+                        persons = new ArrayList<>();
+                        persons.add(new ValutaModel("Доллар США", String.valueOf(strings.get("USD")), R.mipmap.usd));
+                        persons.add(new ValutaModel("Валюта еврозоны Евро", String.valueOf(strings.get("EUR")), R.mipmap.euro));
+                        persons.add(new ValutaModel("Швейцарский Франк ", String.valueOf(strings.get("CHF")), R.mipmap.chf));
+                        persons.add(new ValutaModel("Английский Фунт", "  ", R.mipmap.pound));
 
-                        textViewUSD.setText(String.valueOf(strings.get("USD")));
-                        textViewEUR.setText(String.valueOf(strings.get("EUR")));
-                        textViewCHF.setText(String.valueOf(strings.get("CHF")));
+                        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
+                        LinearLayoutManager llm = new LinearLayoutManager(this);
+                        rv.setLayoutManager(llm);
+
+                        adapter = new RVAdapter(this,persons);
+                        rv.setAdapter(adapter);
+
+                        lisnerAdapterPerson();
+
                     });
 
 
 
         }catch (Exception e){
-            textViewUSD.setText("Нет соединения");
-            textViewEUR.setText("Нет соединения");
-            textViewCHF.setText("Нет соединения");
+
+            persons.add(new ValutaModel("Нет соединения", "Нет соединения", R.mipmap.usd));
+
         }
     }
-
-
-
-
 
 
 

@@ -119,7 +119,7 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         int id=item.getItemId();
         switch (id){
             case R.id.action_settings:
-                //???
+                presenter.newTime();
                 break;
         }
         return super.onOptionsItemSelected(item);
