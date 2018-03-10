@@ -7,12 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import java.util.ArrayList;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+
 public class BlankFragmentInformation extends Fragment {
 
+    private GraphView graphView;
 
     public BlankFragmentInformation() {
         // Required empty public constructor
@@ -26,4 +33,68 @@ public class BlankFragmentInformation extends Fragment {
         return inflater.inflate(R.layout.fragment_blank_fragment_information, container, false);
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        TimeValuteCheck();
+
+    }
+
+
+    public void TimeValuteCheck(){
+
+        new TimeValuteValue(getContext()).getTimeValte().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(listX->{
+
+                    DataPoint[] points=new DataPoint[listX.size()];
+
+                    for (int i = 0; i <points.length ; i++) {
+                        points[i]=new DataPoint(listX.get(i),i);
+                    }
+
+
+                    graphView=(GraphView)getActivity().findViewById(R.id.graphInformation);
+
+                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+
+                    graphView.getViewport().setYAxisBoundsManual(true);
+                    graphView.getViewport().setMinY(-150);
+                    graphView.getViewport().setMaxY(150);
+
+                    graphView.getViewport().setXAxisBoundsManual(true);
+                    graphView.getViewport().setMinX(4);
+                    graphView.getViewport().setMaxX(80);
+
+
+                    graphView.getViewport().setScalable(true);
+                    graphView.getViewport().setScalableY(true);
+
+                    graphView.addSeries(series);
+
+                });
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

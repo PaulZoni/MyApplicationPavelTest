@@ -1,6 +1,7 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -38,8 +39,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivityTest extends FragmentActivity implements IView,View.OnClickListener{
 
-    protected     HashMap<String,Double> v=new HashMap<>();
+    protected  static   HashMap<String,Double> v=new HashMap<>();
 
+    private static final String START_KEY_TIME="START_KEY";
+    static boolean STAT_TIME=false;
+    private SharedPreferences preferences;
     private MainPresenter presenter;
     private RVAdapter adapter;
 
@@ -49,7 +53,7 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     protected Spinner spinnerRight;
 
      Button buttonSum;
-     TextView textViewEUR,textViewCHF,textViewUSD;
+     //TextView textViewEUR,textViewCHF,textViewUSD;
     private List<ValutaModel> persons;
 
 
@@ -61,15 +65,19 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
 
         parserValute();
         if (presenter==null){
-            presenter=new MainPresenter(this,v);
+            presenter=new MainPresenter(this);
         }
         buttonSum=(Button)findViewById(R.id.button_Sum);
         buttonSum.setOnClickListener(this);
 
         activateToast();
-
+        settings();
 
     }
+
+
+
+
 
     public void lisnerAdapterPerson(){
 
@@ -104,16 +112,17 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(strings -> {
 
+                        MainPresenter.setValue(strings);
                         persons = new ArrayList<>();
                         persons.add(new ValutaModel("Доллар США", String.valueOf(strings.get("USD")), R.mipmap.usd));
                         persons.add(new ValutaModel("Валюта еврозоны Евро", String.valueOf(strings.get("EUR")), R.mipmap.euro));
                         persons.add(new ValutaModel("Швейцарский Франк ", String.valueOf(strings.get("CHF")), R.mipmap.chf));
                         persons.add(new ValutaModel("Английский Фунт", "  ", R.mipmap.pound));
 
+
                         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
                         LinearLayoutManager llm = new LinearLayoutManager(this);
                         rv.setLayoutManager(llm);
-
                         adapter = new RVAdapter(this,persons);
                         rv.setAdapter(adapter);
 
@@ -169,6 +178,20 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
         return spinnerRight=(Spinner)findViewById(R.id.spinner_right);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        preferences=getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed=preferences.edit();
+        ed.putBoolean(START_KEY_TIME,STAT_TIME);
+        ed.apply();
+    }
+
+    public void settings(){
+        preferences=getPreferences(MODE_PRIVATE);
+        STAT_TIME=preferences.getBoolean(START_KEY_TIME,false);
+    }
 }
 
 

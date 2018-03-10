@@ -8,12 +8,20 @@ public class MainPresenter {
     double SUM;
     private IView vive;
     private ModelInterface model;
-    private  HashMap<String,Double> value=new HashMap<>();
+    private static HashMap<String,Double> value=new HashMap<>();
 
-    MainPresenter(IView vive,HashMap<String,Double> value){
+    public static void setValue(HashMap<String, Double> value) {
+        MainPresenter.value = value;
+    }
+
+    public static HashMap<String, Double> getValue() {
+        return value;
+    }
+
+    MainPresenter(IView vive){
         this.vive=vive;
         model=new ModelSUM();
-        this.value=value;
+
     }
 
     public void onGetButtonClicked(){
@@ -76,6 +84,7 @@ public class MainPresenter {
 
 
     }
+
 
 }
 

@@ -2,36 +2,44 @@ package s.hfad.com.myapplicationpaveltest;
 
 
 import android.content.Context;
-
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
+import s.hfad.com.myapplicationpaveltest.modelAsets.DBHelperAssets;
 
 public class Graph {
+
+    private int sumID;
+    DBHelperAssets dbHelper;
+    Cursor cursor;
+    SQLiteDatabase database;
 
     Context context;
     Graph(Context context){
         this.context=context;
+        dbHelper=new DBHelperAssets(context);
     }
 
     public ArrayList<Integer> graf(){
 
-        ArrayList<Transaction>transactions=new ArrayList<>();
+
         ArrayList<Integer>listX=new ArrayList<>();
+        database=dbHelper.getWritableDatabase();
+        cursor=database.query(DBHelperAssets.TABLE_ASSETS,null,null,null,null,null,null);
+        if (cursor.moveToFirst()){
 
+            sumID=cursor.getColumnIndex(DBHelperAssets.KEY_VALUE);
+            do {
+                listX.add(Integer.valueOf(cursor.getString(sumID)));
 
-        ModelPurse purse=new AssetsPurse();
-        transactions= purse.input(context,transactions);
-
-
-        for (int i = 0; i < transactions.size() ; i++) {
-            listX.add(transactions.get(i).getSum());
+            }while (cursor.moveToNext());
         }
-
-
-
+        cursor.close();
+        dbHelper.close();
 
         return listX;
     }

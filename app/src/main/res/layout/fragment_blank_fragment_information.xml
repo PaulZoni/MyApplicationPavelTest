@@ -5,10 +5,12 @@
     tools:context="s.hfad.com.myapplicationpaveltest.BlankFragmentInformation">
 
 
-    <TextView
-        android:background="@color/colorPrimaryDark"
+
+    <com.jjoe64.graphview.GraphView
+
+        android:id="@+id/graphInformation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/wait" />
 
 </FrameLayout>

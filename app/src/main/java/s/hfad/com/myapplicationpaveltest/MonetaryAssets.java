@@ -75,11 +75,11 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         new Graph(this).getGraph()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(listX -> {
+                .subscribe(listY -> {
 
-                    DataPoint[] points=new DataPoint[listX.size()];
+                    DataPoint[] points=new DataPoint[listY.size()];
                     for (int i = 0; i <points.length ; i++) {
-                        points[i]=new DataPoint(listX.get(i),i);
+                        points[i]=new DataPoint(i,listY.get(i));
                     }
 
 
