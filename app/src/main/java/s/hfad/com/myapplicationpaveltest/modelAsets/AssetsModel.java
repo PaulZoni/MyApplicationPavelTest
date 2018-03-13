@@ -89,6 +89,11 @@ public class AssetsModel {
 
     }
 
+    public void dbClear(){
+        database=dbHelperAssets.getWritableDatabase();
+        database.delete(DBHelperAssets.TABLE_ASSETS,null,null);
+        dbHelperAssets.close();
+    }
 
 }
 

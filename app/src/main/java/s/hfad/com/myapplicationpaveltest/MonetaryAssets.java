@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -27,8 +28,8 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
 
     private MainPresenterPurse presenter;
 
-    private Button buttonOk;
-    private Button buttonAll;
+    private FloatingActionButton buttonOk;
+    private FloatingActionButton buttonAll;
     protected EditText editTextNumber;
     protected EditText editTextTx;
 
@@ -45,9 +46,9 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         if (presenter==null){
             presenter=new MainPresenterPurse(this,this);
         }
-        buttonOk=(Button)findViewById(R.id.buttonOkAssets);
+        buttonOk=(FloatingActionButton)findViewById(R.id.actionButtonAdd);
         buttonOk.setOnClickListener(this);
-        buttonAll=(Button)findViewById(R.id.buttonAllTrAssets);
+        buttonAll=(FloatingActionButton)findViewById(R.id.actionButtonAll);
         buttonAll.setOnClickListener(this);
 
         graphV();

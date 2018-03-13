@@ -19,6 +19,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BlankFragmentInformation extends Fragment {
 
+    private static int STAT;
+
+    private ArrayList<Double>listX=new ArrayList<>();
     private GraphView graphView;
 
     public BlankFragmentInformation() {
@@ -37,16 +40,26 @@ public class BlankFragmentInformation extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        TimeValuteCheck();
+        Bundle bundle=getArguments();
+        STAT=bundle.getInt("stat");
+        TimeValuteCheck(STAT);
 
     }
 
 
-    public void TimeValuteCheck(){
+    public void TimeValuteCheck(int stat){
+
 
         new TimeValuteValue(getContext()).getTimeValte().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(listX->{
+                .subscribe(list->{
+
+                    if (stat==0){
+                        listX=list.get("USD");
+
+                    }else if (stat==1){
+                        listX=list.get("EUR");
+                    }
 
                     DataPoint[] points=new DataPoint[listX.size()];
 

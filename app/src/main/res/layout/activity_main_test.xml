@@ -61,12 +61,13 @@
        />
 
 
-   <fragment
+   <LinearLayout
        android:name="s.hfad.com.myapplicationpaveltest.BlankFragmentValute"
        android:id="@+id/fragmentContainer"
-       app:layoutManager="LinearLayoutManager"
+
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_below="@+id/textView"/>
+       android:layout_below="@+id/textView"
+       android:orientation="horizontal" />
    </RelativeLayout>
 

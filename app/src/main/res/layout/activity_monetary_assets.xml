@@ -4,6 +4,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray"
     android:orientation="vertical"
     tools:context="s.hfad.com.myapplicationpaveltest.MonetaryAssets">
@@ -29,45 +30,60 @@
         android:lines="5"/>
 
 
-    <LinearLayout
-        android:id="@+id/lineAssets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextAssets_text"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:orientation="horizontal">
 
-
-        <Button
-            android:id="@+id/buttonOkAssets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Ok"
-            android:background="@drawable/roundrect"/>
-
-        <Button
-            android:id="@+id/buttonAllTrAssets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/All_transactions"
-            android:background="@drawable/roundrect"/>
-
-
-
-    </LinearLayout>
 
 
     <com.jjoe64.graphview.GraphView
 
         android:id="@+id/graph"
         android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_height="300dip"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@color/wait" />
+
+
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/Multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        fab:fab_addButtonColorNormal="#fafafa"
+        fab:fab_addButtonColorPressed="#f1f1f1"
+        fab:fab_addButtonPlusIconColor="#808080"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        >
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/actionButtonAdd"
+            fab:fab_icon="@mipmap/star2"
+            fab:fab_colorNormal="#e91e63"
+            fab:fab_addButtonColorPressed="#ec407a"
+            fab:fab_title="@string/ActionA"
+            fab:fab_size="normal"/>
+
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/actionButtonAll"
+            fab:fab_colorNormal="#e91e63"
+            fab:fab_addButtonColorPressed="#ec407a"
+            fab:fab_title="@string/ActionB"
+            fab:fab_icon="@mipmap/full"
+            fab:fab_size="normal"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
 </RelativeLayout>

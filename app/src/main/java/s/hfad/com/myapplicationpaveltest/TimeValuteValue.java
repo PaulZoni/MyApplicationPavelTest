@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 
@@ -21,16 +22,24 @@ public class TimeValuteValue {
         this.context = context;
     }
 
-    public ArrayList<Double> timeVValue(){
+    public HashMap<String, ArrayList<Double>> timeVValue(){
 
         HashMap<String,Double> value=MainPresenter.getValue();
         ArrayList<Double> USDList=new ArrayList<>();
+        ArrayList<Double> EURList=new ArrayList<>();
+        HashMap<String,ArrayList<Double>>timeValue=new HashMap<>();
+
 
 
         if (MainActivityTest.STAT_TIME){
-            USDList=input(context,USDList);
+            timeValue=input(context,timeValue);
+
+            USDList=timeValue.get("USD");
+            EURList=timeValue.get("EUR");
         }
         MainActivityTest.STAT_TIME=true;
+
+
 
 
         try {
@@ -38,7 +47,6 @@ public class TimeValuteValue {
             if (USDList.isEmpty()){
                 USDList.add(value.get("USD"));
             }else {
-
                 int size=USDList.size()-1;
 
                 if (USDList.get(size)>value.get("USD") | USDList.get(size)<value.get("USD")){
@@ -46,23 +54,38 @@ public class TimeValuteValue {
                 }
             }
 
+            if (EURList.isEmpty()){
+                EURList.add(value.get("EUR"));
+            }else {
+                int size=EURList.size()-1;
+
+                if (EURList.get(size)>value.get("EUR") | EURList.get(size)<value.get("EUR")){
+                    EURList.add(value.get("EUR"));
+                }
+            }
+
+
+
         }catch (Exception e){
 
         }
 
-        output(context,USDList);
+        timeValue.clear();
+        timeValue.put("USD",USDList);
+        timeValue.put("EUR",EURList);
+        output(context,timeValue);
 
-        return USDList;
+        return timeValue;
     }
 
 
-    public ArrayList input(Context context, ArrayList<Double> list) {
+    public HashMap input(Context context, HashMap<String,ArrayList<Double>> list) {
 
 
         try {
             FileInputStream fileInputStream = context.openFileInput("Mani.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            list = (ArrayList<Double>) objectInputStream.readObject();
+            list = (HashMap<String,ArrayList<Double>>) objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
         } catch (IOException e) {
@@ -78,7 +101,7 @@ public class TimeValuteValue {
 
 
 
-    public ArrayList output(Context context,ArrayList<Double> list) {
+    public HashMap output(Context context,HashMap<String,ArrayList<Double>> list) {
 
 
         try {
@@ -95,7 +118,7 @@ public class TimeValuteValue {
         return null;
     }
 
-    public Observable<ArrayList<Double>> getTimeValte() {
+    public Observable <HashMap<String,ArrayList<Double>>> getTimeValte() {
         return Observable.create(observableEmitter ->{
 
 

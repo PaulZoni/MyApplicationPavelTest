@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,8 +63,8 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_test);
 
+        loadingFragment();
 
-        parserValute();
         if (presenter==null){
             presenter=new MainPresenter(this);
         }
@@ -77,7 +78,29 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
 
 
 
+    public void loadingFragment(){
+        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+        Fragment fragment=manager.findFragmentById(R.id.fragmentContainer);
 
+        fragment = new BlankFragmentValute();
+        manager.beginTransaction()
+                .add(R.id.fragmentContainer, fragment)
+                .commit();
+
+        parserValute();
+    }
+
+    public void loadingPosition(Bundle b){
+        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+
+        android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
+        BlankFragmentInformation frag=new BlankFragmentInformation();
+        frag.setArguments(b);
+        transaction.replace(R.id.fragmentContainer,frag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
 
     public void lisnerAdapterPerson(){
 
@@ -85,17 +108,15 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
             @Override
             public void onClick(int position) {
 
-
+                Bundle bundle=new Bundle();
 
                 if (position==0){
-                    android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+                    bundle.putInt("stat",0);
+                    loadingPosition(bundle);
 
-                    android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
-
-
-                    transaction.replace(R.id.fragmentContainer,new BlankFragmentInformation());
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                }else if (position==1){
+                    bundle.putInt("stat",1);
+                    loadingPosition(bundle);
                 }
 
             }
@@ -191,6 +212,12 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     public void settings(){
         preferences=getPreferences(MODE_PRIVATE);
         STAT_TIME=preferences.getBoolean(START_KEY_TIME,false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        loadingFragment();
     }
 }
 

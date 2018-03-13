@@ -6,9 +6,6 @@ import android.content.Context;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
-
-
-import java.util.ArrayList;
 import android.os.Handler;
 
 
@@ -16,19 +13,17 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
 
 
 public class MainPresenterPurse {
-    private ModelPurseTop model;
+
     Handler handler;
     private IViewPurse view;
     AssetsModel assetsModel;
 
     Context context;
 
-    public static String fileName = "Assets.ser";
 
     MainPresenterPurse(IViewPurse view, Context context){
         this.view=view;
         this.context=context;
-        model=new ModelPurseTopping(context);
         assetsModel=new AssetsModel(context);
     }
 
@@ -39,18 +34,16 @@ public class MainPresenterPurse {
 
         switch (v.getId()){
 
-            case R.id.buttonOkAssets:
+            case R.id.actionButtonAdd:
 
                 int sum= Integer.parseInt(view.getEditTextNumber().getText().toString());
                 String value= String.valueOf(sum);
                 String comment=view.getEditTextTx().getText().toString();
-                //model.buttonOk(sum,comment);
                 assetsModel.buttonOk(value,comment);
-
 
                 break;
 
-            case R.id.buttonAllTrAssets:
+            case R.id.actionButtonAll:
 
                 Thread thread=new Thread(() -> {
 
@@ -68,30 +61,18 @@ public class MainPresenterPurse {
                        }
                    };
 
-
-
                   break;
         }
     }
 
 
     public void newTime(){
-
-        ModelPurse purse=new AssetsPurse();
-        ArrayList list=new ArrayList();
         try {
-
-            purse.output(context,list);
-
-
-
-
-
-
+            assetsModel.dbClear();
 
             Toast toastTexst=Toast.makeText(context,"Все удаленно",Toast.LENGTH_LONG);
             toastTexst.show();
-            MonetaryAssets.STAT=false;
+
         }catch (Exception e){
             Toast toastTexst=Toast.makeText(context,"Неудача",Toast.LENGTH_LONG);
             toastTexst.show();
