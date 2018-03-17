@@ -57,8 +57,10 @@
        android:textSize="30sp"
        android:text="@string/text"
        android:layout_below="@+id/button_Sum"
-       android:layout_marginBottom="10dp"
-       />
+       android:layout_marginBottom="10dp" />
+
+
+
 
 
    <LinearLayout
@@ -69,5 +71,15 @@
        android:layout_height="match_parent"
        android:layout_below="@+id/textView"
        android:orientation="horizontal" />
+
+
+
+   <com.getbase.floatingactionbutton.FloatingActionButton
+       android:id="@+id/buttonFind"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBottom="@+id/fragmentContainer"
+       android:layout_alignRight="@+id/fragmentContainer"
+       />
    </RelativeLayout>
 

@@ -1,6 +1,9 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -34,11 +40,11 @@ import java.util.concurrent.ExecutionException;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import s.hfad.com.myapplicationpaveltest.modelAsets.KeyWord;
 
 
-
-
-public class MainActivityTest extends FragmentActivity implements IView,View.OnClickListener{
+public class MainActivityTest extends FragmentActivity implements IView,View.OnClickListener,
+         FireMissilesDialogFragment.NoticeDialogListener{
 
     protected  static   HashMap<String,Double> v=new HashMap<>();
 
@@ -47,6 +53,11 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     private SharedPreferences preferences;
     private MainPresenter presenter;
     private RVAdapter adapter;
+    private FloatingActionButton mFloatingActionButton;
+
+    private KeyWord mKeyWord;
+    private TextView textResult;
+    private EditText faindEditText;
 
     protected TextView textView;
     protected EditText editText;
@@ -57,6 +68,10 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
      //TextView textViewEUR,textViewCHF,textViewUSD;
     private List<ValutaModel> persons;
 
+
+    public MainActivityTest() {
+        mKeyWord=new KeyWord();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +88,53 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
 
         activateToast();
         settings();
+        floatingButton();
 
     }
 
 
+    public void floatingButton(){
+        mFloatingActionButton=(FloatingActionButton)findViewById(R.id.buttonFind);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivityTest.this);
+                LayoutInflater inflater = getLayoutInflater();
+
+                View dialogView=inflater.inflate(R.layout.dialog_signin, null);
+
+                builder.setView(dialogView)
+                        .setPositiveButton(R.string.app_name_Ok, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+
+                                textResult=(TextView)dialogView.findViewById(R.id.TextResult);
+                                faindEditText=(EditText)dialogView.findViewById(R.id.editText_find);
+                                String string=faindEditText.getText().toString();
+
+                                String answer=mKeyWord.wordAnsver(string);
+
+                                if (answer.equals("USD")){
+
+                                    positionChoice(0);
+
+                                }
+
+
+                            }
+                        });
+
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
+        });
+    }
 
     public void loadingFragment(){
         android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
@@ -108,7 +166,8 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
             @Override
             public void onClick(int position) {
 
-                Bundle bundle=new Bundle();
+                positionChoice(position);
+                /*Bundle bundle=new Bundle();
 
                 if (position==0){
                     bundle.putInt("stat",0);
@@ -117,12 +176,26 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
                 }else if (position==1){
                     bundle.putInt("stat",1);
                     loadingPosition(bundle);
-                }
+                }*/
 
             }
         });
     }
 
+
+    public void positionChoice(int position){
+        Bundle bundle=new Bundle();
+
+        if (position==0){
+            bundle.putInt("stat",0);
+            loadingPosition(bundle);
+
+        }else if (position==1){
+            bundle.putInt("stat",1);
+            loadingPosition(bundle);
+        }
+
+    }
 
     public void parserValute(){
 
@@ -218,6 +291,13 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     public void onBackPressed() {
         super.onBackPressed();
         loadingFragment();
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
+
     }
 }
 
