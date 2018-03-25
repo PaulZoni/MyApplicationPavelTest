@@ -9,7 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AssetsModel {
 
@@ -49,9 +51,9 @@ public class AssetsModel {
 
 
 
-    public String buttonAll(){
+    public List<String> buttonAll(){
 
-
+            List<String>list=null;
             database=dbHelperAssets.getWritableDatabase();
             cursor=database.query(DBHelperAssets.TABLE_ASSETS,null,null,null,null,null,null);
 
@@ -63,21 +65,24 @@ public class AssetsModel {
                 sumID = cursor.getColumnIndex(DBHelperAssets.KEY_VALUE);
                 dataID = cursor.getColumnIndex(DBHelperAssets.KEY_DATA);
 
-                stringBuilder = new StringBuilder();
+                //stringBuilder = new StringBuilder();
+                list=new ArrayList<>();
 
                 do {
-                    stringBuilder.append("ПОТРАЧЕНО=" + cursor.getString(sumID)
-                            + " КОМЕНТАРИЙ=" + cursor.getString(comentID)
-                            + "ДАТА=" + cursor.getString(dataID)+ "\n");
+                    int i=0;
 
-                     string = String.valueOf(stringBuilder);
+                        String s="ПОТРАЧЕНО=" + cursor.getString(sumID)
+                                + " КОМЕНТАРИЙ=" + cursor.getString(comentID)
+                                + "ДАТА=" + cursor.getString(dataID)+ "\n";
+                        list.add(i,s);
 
-
-
-
+                        i++;
                 } while (cursor.moveToNext());
 
-                return string;
+
+
+
+                return list;
 
             }
 
@@ -85,7 +90,7 @@ public class AssetsModel {
         cursor.close();
         dbHelperAssets.close();
 
-        return string;
+        return list;
 
     }
 

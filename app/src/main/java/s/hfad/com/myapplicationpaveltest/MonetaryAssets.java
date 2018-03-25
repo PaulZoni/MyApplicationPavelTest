@@ -1,6 +1,7 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +55,8 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         graphV();
         settings();
 
+
+
     }
 
 
@@ -61,10 +64,6 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
         sPref=getPreferences(MODE_PRIVATE);
         STAT=sPref.getBoolean(START_KEY,false );
     }
-
-
-
-
 
 
 

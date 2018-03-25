@@ -3,20 +3,30 @@ package s.hfad.com.myapplicationpaveltest;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 import android.os.Handler;
 
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import s.hfad.com.myapplicationpaveltest.Activity.MainActivityList;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
+
+
 
 
 public class MainPresenterPurse {
 
-    Handler handler;
+    private final Handler handler;
     private IViewPurse view;
-    AssetsModel assetsModel;
+    private AssetsModel assetsModel;
+
 
     Context context;
 
@@ -25,9 +35,11 @@ public class MainPresenterPurse {
         this.view=view;
         this.context=context;
         assetsModel=new AssetsModel(context);
+        handler=new MayHandler(this);
     }
 
-    @SuppressLint("HandlerLeak")
+
+
     public void buttonOnClick(View v){
 
 
@@ -47,19 +59,15 @@ public class MainPresenterPurse {
 
                 Thread thread=new Thread(() -> {
 
-                    String s=assetsModel.buttonAll();
+                    List<String>s=new ArrayList<>();
+                     s=assetsModel.buttonAll();
 
                     Message message=handler.obtainMessage(1,s);
                     handler.sendMessage(message);
                 });
-                   thread.start();
+                thread.start();
 
-                   handler =new Handler(){
-                       @Override
-                       public void handleMessage(android.os.Message msg) {
-                           view.getEditTextTx().setText(String.valueOf(msg.obj));
-                       }
-                   };
+
 
                   break;
         }
@@ -79,7 +87,47 @@ public class MainPresenterPurse {
         }
 
     }
+
+
+    static class MayHandler extends Handler{
+
+        private final WeakReference<MainPresenterPurse> mActiviti;
+
+        public MayHandler(MainPresenterPurse activity){
+            mActiviti=new WeakReference<MainPresenterPurse>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            MainPresenterPurse presenterPurse=mActiviti.get();
+            //presenterPurse.view.getEditTextTx().setText(String.valueOf(msg.obj));
+            List<String> list=(List<String>)msg.obj;
+            MainActivityList.setList(list);
+            Intent intent=new Intent(presenterPurse.context,MainActivityList.class);
+            presenterPurse.context.startActivity(intent);
+
+        }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

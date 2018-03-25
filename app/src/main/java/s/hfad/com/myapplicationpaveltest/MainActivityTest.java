@@ -43,8 +43,7 @@ import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.modelAsets.KeyWord;
 
 
-public class MainActivityTest extends FragmentActivity implements IView,View.OnClickListener,
-         FireMissilesDialogFragment.NoticeDialogListener{
+public class MainActivityTest extends FragmentActivity implements IView,View.OnClickListener{
 
     protected  static   HashMap<String,Double> v=new HashMap<>();
 
@@ -56,8 +55,8 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     private FloatingActionButton mFloatingActionButton;
 
     private KeyWord mKeyWord;
-    private TextView textResult;
     private EditText faindEditText;
+    static final String TAG_1="ID_Pager";
 
     protected TextView textView;
     protected EditText editText;
@@ -65,7 +64,6 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     protected Spinner spinnerRight;
 
      Button buttonSum;
-     //TextView textViewEUR,textViewCHF,textViewUSD;
     private List<ValutaModel> persons;
 
 
@@ -110,9 +108,6 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-
-
-                                textResult=(TextView)dialogView.findViewById(R.id.TextResult);
                                 faindEditText=(EditText)dialogView.findViewById(R.id.editText_find);
                                 String string=faindEditText.getText().toString();
 
@@ -122,6 +117,12 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
 
                                     positionChoice(0);
 
+                                }else if (answer.equals("EUR")){
+                                    positionChoice(1);
+
+                                }else {
+                                    Toast toast=Toast.makeText(MainActivityTest.this,"Вы ввели не правельный результат",Toast.LENGTH_SHORT);
+                                    toast.show();
                                 }
 
 
@@ -166,22 +167,26 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
             @Override
             public void onClick(int position) {
 
-                positionChoice(position);
-                /*Bundle bundle=new Bundle();
+                loadingPager(position);
+                //positionChoice(position);
 
-                if (position==0){
-                    bundle.putInt("stat",0);
-                    loadingPosition(bundle);
-
-                }else if (position==1){
-                    bundle.putInt("stat",1);
-                    loadingPosition(bundle);
-                }*/
 
             }
         });
     }
 
+
+    public void loadingPager(int position){
+        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
+        BlankFragmentPager fragment3=new BlankFragmentPager();
+        Bundle bundle=new Bundle();
+        bundle.putInt(TAG_1,position);
+        fragment3.setArguments(bundle);
+        transaction.replace(R.id.fragmentContainer,fragment3);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     public void positionChoice(int position){
         Bundle bundle=new Bundle();
@@ -293,12 +298,6 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
         loadingFragment();
     }
 
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-
-
-    }
 }
 
 

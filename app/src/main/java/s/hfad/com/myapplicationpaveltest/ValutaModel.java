@@ -2,6 +2,7 @@ package s.hfad.com.myapplicationpaveltest;
 
 
 
+
 public class ValutaModel {
 
      String name;
@@ -14,3 +15,5 @@ public class ValutaModel {
         this.photoId = photoId;
     }
 }
+
+

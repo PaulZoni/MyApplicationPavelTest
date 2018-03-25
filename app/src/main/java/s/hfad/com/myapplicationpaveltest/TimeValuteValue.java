@@ -2,6 +2,7 @@ package s.hfad.com.myapplicationpaveltest;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,7 +39,6 @@ public class TimeValuteValue {
             EURList=timeValue.get("EUR");
         }
         MainActivityTest.STAT_TIME=true;
-
 
 
 
