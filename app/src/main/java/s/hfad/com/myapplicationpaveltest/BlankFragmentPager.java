@@ -2,14 +2,15 @@ package s.hfad.com.myapplicationpaveltest;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 
 
@@ -38,16 +39,49 @@ public class BlankFragmentPager extends Fragment {
 
             @Override
             public int getCount() {
-                return 2;
+                return 15;
             }
         });
 
-        if (position==0){
-            mViewPager.setCurrentItem(0);
-        }else if (position==1){
-            mViewPager.setCurrentItem(1);
-        }
+        mViewPager.setCurrentItem(position);
         return view;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

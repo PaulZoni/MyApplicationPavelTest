@@ -80,6 +80,8 @@
        android:layout_height="wrap_content"
        android:layout_alignBottom="@+id/fragmentContainer"
        android:layout_alignRight="@+id/fragmentContainer"
+       android:src="@drawable/search"
+
        />
    </RelativeLayout>
 

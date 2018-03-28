@@ -38,5 +38,8 @@
     <string name="ActionB">Показать все</string>
     <string name="find">Найти</string>
     <string name="app_name_Ok">Ok</string>
+    <string name="Converter">Конвертер</string>
+    <string name="Assets">Доходы</string>
+    <string name="expenses">Затраты</string>
 
 </resources>

@@ -1,10 +1,8 @@
-package s.hfad.com.myapplicationpaveltest;
+package s.hfad.com.myapplicationpaveltest.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
@@ -12,7 +10,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import s.hfad.com.myapplicationpaveltest.Activity.Expenses;
+import s.hfad.com.myapplicationpaveltest.MainActivityTest;
+import s.hfad.com.myapplicationpaveltest.MonetaryAssets;
+import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterHome;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Menu;
 
@@ -50,24 +50,21 @@ public class HomePage extends Activity {
     }
 
     public void listnerAdapterMqnu(){
-        adapterHome.setListener(new AdapterHome.Listener() {
-            @Override
-            public void onClick(int position) {
+        adapterHome.setListener(position -> {
 
-                if (position==0){
-                    Intent intent=new Intent(HomePage.this,MainActivityTest.class);
-                    startActivity(intent);
+            if (position==0){
+                Intent intent=new Intent(HomePage.this,MainActivityTest.class);
+                startActivity(intent);
 
-                }else if (position==1){
+            }else if (position==1){
 
-                    Intent intent=new Intent(HomePage.this,MonetaryAssets.class);
-                    startActivity(intent);
+                Intent intent=new Intent(HomePage.this,MonetaryAssets.class);
+                startActivity(intent);
 
-                }else if (position==2){
+            }else if (position==2){
 
-                    Intent intent=new Intent(HomePage.this,Expenses.class);
-                    startActivity(intent);
-                }
+                Intent intent=new Intent(HomePage.this,Expenses.class);
+                startActivity(intent);
             }
         });
     }
