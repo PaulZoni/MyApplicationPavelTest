@@ -3,15 +3,15 @@
 
 
     <item
-        android:id="@+id/action_map"
+        android:id="@+id/action_converter"
         android:icon="@android:drawable/ic_dialog_map"
         android:title="@string/Converter"/>
     <item
-        android:id="@+id/action_dial"
+        android:id="@+id/action_assets"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="@string/Assets" />
     <item
-        android:id="@+id/action_mail"
+        android:id="@+id/action_expenses"
         android:icon="@android:drawable/ic_dialog_email"
         android:title="@string/expenses" />
 </menu>

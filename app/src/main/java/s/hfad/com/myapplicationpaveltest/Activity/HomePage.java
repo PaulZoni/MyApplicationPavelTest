@@ -3,8 +3,11 @@ package s.hfad.com.myapplicationpaveltest.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.MenuItem;
 
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Menu;
 
 public class HomePage extends Activity {
 
-
+    private BottomNavigationView mBottomNavigationView;
     private List<Menu>mMenus;
     private AdapterHome adapterHome;
 
@@ -38,6 +41,7 @@ public class HomePage extends Activity {
         rv.setAdapter(adapterHome);
 
         listnerAdapterMqnu();
+        buttonNavigationLisner();
 
     }
 
@@ -68,10 +72,32 @@ public class HomePage extends Activity {
             }
         });
     }
+
+    public void buttonNavigationLisner(){
+        mBottomNavigationView=(BottomNavigationView)findViewById(R.id.bottom_navigation);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+
+            Intent intent;
+            switch (item.getItemId()){
+
+                case R.id.action_converter:
+                     intent=new Intent(HomePage.this,MainActivityTest.class);
+                    startActivity(intent);
+                    break;
+                case R.id.action_assets:
+                     intent=new Intent(HomePage.this,MonetaryAssets.class);
+                    startActivity(intent);
+                    break;
+                case R.id.action_expenses:
+                    intent=new Intent(HomePage.this,Expenses.class);
+                    startActivity(intent);
+                    break;
+            }
+
+            return false;
+        });
+    }
 }
-
-
-
 
 
 

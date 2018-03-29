@@ -1,11 +1,10 @@
 package s.hfad.com.myapplicationpaveltest;
 
 
+import java.util.HashMap;
 
 public interface ModelInterface {
-    public double count(String sum,double d1);
-    public double count(String sum,double d1,double d2);
-    public double countRub(String sum,double d1);
+    public double sumTest(String left, String right, HashMap<String,Double> value, String s);
 }
 
 
