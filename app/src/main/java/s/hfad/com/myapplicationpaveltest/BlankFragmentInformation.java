@@ -113,7 +113,7 @@ public class BlankFragmentInformation extends Fragment {
     public void graf(){
 
 
-
+        points=new DataPoint[listX.size()];
         for (int i = 0; i <points.length ; i++) {
             points[i]=new DataPoint(i,listX.get(i));
         }
@@ -178,7 +178,7 @@ public class BlankFragmentInformation extends Fragment {
                     listX = stringArrayListHashMap.get("KZT");
                 }
 
-                points=new DataPoint[listX.size()];
+
 
                 graf();
             }).start();
