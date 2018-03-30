@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,10 +27,13 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import s.hfad.com.myapplicationpaveltest.Activity.HomePage;
 import s.hfad.com.myapplicationpaveltest.modelAsets.KeyWord;
 
+import static android.content.Context.MODE_PRIVATE;
 
-public class MainActivityTest extends FragmentActivity implements IView,View.OnClickListener{
+
+public class MainActivityTest extends Fragment implements IView,View.OnClickListener,HomePage.OnBackPressedListener {
 
     protected  static   HashMap<String,Double> v=new HashMap<>();
     private static final String START_KEY_TIME="START_KEY";
@@ -48,36 +53,43 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
      Button buttonSum;
     private List<ValutaModel> persons;
 
-
+    View view;
     public MainActivityTest() {
         mKeyWord=new KeyWord();
     }
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_test);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+         view=inflater.inflate(R.layout.activity_main_test, container, false);
 
         loadingFragment();
 
         if (presenter==null){
             presenter=new MainPresenter(this);
         }
-        buttonSum=(Button)findViewById(R.id.button_Sum);
+        buttonSum=(Button)view.findViewById(R.id.button_Sum);
         buttonSum.setOnClickListener(this);
 
         activateToast();
         settings();
         floatingButton();
 
+        return view;
     }
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     public void floatingButton(){
-        mFloatingActionButton=(FloatingActionButton)findViewById(R.id.buttonFind);
+        mFloatingActionButton=(FloatingActionButton)view.findViewById(R.id.buttonFind);
         mFloatingActionButton.setOnClickListener(view -> {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivityTest.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             LayoutInflater inflater = getLayoutInflater();
 
             View dialogView=inflater.inflate(R.layout.dialog_signin, null);
@@ -153,7 +165,7 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
                                 break;
 
                             default:
-                                Toast toast = Toast.makeText(MainActivityTest.this, "Вы ввели не правельный результат", Toast.LENGTH_SHORT);
+                                Toast toast = Toast.makeText(getActivity(), "Вы ввели не правельный результат", Toast.LENGTH_SHORT);
                                 toast.show();
                                 break;
                         }
@@ -169,7 +181,7 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     }
 
     public void loadingFragment(){
-        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+        android.support.v4.app.FragmentManager manager=getFragmentManager();
         Fragment fragment=manager.findFragmentById(R.id.fragmentContainer);
 
         fragment = new BlankFragmentValute();
@@ -181,7 +193,7 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     }
 
     public void loadingPosition(Bundle b){
-        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+        android.support.v4.app.FragmentManager manager=getFragmentManager();
 
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
         BlankFragmentInformation frag=new BlankFragmentInformation();
@@ -206,7 +218,7 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
 
 
     public void loadingPager(int position){
-        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+        android.support.v4.app.FragmentManager manager=getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
         BlankFragmentPager fragment3=new BlankFragmentPager();
         Bundle bundle=new Bundle();
@@ -252,10 +264,10 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
                         persons.add(new ValutaModel("Казахстанских тенге", String.valueOf(strings.get("KZT")), R.mipmap.tenge));
 
 
-                        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
-                        LinearLayoutManager llm = new LinearLayoutManager(this);
+                        RecyclerView rv = (RecyclerView)view.findViewById(R.id.rv);
+                        LinearLayoutManager llm = new LinearLayoutManager(getContext());
                         rv.setLayoutManager(llm);
-                        adapter = new RVAdapter(this,persons);
+                        adapter = new RVAdapter(getActivity(),persons);
                         rv.setAdapter(adapter);
 
                         lisnerAdapterPerson();
@@ -277,7 +289,7 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
     public void activateToast(){
         CharSequence text="Вы активировали конвертер!";
         int duration=Toast.LENGTH_SHORT;
-        Toast toastTexst=Toast.makeText(this,text,duration);
+        Toast toastTexst=Toast.makeText(getActivity(),text,duration);
         toastTexst.show();
     }
 
@@ -292,45 +304,49 @@ public class MainActivityTest extends FragmentActivity implements IView,View.OnC
 
     @Override
     public TextView getTextView() {
-        return textView=(TextView)findViewById(R.id.textView);
+        return textView=(TextView)view.findViewById(R.id.textView);
     }
 
     @Override
     public EditText getTextEdit() {
-        return editText=(EditText)findViewById(R.id.edit_number1);
+        return editText=(EditText)view.findViewById(R.id.edit_number1);
     }
 
     @Override
     public Spinner getLeftSpiner() {
-        return spinnerLeft=(Spinner)findViewById(R.id.spinner_left);
+        return spinnerLeft=(Spinner)view.findViewById(R.id.spinner_left);
     }
 
     @Override
     public Spinner getRightSpiner() {
-        return spinnerRight=(Spinner)findViewById(R.id.spinner_right);
+        return spinnerRight=(Spinner)view.findViewById(R.id.spinner_right);
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
 
-        preferences=getPreferences(MODE_PRIVATE);
+        preferences=getActivity().getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed=preferences.edit();
         ed.putBoolean(START_KEY_TIME,STAT_TIME);
         ed.apply();
     }
 
     public void settings(){
-        preferences=getPreferences(MODE_PRIVATE);
+        preferences=getActivity().getPreferences(MODE_PRIVATE);
         STAT_TIME=preferences.getBoolean(START_KEY_TIME,false);
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         loadingFragment();
     }
 
+    /*@Override
+    public void onBackPressed() {
+        super.getActivity().onBackPressed();
+        loadingFragment();
+    }*/
 
 
 

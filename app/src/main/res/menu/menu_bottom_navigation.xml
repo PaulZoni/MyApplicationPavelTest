@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <item
         android:id="@+id/action_converter"
         android:icon="@android:drawable/ic_dialog_map"
-        android:title="@string/Converter"/>
+        android:title="@string/Converter"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_assets"
         android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="@string/Assets" />
+        android:title="@string/Assets"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_expenses"
         android:icon="@android:drawable/ic_dialog_email"
-        android:title="@string/expenses" />
+        android:title="@string/expenses"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
 </menu>

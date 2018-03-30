@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest;
+package s.hfad.com.myapplicationpaveltest.modelAsets;
 
 
 import android.content.Context;
@@ -19,7 +19,7 @@ public class Graph {
     SQLiteDatabase database;
 
     Context context;
-    Graph(Context context){
+    public Graph(Context context){
         this.context=context;
         dbHelper=new DBHelperAssets(context);
     }

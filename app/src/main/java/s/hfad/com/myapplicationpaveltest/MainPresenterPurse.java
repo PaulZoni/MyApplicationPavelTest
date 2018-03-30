@@ -1,20 +1,16 @@
 package s.hfad.com.myapplicationpaveltest;
 
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
-import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 import android.os.Handler;
-
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
 import s.hfad.com.myapplicationpaveltest.Activity.MainActivityList;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
 
@@ -31,7 +27,7 @@ public class MainPresenterPurse {
     Context context;
 
 
-    MainPresenterPurse(IViewPurse view, Context context){
+    public MainPresenterPurse(IViewPurse view, Context context){
         this.view=view;
         this.context=context;
         assetsModel=new AssetsModel(context);
@@ -66,8 +62,6 @@ public class MainPresenterPurse {
                     handler.sendMessage(message);
                 });
                 thread.start();
-
-
 
                   break;
         }

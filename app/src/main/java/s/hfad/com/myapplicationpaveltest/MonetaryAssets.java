@@ -1,31 +1,29 @@
 package s.hfad.com.myapplicationpaveltest;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-
+import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
-public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickListener {
+public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickListener {
 
     private MainPresenterPurse presenter;
 
@@ -33,6 +31,7 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
     private FloatingActionButton buttonAll;
     protected EditText editTextNumber;
     protected EditText editTextTx;
+    private View view;
 
     private static final String START_KEY="START_KEY";
     SharedPreferences sPref;
@@ -40,28 +39,35 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monetary_assets);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+         view=inflater.inflate(R.layout.activity_monetary_assets,container,false);
 
         if (presenter==null){
-            presenter=new MainPresenterPurse(this,this);
+            presenter=new MainPresenterPurse(this,getContext());
         }
-        buttonOk=(FloatingActionButton)findViewById(R.id.actionButtonAdd);
+        buttonOk=(FloatingActionButton)view.findViewById(R.id.actionButtonAdd);
         buttonOk.setOnClickListener(this);
-        buttonAll=(FloatingActionButton)findViewById(R.id.actionButtonAll);
+        buttonAll=(FloatingActionButton)view.findViewById(R.id.actionButtonAll);
         buttonAll.setOnClickListener(this);
 
         graphV();
         settings();
+        setHasOptionsMenu(true);
 
+        return view;
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
     }
 
 
     public void settings(){
-        sPref=getPreferences(MODE_PRIVATE);
+        sPref=getActivity().getPreferences(MODE_PRIVATE);
         STAT=sPref.getBoolean(START_KEY,false );
     }
 
@@ -72,7 +78,7 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
     public void graphV(){
 
 
-        new Graph(this).getGraph()
+        new Graph(getContext()).getGraph()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(listY -> {
@@ -83,7 +89,7 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
                     }
 
 
-                    GraphView graph = (GraphView) findViewById(R.id.graph);
+                    GraphView graph = (GraphView)getActivity().findViewById(R.id.graph);
 
                     LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
 
@@ -103,17 +109,14 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
 
                 });
 
-
-
     }
 
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.menu_purse,menu);
-
-        return super.onCreateOptionsMenu(menu);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_purse,menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item){
         int id=item.getItemId();
@@ -132,21 +135,21 @@ public class MonetaryAssets extends Activity implements IViewPurse,View.OnClickL
 
     @Override
     public EditText getEditTextNumber(){
-        return editTextNumber=(EditText)findViewById(R.id.editTextAssets_sum);
+        return editTextNumber=(EditText)view.findViewById(R.id.editTextAssets_sum);
     }
 
     @Override
     public EditText getEditTextTx() {
-        return editTextTx=(EditText)findViewById(R.id.editTextAssets_text);
+        return editTextTx=(EditText)view.findViewById(R.id.editTextAssets_text);
     }
 
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
 
 
-        sPref=getPreferences(MODE_PRIVATE);
+        sPref=getActivity().getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed=sPref.edit();
         ed.putBoolean(START_KEY,STAT);
         ed.apply();

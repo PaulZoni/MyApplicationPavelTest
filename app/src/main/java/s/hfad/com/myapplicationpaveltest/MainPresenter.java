@@ -21,7 +21,6 @@ public class MainPresenter {
     MainPresenter(IView vive){
         this.vive=vive;
         model=new ModelSUM();
-
     }
 
 
@@ -39,10 +38,7 @@ public class MainPresenter {
             vive.getTextView().setText(String.valueOf(SUM));
         }
 
-
     }
-
-
 }
 
 
