@@ -1,29 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/gray"
     tools:context="s.hfad.com.myapplicationpaveltest.Activity.Expenses">
 
     <EditText
-        android:id="@+id/editTextExpenses_sum"
+        android:id="@+id/editTextAssets_sum"
         android:layout_marginTop="16dp"
+        android:background="@color/wait"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:textSize="25sp"
-        android:inputType="number"
-        android:background="@color/wait"/>
+        android:inputType="number" />
+
 
     <EditText
-        android:id="@+id/editTextExpenses_text"
+        android:id="@+id/editTextAssets_text"
         android:layout_width="300dp"
         android:layout_height="150dp"
+        android:layout_below="@+id/editTextAssets_sum"
         android:layout_marginTop="10dp"
         android:background="@color/wait"
         android:inputType="textMultiLine"
-        android:lines="5" />
+        android:lines="5"/>
 
 
-</LinearLayout>
+
+
+
+    <com.jjoe64.graphview.GraphView
+
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="300dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/wait" />
+
+
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/Multiple_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        fab:fab_addButtonColorNormal="#fafafa"
+        fab:fab_addButtonColorPressed="#f1f1f1"
+        fab:fab_addButtonPlusIconColor="#808080"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        >
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/actionButtonAdd"
+            fab:fab_icon="@mipmap/star2"
+            fab:fab_colorNormal="#4527f1"
+            fab:fab_addButtonColorPressed="#9f40ec"
+            fab:fab_title="@string/ActionA"
+            fab:fab_size="normal"/>
+
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/actionButtonAll"
+            fab:fab_colorNormal="#4527f1"
+            fab:fab_addButtonColorPressed="#9f40ec"
+            fab:fab_title="@string/ActionB"
+            fab:fab_icon="@mipmap/full"
+            fab:fab_size="normal"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+</RelativeLayout>

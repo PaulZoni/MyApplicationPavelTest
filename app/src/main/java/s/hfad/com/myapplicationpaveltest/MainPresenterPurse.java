@@ -22,23 +22,21 @@ public class MainPresenterPurse {
     private final Handler handler;
     private IViewPurse view;
     private AssetsModel assetsModel;
-
+    private
 
     Context context;
 
 
-    public MainPresenterPurse(IViewPurse view, Context context){
+    public MainPresenterPurse(IViewPurse view, Context context,String key){
         this.view=view;
         this.context=context;
-        assetsModel=new AssetsModel(context);
+        assetsModel=new AssetsModel(context,key);
         handler=new MayHandler(this);
     }
 
 
 
     public void buttonOnClick(View v){
-
-
 
         switch (v.getId()){
 
@@ -95,7 +93,6 @@ public class MainPresenterPurse {
         public void handleMessage(Message msg) {
 
             MainPresenterPurse presenterPurse=mActiviti.get();
-            //presenterPurse.view.getEditTextTx().setText(String.valueOf(msg.obj));
             List<String> list=(List<String>)msg.obj;
             MainActivityList.setList(list);
             Intent intent=new Intent(presenterPurse.context,MainActivityList.class);

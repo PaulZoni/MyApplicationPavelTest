@@ -4,24 +4,36 @@ package s.hfad.com.myapplicationpaveltest.modelAsets;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 
 import java.util.ArrayList;
 
 import io.reactivex.Observable;
-import s.hfad.com.myapplicationpaveltest.modelAsets.DBHelperAssets;
+
 
 public class Graph {
 
     private int sumID;
-    DBHelperAssets dbHelper;
+    SQLiteOpenHelper dbHelper;
     Cursor cursor;
     SQLiteDatabase database;
+    static private final String KEY_ASSETS="assets_key";
+    static private final String KEY_EXPENSES="expenses_key";
+    private String key;
+
 
     Context context;
-    public Graph(Context context){
+    public Graph(Context context,String key){
+        this.key=key;
         this.context=context;
-        dbHelper=new DBHelperAssets(context);
+        if (key.equals(KEY_ASSETS)){
+            dbHelper=new DBHelperAssets(context);
+
+        }else if (key.equals(KEY_EXPENSES)){
+            dbHelper=new DBHelperExpenses(context);
+        }
+
     }
 
     public ArrayList<Integer> graf(){
@@ -29,22 +41,39 @@ public class Graph {
 
         ArrayList<Integer>listX=new ArrayList<>();
         database=dbHelper.getWritableDatabase();
-        cursor=database.query(DBHelperAssets.TABLE_ASSETS,null,null,null,null,null,null);
+
+        if (key.equals(KEY_ASSETS)){
+            cursor=database.query(DBHelperAssets.TABLE_ASSETS,null,null,null,null,null,null);
+
+        }else if (key.equals(KEY_EXPENSES)){
+            cursor=database.query(DBHelperExpenses.TABLE_EXPENSES,null,null,null,null,null,null);
+        }
+
         if (cursor.moveToFirst()){
 
-            sumID=cursor.getColumnIndex(DBHelperAssets.KEY_VALUE);
+            if (key.equals(KEY_ASSETS)){
+                sumID=cursor.getColumnIndex(DBHelperAssets.KEY_VALUE);
+
+            }else if (key.equals(KEY_EXPENSES)){
+                sumID=cursor.getColumnIndex(DBHelperExpenses.KEY_VALUE_EXPENSES);
+            }
+
             do {
-                listX.add(Integer.valueOf(cursor.getString(sumID)));
+                String sum=cursor.getString(sumID);
+
+                if (sum!=null){
+                    listX.add(Integer.valueOf(sum));
+                }
 
             }while (cursor.moveToNext());
+
         }
+
         cursor.close();
         dbHelper.close();
 
         return listX;
     }
-
-
 
 
     public Observable<ArrayList<Integer>> getGraph(){

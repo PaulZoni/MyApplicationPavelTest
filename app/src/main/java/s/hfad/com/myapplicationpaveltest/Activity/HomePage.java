@@ -68,16 +68,13 @@ public class HomePage extends FragmentActivity  {
     }
 
 
-
-
-
     public void buttonNavigationLisner(){
         mBottomNavigationView=(BottomNavigationView)findViewById(R.id.bottom_navigation);
         mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             FragmentManager manager=getSupportFragmentManager();
             Fragment fragment=manager.findFragmentById(R.id.homeContainer);
 
-            Intent intent;
+
             switch (item.getItemId()){
 
                 case R.id.action_converter:
@@ -97,8 +94,11 @@ public class HomePage extends FragmentActivity  {
 
                     break;
                 case R.id.action_expenses:
-                    intent=new Intent(HomePage.this,Expenses.class);
-                    startActivity(intent);
+                    fragment = new Expenses();
+                    manager.beginTransaction()
+                            .replace(R.id.homeContainer, fragment)
+                            .commit();
+
                     break;
             }
             return true;

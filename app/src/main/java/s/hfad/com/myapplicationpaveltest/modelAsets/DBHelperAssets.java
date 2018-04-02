@@ -16,14 +16,9 @@ public class DBHelperAssets extends SQLiteOpenHelper {
     public static final String KEY_VALUE="value";
     public static final String KEY_DATA="data";
 
-
-
-
-
     public DBHelperAssets(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
 
     @Override
@@ -44,3 +39,13 @@ public class DBHelperAssets extends SQLiteOpenHelper {
     }
 
 }
+
+
+
+
+
+
+
+
+
+

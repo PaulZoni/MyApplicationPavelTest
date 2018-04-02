@@ -1,6 +1,7 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     private static final String START_KEY="START_KEY";
     SharedPreferences sPref;
     static boolean STAT=false;
+    static private final String KEY_ASSETS="assets_key";
 
 
     @Override
@@ -45,7 +47,7 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
          view=inflater.inflate(R.layout.activity_monetary_assets,container,false);
 
         if (presenter==null){
-            presenter=new MainPresenterPurse(this,getContext());
+            presenter=new MainPresenterPurse(this,getContext(),KEY_ASSETS);
         }
         buttonOk=(FloatingActionButton)view.findViewById(R.id.actionButtonAdd);
         buttonOk.setOnClickListener(this);
@@ -60,7 +62,7 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
@@ -72,13 +74,10 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     }
 
 
-
-
-
     public void graphV(){
 
 
-        new Graph(getContext()).getGraph()
+        new Graph(getContext(),KEY_ASSETS).getGraph()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(listY -> {
@@ -147,7 +146,6 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     @Override
     public void onDestroy() {
         super.onDestroy();
-
 
         sPref=getActivity().getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed=sPref.edit();
