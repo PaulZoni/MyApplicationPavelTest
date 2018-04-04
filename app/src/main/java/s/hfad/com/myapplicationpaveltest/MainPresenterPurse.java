@@ -4,6 +4,7 @@ package s.hfad.com.myapplicationpaveltest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.SoundPool;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
@@ -13,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import s.hfad.com.myapplicationpaveltest.Activity.MainActivityList;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
-
-
+import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
 
 public class MainPresenterPurse {
@@ -22,7 +22,7 @@ public class MainPresenterPurse {
     private final Handler handler;
     private IViewPurse view;
     private AssetsModel assetsModel;
-    private
+    private Sound mSound;
 
     Context context;
 
@@ -32,6 +32,8 @@ public class MainPresenterPurse {
         this.context=context;
         assetsModel=new AssetsModel(context,key);
         handler=new MayHandler(this);
+        mSound=new Sound(context);
+
     }
 
 
@@ -46,6 +48,7 @@ public class MainPresenterPurse {
                 String value= String.valueOf(sum);
                 String comment=view.getEditTextTx().getText().toString();
                 assetsModel.buttonOk(value,comment);
+                mSound.play();
 
                 break;
 
