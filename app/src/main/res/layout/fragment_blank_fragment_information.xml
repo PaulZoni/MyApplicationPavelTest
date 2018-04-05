@@ -6,11 +6,21 @@
 
 
 
-    <com.jjoe64.graphview.GraphView
-
-        android:id="@+id/graphInformation"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/wait" />
+        android:layout_height="match_parent">
+
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graphInformation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/wait" />
+
+    </android.support.v7.widget.CardView>
+
+
+
+
 
 </FrameLayout>

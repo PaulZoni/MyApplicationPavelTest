@@ -4,7 +4,6 @@ package s.hfad.com.myapplicationpaveltest;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.SoundPool;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
@@ -12,7 +11,7 @@ import android.os.Handler;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import s.hfad.com.myapplicationpaveltest.Activity.MainActivityList;
+
 import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 

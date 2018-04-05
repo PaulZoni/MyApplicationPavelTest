@@ -12,17 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivityTest" />
-        <activity android:name=".Activity.HomePage">
+
+        <activity
+            android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MonetaryAssets" />
-        <activity android:name=".Activity.Expenses" />
-        <activity android:name=".Activity.MainActivityList"></activity>
+
+        <activity
+            android:name=".MainActivityList">
+
+        </activity>
     </application>
 
 </manifest>

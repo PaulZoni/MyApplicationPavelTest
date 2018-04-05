@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.Activity;
+package s.hfad.com.myapplicationpaveltest;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

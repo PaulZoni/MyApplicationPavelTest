@@ -1,12 +1,12 @@
 package s.hfad.com.myapplicationpaveltest;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,9 +27,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import s.hfad.com.myapplicationpaveltest.Activity.HomePage;
 import s.hfad.com.myapplicationpaveltest.modelAsets.KeyWord;
-
 import static android.content.Context.MODE_PRIVATE;
 
 

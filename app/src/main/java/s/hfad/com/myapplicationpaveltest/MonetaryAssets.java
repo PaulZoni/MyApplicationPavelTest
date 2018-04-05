@@ -1,9 +1,6 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -20,12 +17,8 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.IOException;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
-import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -46,12 +39,6 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     static private final String KEY_ASSETS="assets_key";
 
 
-    /*private static final int MAX_SOUNDS = 5;
-    int soundId;
-    SoundPool mSoundPool;
-    private AssetManager mAssets;
-    private static final String SOUNDS_FOLDER = "sounds";*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,20 +56,6 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
         graphV();
         settings();
         setHasOptionsMenu(true);
-
-        /*mAssets=getActivity().getAssets();
-        mSoundPool=new SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0);
-        mSoundPool.setOnLoadCompleteListener(this);
-        try {
-            mAssets.list(SOUNDS_FOLDER);
-        } catch (IOException e) {
-
-        }
-        try {
-            soundId = mSoundPool.load(mAssets.openFd("00923.wav"), 1);
-        } catch (IOException e) {
-
-        }*/
 
         return view;
     }
@@ -156,7 +129,6 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     @Override
     public void onClick(View view) {
         presenter.buttonOnClick(view);
-        //mSoundPool.play(soundId,1.0f, 1.0f, 1, 0, 1.0f);
     }
 
     @Override

@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/Brown"
     android:id="@+id/recyclerView_mainList"
-    tools:context="s.hfad.com.myapplicationpaveltest.Activity.MainActivityList">
+    tools:context="s.hfad.com.myapplicationpaveltest.MainActivityList">
 
 </android.support.v7.widget.RecyclerView>
