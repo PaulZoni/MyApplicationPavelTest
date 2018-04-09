@@ -2,16 +2,11 @@ package s.hfad.com.myapplicationpaveltest.modelAsets;
 
 
 import android.content.Context;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.util.Log;
-import android.view.View;
-
 import java.io.IOException;
 
-import s.hfad.com.myapplicationpaveltest.IViewPurse;
 
 public class Sound implements SoundPool.OnLoadCompleteListener {
     private SoundPool mSoundPool;
@@ -53,6 +48,19 @@ public class Sound implements SoundPool.OnLoadCompleteListener {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

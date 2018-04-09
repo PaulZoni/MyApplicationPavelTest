@@ -1,9 +1,12 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -56,6 +60,12 @@ public class Expenses extends Fragment implements IViewPurse,View.OnClickListene
         buttonAll=(FloatingActionButton)view.findViewById(R.id.actionButtonAll);
         buttonAll.setOnClickListener(this);
 
+        Toolbar toolbar=(Toolbar)view.findViewById(R.id.toolbarAssets_expenses);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+        }
+
         graphV();
         settings();
         setHasOptionsMenu(true);
@@ -84,29 +94,21 @@ public class Expenses extends Fragment implements IViewPurse,View.OnClickListene
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(listY -> {
 
-                    DataPoint[] points=new DataPoint[listY.size()];
-                    for (int i = 0; i <points.length ; i++) {
-                        points[i]=new DataPoint(i,listY.get(i));
-                    }
 
+                    Thread thread=new Thread(() -> {
+                        GraphView graph = (GraphView)getActivity().findViewById(R.id.graph);
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+                                new DataPoint(0,listY.get(0))
+                                //new DataPoint(1,list.get(1))
 
-                    GraphView graph = (GraphView)getActivity().findViewById(R.id.graph);
+                        });
+                        series.setValueDependentColor(data -> Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100));
+                        series.setDrawValuesOnTop(true);
+                        series.setValuesOnTopColor(Color.RED);
+                        graph.addSeries(series);
+                    });
+                    thread.start();
 
-                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
-
-                    graph.getViewport().setYAxisBoundsManual(true);
-                    graph.getViewport().setMinY(-150);
-                    graph.getViewport().setMaxY(150);
-
-                    graph.getViewport().setXAxisBoundsManual(true);
-                    graph.getViewport().setMinX(4);
-                    graph.getViewport().setMaxX(80);
-
-                    // enable scaling and scrolling
-                    graph.getViewport().setScalable(true);
-                    graph.getViewport().setScalableY(true);
-
-                    graph.addSeries(series);
 
                 });
 

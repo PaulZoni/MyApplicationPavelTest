@@ -8,9 +8,16 @@
     android:background="@color/gray"
     tools:context="s.hfad.com.myapplicationpaveltest.Expenses">
 
+
+    <include layout="@layout/told_bar"
+        android:id="@+id/toolbarAssets_expenses">
+
+    </include>
+
     <EditText
         android:id="@+id/editTextAssets_sum"
         android:layout_marginTop="16dp"
+        android:layout_below="@+id/toolbarAssets_expenses"
         android:background="@color/wait"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -27,8 +34,6 @@
         android:background="@color/wait"
         android:inputType="textMultiLine"
         android:lines="5"/>
-
-
 
 
 

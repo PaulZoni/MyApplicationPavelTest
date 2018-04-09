@@ -10,9 +10,14 @@
     tools:context="s.hfad.com.myapplicationpaveltest.MonetaryAssets">
 
 
+    <include layout="@layout/told_bar"
+        android:id="@+id/toolbarAssets">
+
+    </include>
 
     <EditText
         android:id="@+id/editTextAssets_sum"
+        android:layout_below="@+id/toolbarAssets"
         android:layout_marginTop="16dp"
         android:background="@color/wait"
         android:layout_width="300dp"

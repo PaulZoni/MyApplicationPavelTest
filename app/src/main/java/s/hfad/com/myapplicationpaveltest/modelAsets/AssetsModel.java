@@ -66,7 +66,6 @@ public class AssetsModel {
     }
 
 
-
     public List<String> buttonAll(){
 
             List<String>list=new ArrayList<>();
@@ -120,15 +119,16 @@ public class AssetsModel {
     }
 
     public void dbClear(){
-        database=dbHelper.getWritableDatabase();
-        if (KeyDB.equals(KEY_ASSETS)){
-            database.delete(DBHelperAssets.TABLE_ASSETS,null,null);
+        SQLiteOpenHelper helper=new DBHelperAssets(context);
+        database=helper.getWritableDatabase();
+        database.delete(DBHelperAssets.TABLE_ASSETS,null,null);
 
-        }else if (KeyDB.equals(KEY_EXPENSES)){
-            database.delete(DBHelperExpenses.TABLE_EXPENSES,null,null);
-        }
+        helper=new DBHelperExpenses(context);
+        database=helper.getWritableDatabase();
+        database.delete(DBHelperExpenses.TABLE_EXPENSES,null,null);
 
-        dbHelper.close();
+        database.close();
+        helper.close();
     }
 
 }
