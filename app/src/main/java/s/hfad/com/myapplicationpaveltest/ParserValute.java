@@ -109,7 +109,6 @@ public class ParserValute {
     public Observable<HashMap<String,Double>> getParser() {
         return Observable.create(observableEmitter ->{
 
-
             observableEmitter.onNext(parser(inputParser()));
         });
     }

@@ -66,5 +66,6 @@
     <string name="Converter">Конвертер</string>
     <string name="Assets">Доходы</string>
     <string name="expenses">Затраты</string>
+    <string name="News">Новости</string>
 
 </resources>

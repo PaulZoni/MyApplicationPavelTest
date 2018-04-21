@@ -9,37 +9,39 @@ import java.io.IOException;
 
 
 public class Sound implements SoundPool.OnLoadCompleteListener {
-    private SoundPool mSoundPool;
+    private static SoundPool mSoundPool;
     private static final int MAX_SOUNDS = 5;
-    private AssetManager mAssets;
+    private static AssetManager mAssets;
     private static final String SOUNDS_FOLDER = "sounds";
-    private int soundId=0;
+    private static int soundId=0;
     private Context mContext;
 
+
     public Sound(Context context) {
+
         mContext=context;
         mAssets=context.getAssets();
         mSoundPool=new SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0);
         mSoundPool.setOnLoadCompleteListener(this);
-
         try {
             load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    public void load()throws IOException {
-        String[] s=mAssets.list(SOUNDS_FOLDER);
+    private void load()throws IOException {
+        //String[] s=mAssets.list(SOUNDS_FOLDER);
          soundId = mSoundPool.load(mContext.getAssets().openFd("00923.wav"), 0);
 
     }
 
-    public void play(){
+    public static void play(){
         mSoundPool.play(soundId,1.0f, 1.0f, 1, 0, 1.0f);
     }
 
-    public void release() {
+    public static void release() {
         mSoundPool.release();
     }
 

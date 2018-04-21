@@ -19,6 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.GraphView;
@@ -26,6 +29,8 @@ import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import org.reactivestreams.Subscriber;
 
 import java.util.ArrayList;
 
@@ -49,7 +54,7 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     SharedPreferences sPref;
     static boolean STAT=false;
     static private final String KEY_ASSETS="assets_key";
-
+    Observable s;
 
 
 
@@ -62,6 +67,7 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
         if (presenter==null){
             presenter=new MainPresenterPurse(this,getContext(),KEY_ASSETS);
         }
+
         buttonOk=(FloatingActionButton)view.findViewById(R.id.actionButtonAdd);
         buttonOk.setOnClickListener(this);
         buttonAll=(FloatingActionButton)view.findViewById(R.id.actionButtonAll);

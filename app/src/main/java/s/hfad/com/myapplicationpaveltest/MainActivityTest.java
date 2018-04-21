@@ -340,13 +340,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         loadingFragment();
     }
 
-    /*@Override
-    public void onBackPressed() {
-        super.getActivity().onBackPressed();
-        loadingFragment();
-    }*/
-
-
 
 }
 

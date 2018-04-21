@@ -64,15 +64,14 @@
         fab:fab_addButtonColorNormal="#fafafa"
         fab:fab_addButtonColorPressed="#f1f1f1"
         fab:fab_addButtonPlusIconColor="#808080"
-        fab:fab_labelStyle="@style/menu_labels_style"
-        >
+        fab:fab_labelStyle="@style/menu_labels_style">
 
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:id="@+id/actionButtonAdd"
-            fab:fab_icon="@mipmap/star2"
+            android:src="@drawable/ic_add_24dp"
             fab:fab_colorNormal="#e91e63"
             fab:fab_addButtonColorPressed="#ec407a"
             fab:fab_title="@string/ActionA"
@@ -87,10 +86,9 @@
             fab:fab_colorNormal="#e91e63"
             fab:fab_addButtonColorPressed="#ec407a"
             fab:fab_title="@string/ActionB"
-            fab:fab_icon="@mipmap/full"
-            fab:fab_size="normal"/>
+            android:src="@drawable/ic_add_24dp"
+            fab:fabSize="normal"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
 
 </RelativeLayout>

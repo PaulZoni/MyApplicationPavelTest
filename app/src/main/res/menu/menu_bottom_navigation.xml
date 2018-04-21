@@ -4,6 +4,13 @@
 
 
     <item
+        android:icon="@android:drawable/ic_dialog_info"
+        android:id="@+id/action_news"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="@string/News" />
+
+    <item
         android:id="@+id/action_converter"
         android:icon="@android:drawable/ic_dialog_map"
         android:title="@string/Converter"
@@ -21,4 +28,5 @@
         android:title="@string/expenses"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
+
 </menu>

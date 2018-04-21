@@ -4,9 +4,11 @@ package s.hfad.com.myapplicationpaveltest;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+
+import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentHome;
+import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
 
 public class HomePage extends AppCompatActivity {
@@ -47,9 +49,18 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        Thread soundThread=new Thread(()-> new Sound(this));
+        soundThread.start();
+
         loadingFragment();
         buttonNavigationLisner();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Sound.release();
     }
 
     public void loadingFragment(){
@@ -97,6 +108,12 @@ public class HomePage extends AppCompatActivity {
                             .commit();
 
                     break;
+
+                case R.id.action_news:
+                    fragment = new BlankFragmentHome();
+                    manager.beginTransaction()
+                            .replace(R.id.homeContainer, fragment)
+                            .commit();
             }
             return true;
         });

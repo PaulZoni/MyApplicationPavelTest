@@ -8,10 +8,14 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 import android.os.Handler;
+
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
@@ -21,7 +25,7 @@ public class MainPresenterPurse {
     private final Handler handler;
     private IViewPurse view;
     private AssetsModel assetsModel;
-    private Sound mSound;
+
 
     Context context;
 
@@ -31,8 +35,6 @@ public class MainPresenterPurse {
         this.context=context;
         assetsModel=new AssetsModel(context,key);
         handler=new MayHandler(this);
-        mSound=new Sound(context);
-
     }
 
 
@@ -47,8 +49,7 @@ public class MainPresenterPurse {
                 String value= String.valueOf(sum);
                 String comment=view.getEditTextTx().getText().toString();
                 assetsModel.buttonOk(value,comment);
-                mSound.play();
-
+                Sound.play();
                 break;
 
             case R.id.actionButtonAll:
