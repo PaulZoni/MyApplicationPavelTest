@@ -1,6 +1,5 @@
 package s.hfad.com.myapplicationpaveltest;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,6 +26,9 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import s.hfad.com.myapplicationpaveltest.Parser.ParserValute;
+import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentInformation;
+import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentValute;
 import s.hfad.com.myapplicationpaveltest.modelAsets.KeyWord;
 import static android.content.Context.MODE_PRIVATE;
 

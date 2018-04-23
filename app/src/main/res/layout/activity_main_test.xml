@@ -91,7 +91,7 @@
        android:layout_height="wrap_content"
        android:layout_alignBottom="@+id/fragmentContainer"
        android:layout_alignRight="@+id/fragmentContainer"
-       android:src="@mipmap/ic_launcher_foreground"
+       android:src="@android:drawable/ic_menu_search"
        android:layout_alignEnd="@+id/fragmentContainer" />
    </RelativeLayout>
 

@@ -3,6 +3,8 @@ package s.hfad.com.myapplicationpaveltest;
 
 import java.util.HashMap;
 
+import s.hfad.com.myapplicationpaveltest.modelAsets.ModelInterface;
+
 public class MainPresenter {
 
     double SUM;

@@ -3,7 +3,9 @@ package s.hfad.com.myapplicationpaveltest;
 
 import java.util.HashMap;
 
-class ModelSUM implements ModelInterface{
+import s.hfad.com.myapplicationpaveltest.modelAsets.ModelInterface;
+
+class ModelSUM implements ModelInterface {
 
     @Override
     public double sumTest(String left, String right, HashMap<String,Double> value, String s){

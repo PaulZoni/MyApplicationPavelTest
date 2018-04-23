@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest;
+package s.hfad.com.myapplicationpaveltest.modelAsets;
 
 
 import java.util.HashMap;

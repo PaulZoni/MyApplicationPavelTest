@@ -20,19 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import im.dacer.androidcharts.BarView;
+import im.dacer.androidcharts.PieHelper;
+import im.dacer.androidcharts.PieView;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.ValueDependentColor;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
-import org.reactivestreams.Subscriber;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -111,22 +106,16 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
 
     public void graphBac(ArrayList<Integer> list){
 
-        new Thread(() -> {
+        ArrayList name=new ArrayList();
+        name.add("Assets");
+        name.add("Expenses");
 
-            GraphView graph = (GraphView)getActivity().findViewById(R.id.graph);
-            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-                    new DataPoint(0,list.get(0))
-                    //new DataPoint(1,list.get(1))
+        PieView pieView = view.findViewById(R.id.bar_view);
+        ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
+        pieHelperArrayList.add(new PieHelper(50));
+        pieHelperArrayList.add(new PieHelper(50));
 
-            });
-
-            series.setValueDependentColor(data -> Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100));
-
-            series.setDrawValuesOnTop(true);
-            series.setValuesOnTopColor(Color.RED);
-            graph.addSeries(series);
-
-        }).start();
+        pieView.setDate(pieHelperArrayList);
 
 
     }

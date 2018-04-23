@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest;
+package s.hfad.com.myapplicationpaveltest.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-
+import s.hfad.com.myapplicationpaveltest.R;
+import s.hfad.com.myapplicationpaveltest.TimeValuteValue;
 
 
 public class BlankFragmentInformation extends Fragment {
@@ -46,7 +47,6 @@ public class BlankFragmentInformation extends Fragment {
                              Bundle savedInstanceState) {
          view=inflater.inflate(R.layout.fragment_blank_fragment_information, container, false);
 
-
         if (savedInstanceState!=null){
             INDEX=savedInstanceState.getBoolean(KEY,false);
             listX=(ArrayList<Double>) savedInstanceState.getSerializable("listX");
@@ -59,7 +59,6 @@ public class BlankFragmentInformation extends Fragment {
             TimeValuteCheck(STAT);
             INDEX=true;
         }
-
 
         return view;
     }
@@ -91,8 +90,6 @@ public class BlankFragmentInformation extends Fragment {
             }
 
         }
-
-
     }
 
     @Override
@@ -142,7 +139,6 @@ public class BlankFragmentInformation extends Fragment {
     public void TimeValuteCheck(int stat){
         Observable.just(new TimeValuteValue(getContext()).timeVValue()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(stringArrayListHashMap -> {
-
 
             new Thread(() -> {
 

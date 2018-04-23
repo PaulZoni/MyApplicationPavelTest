@@ -104,7 +104,7 @@ public class Graph {
         return listX;
     }
 
-    private ArrayList<Integer>sum(ArrayList<Integer>list){
+    /*private ArrayList<Integer>sum(ArrayList<Integer>list){
         ArrayList<Integer>listX=new ArrayList<>();
         if (!list.isEmpty()){
             int z=0;
@@ -119,7 +119,7 @@ public class Graph {
             }
         }
         return listX;
-    }
+    }*/
 
     public Observable<ArrayList<Integer>> getGraph(){
         return Observable.create(observableEmitter->{

@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.Parser;
+package s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing;
 
 
 import java.io.IOException;
@@ -89,12 +89,7 @@ public class ParsingNewsRetrofit {
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
-            builder.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
+            builder.hostnameVerifier((hostname, session) -> true);
             return builder;
         } catch (Exception e) {
             throw new RuntimeException(e);

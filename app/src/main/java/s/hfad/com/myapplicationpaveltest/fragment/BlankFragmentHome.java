@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import s.hfad.com.myapplicationpaveltest.Parser.ParsingNewsRetrofit;
+import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.ParsingNewsRetrofit;
 import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterHome;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Menu;
@@ -32,7 +32,6 @@ public class BlankFragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_blank_fragment_home, container, false);
-
 
         initializationMenu();
 
