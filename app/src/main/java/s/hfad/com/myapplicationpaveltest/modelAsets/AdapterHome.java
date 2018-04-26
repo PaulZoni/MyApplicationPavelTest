@@ -37,7 +37,7 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
     private MenuViewHolder menuViewHolder;
 
     public static interface Listener {
-        public void onClick(int position);
+        public void onClick(int position,String url);
     }
 
     public AdapterHome(Context context,List<Menu> menuList) {
@@ -110,14 +110,20 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
     @Override
     public void onBindViewHolder(MenuViewHolder holder, int position) {
 
+        Menu menu=mMenus.get(position);//?
+        holder.setUrl(menu.getUrl());//?
+
+
         CardView cardView=holder.cardView;
         mNewsHandler.quay(holder,position);
 
         cardView.setOnClickListener(view -> {
 
             if (listener!=null){
-                listener.onClick(position);
+                listener.onClick(position,holder.getUrl());
             }
+
+
         });
     }
 

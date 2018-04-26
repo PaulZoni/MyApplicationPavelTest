@@ -22,6 +22,11 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import im.dacer.androidcharts.PieHelper;
+import im.dacer.androidcharts.PieView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.IViewPurse;
@@ -92,25 +97,20 @@ public class Expenses extends Fragment implements IViewPurse,View.OnClickListene
         new Graph(getContext(),KEY_EXPENSES).getGraph()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(listY -> {
+                .subscribe(this::graphBac);
+
+    }
+
+    public void graphBac(HashMap<String,Float> map){
 
 
-                    Thread thread=new Thread(() -> {
-                        GraphView graph = (GraphView)getActivity().findViewById(R.id.graph);
-                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-                                new DataPoint(0,listY.get(0))
-                                //new DataPoint(1,list.get(1))
+        PieView pieView = view.findViewById(R.id.graph);
+        ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
+        pieHelperArrayList.add(new PieHelper(map.get("P assets")));
+        pieHelperArrayList.add(new PieHelper(map.get("P expenses")));
 
-                        });
-                        series.setValueDependentColor(data -> Color.rgb((int) data.getX()*255/4, (int) Math.abs(data.getY()*255/6), 100));
-                        series.setDrawValuesOnTop(true);
-                        series.setValuesOnTopColor(Color.RED);
-                        graph.addSeries(series);
-                    });
-                    thread.start();
+        pieView.setDate(pieHelperArrayList);
 
-
-                });
 
     }
 

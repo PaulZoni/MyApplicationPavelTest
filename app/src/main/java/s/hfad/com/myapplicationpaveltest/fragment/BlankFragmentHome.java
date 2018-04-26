@@ -1,5 +1,6 @@
 package s.hfad.com.myapplicationpaveltest.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import s.hfad.com.myapplicationpaveltest.Activity.Activity_Web;
 import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.ParsingNewsRetrofit;
 import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterHome;
@@ -21,7 +23,6 @@ public class BlankFragmentHome extends Fragment {
 
 
     private AdapterHome adapterHome;
-
     private View view;
 
     public BlankFragmentHome() {
@@ -59,33 +60,28 @@ public class BlankFragmentHome extends Fragment {
                     List<Menu> mMenus=new ArrayList<>();
 
                     for (int i = 0; i <parser.size() ; i++) {
-                        mMenus.add(new Menu(parser.get(i).getDescription(),parser.get(i).getUrlToImage()));
+                        mMenus.add(new Menu(parser.get(i).getDescription(),
+                                parser.get(i).getUrlToImage(),
+                                parser.get(i).getUrl()));
                     }
 
-                    RecyclerView rv = (RecyclerView)view.findViewById(R.id.LIst_homePage);
+                    RecyclerView rv = view.findViewById(R.id.LIst_homePage);
                     rv.setHasFixedSize(true);
                     StaggeredGridLayoutManager llm = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
                     rv.setLayoutManager(llm);
                     adapterHome=new AdapterHome(getActivity(),mMenus);
                     rv.setAdapter(adapterHome);
+                    listnerAdapterMqnu();
                 });
 
     }
 
     public void listnerAdapterMqnu(){
-        adapterHome.setListener(position -> {
+        adapterHome.setListener((position,url) -> {
 
-            if (position==0){
-               //?
+            Intent intent= Activity_Web.newIntentActivityWeb(getContext(),url);
+            startActivity(intent);
 
-            }else if (position==1){
-
-                //?
-
-            }else if (position==2){
-                //?
-
-            }
         });
     }
 }

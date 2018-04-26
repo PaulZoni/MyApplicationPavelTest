@@ -27,6 +27,7 @@ import io.reactivex.Observable;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -101,19 +102,17 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::graphBac);
 
+
     }
 
 
-    public void graphBac(ArrayList<Integer> list){
+    public void graphBac(HashMap<String,Float> map){
 
-        ArrayList name=new ArrayList();
-        name.add("Assets");
-        name.add("Expenses");
 
         PieView pieView = view.findViewById(R.id.bar_view);
         ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
-        pieHelperArrayList.add(new PieHelper(50));
-        pieHelperArrayList.add(new PieHelper(50));
+        pieHelperArrayList.add(new PieHelper(map.get("P assets")));
+        pieHelperArrayList.add(new PieHelper(map.get("P expenses")));
 
         pieView.setDate(pieHelperArrayList);
 
