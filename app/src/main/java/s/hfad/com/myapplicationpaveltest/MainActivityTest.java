@@ -5,7 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,7 +92,7 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     }
 
     public void floatingButton(){
-        mFloatingActionButton=(FloatingActionButton)view.findViewById(R.id.buttonFind);
+        mFloatingActionButton= view.findViewById(R.id.buttonFind);
         mFloatingActionButton.setOnClickListener(view -> {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -97,7 +103,7 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
             builder.setView(dialogView)
                     .setPositiveButton(R.string.app_name_Ok, (dialogInterface, i) -> {
 
-                        faindEditText=(EditText)dialogView.findViewById(R.id.editText_find);
+                        faindEditText= dialogView.findViewById(R.id.editText_find);
                         String string=faindEditText.getText().toString();
 
                         String answer=mKeyWord.wordAnsver(string);
@@ -170,20 +176,16 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                                 break;
                         }
 
-
                     });
-
 
             AlertDialog alert = builder.create();
             alert.show();
-
         });
     }
 
     public void loadingFragment(){
         android.support.v4.app.FragmentManager manager=getFragmentManager();
         Fragment fragment=manager.findFragmentById(R.id.fragmentContainer);
-
         fragment = new BlankFragmentValute();
         manager.beginTransaction()
                 .add(R.id.fragmentContainer, fragment)
@@ -194,14 +196,12 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     public void loadingPosition(Bundle b){
         android.support.v4.app.FragmentManager manager=getFragmentManager();
-
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
         BlankFragmentInformation frag=new BlankFragmentInformation();
         frag.setArguments(b);
         transaction.replace(R.id.fragmentContainer,frag);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 
     public void lisnerAdapterPerson(){
@@ -211,21 +211,44 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
             public void onClick(int position) {
 
                 loadingPager(position);
-
             }
         });
     }
 
 
     public void loadingPager(int position){
+        CollapsingToolbarLayout collapsing=view.findViewById(R.id.toolbar_collapsing);
+        LinearLayout linearLayout=view.findViewById(R.id.layout_assets_info_1);
+        NestedScrollView  scrollView=view.findViewById(R.id.nestedScrollView_converter);
+        LinearLayout linearLayout1All=view.findViewById(R.id.layout_assets_info_all);
+
+        scrollView.setLayoutParams(new CoordinatorLayout.LayoutParams(0,0));
+
+
+        AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) collapsing.getLayoutParams();
+        p.setScrollFlags(0);
+
+        linearLayout1All.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
+
+        //collapsing.setLayoutParams(p);
+        //collapsing.setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                //ViewGroup.LayoutParams.WRAP_CONTENT,
+                //1.0f));
+
+
+        //linearLayout.setLayoutParams(new LinearLayout.LayoutParams(AppBarLayout.LayoutParams.MATCH_PARENT,
+                //AppBarLayout.LayoutParams.MATCH_PARENT,1));
+
+
         android.support.v4.app.FragmentManager manager=getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
         BlankFragmentPager fragment3=new BlankFragmentPager();
         Bundle bundle=new Bundle();
-        //bundle.putInt(TAG_1,position);
+
         bundle.putSerializable(TAG_1,position);
         fragment3.setArguments(bundle);
-        transaction.replace(R.id.fragmentContainer,fragment3);
+        transaction.replace(R.id.layout_assets_info_1,fragment3);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -237,7 +260,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     }
 
     public void parserValute(){
-
         try {
 
             new ParserValute().getParser()
@@ -274,16 +296,11 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
                     });
 
-
-
         }catch (Exception e){
 
             persons.add(new ValutaModel("Нет соединения", "Нет соединения", R.mipmap.usd));
-
         }
     }
-
-
 
 
     public void activateToast(){
@@ -292,8 +309,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         Toast toastTexst=Toast.makeText(getActivity(),text,duration);
         toastTexst.show();
     }
-
-
 
 
     @Override

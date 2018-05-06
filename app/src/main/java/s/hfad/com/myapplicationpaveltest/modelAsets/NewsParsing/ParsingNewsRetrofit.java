@@ -4,25 +4,17 @@ package s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing;
 import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.APIService;
-import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.Article;
-import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.ModelNews;
+
 
 public class ParsingNewsRetrofit {
 

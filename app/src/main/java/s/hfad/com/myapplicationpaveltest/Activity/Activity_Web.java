@@ -3,6 +3,7 @@ package s.hfad.com.myapplicationpaveltest.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class Activity_Web extends AppCompatActivity {
         url=intent.getStringExtra(TAG_URL);
         Log.e("Load",url);
         loadingWeb();
+
     }
 
 

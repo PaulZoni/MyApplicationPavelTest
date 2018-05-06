@@ -57,7 +57,7 @@
         <item>Cash expenses</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ActionA">Добавить</string>
     <string name="ActionB">Показать все</string>
@@ -67,5 +67,8 @@
     <string name="Assets">Доходы</string>
     <string name="expenses">Затраты</string>
     <string name="News">Новости</string>
+    <string name="noTitle">Нет описания</string>
+    <string name="allsum">От всей суммы за весь период что было потрачено</string>
+    <string name="ollAssets">От всей суммы за весь период что было приобретено</string>
 
 </resources>

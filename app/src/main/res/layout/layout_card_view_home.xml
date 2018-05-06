@@ -21,7 +21,8 @@
             android:id="@+id/textHome_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17sp"/>
+            android:textSize="17sp"
+            android:textColor="@android:color/background_dark"/>
         
     </LinearLayout>
 

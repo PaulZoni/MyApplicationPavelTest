@@ -22,6 +22,7 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
 public class MainPresenterPurse {
 
+    private final String STRING_WRONGS="fill in the field";
     private final Handler handler;
     private IViewPurse view;
     private AssetsModel assetsModel;
@@ -45,11 +46,23 @@ public class MainPresenterPurse {
 
             case R.id.actionButtonAdd:
 
-                int sum= Integer.parseInt(view.getEditTextNumber().getText().toString());
-                String value= String.valueOf(sum);
-                String comment=view.getEditTextTx().getText().toString();
-                assetsModel.buttonOk(value,comment);
-                Sound.play();
+                if (view.getEditTextTx().getText().toString().equals("")){
+                    view.getEditTextTx().setText(STRING_WRONGS);
+
+                }else if (view.getEditTextNumber().getText().toString().equals("")){
+                    view.getEditTextNumber().setText(STRING_WRONGS);
+
+                }else {
+                    int sum= Integer.parseInt(view.getEditTextNumber().getText().toString());
+                    String value= String.valueOf(sum);
+                    String comment=view.getEditTextTx().getText().toString();
+                    assetsModel.buttonOk(value,comment);
+                    Sound.play();
+
+                    view.getEditTextNumber().setText(null);
+                    view.getEditTextTx().setText(null);
+                }
+
                 break;
 
             case R.id.actionButtonAll:

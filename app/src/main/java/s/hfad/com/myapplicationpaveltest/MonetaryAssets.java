@@ -1,15 +1,12 @@
 package s.hfad.com.myapplicationpaveltest;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -19,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import im.dacer.androidcharts.BarView;
 import im.dacer.androidcharts.PieHelper;
 import im.dacer.androidcharts.PieView;
 import io.reactivex.Observable;
@@ -28,7 +25,6 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -38,20 +34,23 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickListener {
 
-    private MainPresenterPurse presenter;
-
+    static private final String KEY_ASSETS="assets_key";
+    private static final String START_KEY="START_KEY";
+    private final String textSumExpenses="От всей суммы что было потрачено";
+    private final String textSumAssets="От всей суммы было приобретено";
     private FloatingActionButton buttonOk;
     private FloatingActionButton buttonAll;
     protected EditText editTextNumber;
     protected EditText editTextTx;
     private View view;
-
-    private static final String START_KEY="START_KEY";
-    SharedPreferences sPref;
+    private MainPresenterPurse presenter;
+    private TextView mTextViewInformation;
+    private TextView mTextViewAllSum;
+    private SharedPreferences sPref;
     static boolean STAT=false;
-    static private final String KEY_ASSETS="assets_key";
-    Observable s;
+    private PieView pieView;
 
+    Observable s;
 
 
     @Override
@@ -64,9 +63,9 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
             presenter=new MainPresenterPurse(this,getContext(),KEY_ASSETS);
         }
 
-        buttonOk=(FloatingActionButton)view.findViewById(R.id.actionButtonAdd);
+        buttonOk= view.findViewById(R.id.actionButtonAdd);
         buttonOk.setOnClickListener(this);
-        buttonAll=(FloatingActionButton)view.findViewById(R.id.actionButtonAll);
+        buttonAll= view.findViewById(R.id.actionButtonAll);
         buttonAll.setOnClickListener(this);
 
         Toolbar toolbar=(Toolbar)view.findViewById(R.id.toolbarAssets);
@@ -82,6 +81,7 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
         return view;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,35 +89,56 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
     }
 
 
-    public void settings(){
+    private void settings(){
         sPref=getActivity().getPreferences(MODE_PRIVATE);
         STAT=sPref.getBoolean(START_KEY,false );
     }
 
 
-    public void graphV(){
+    private void graphV(){
 
         new Graph(getContext(),KEY_ASSETS).getGraph()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::graphBac);
-
-
     }
 
 
-    public void graphBac(HashMap<String,Float> map){
+    private void graphBac(HashMap<String,Float> map){
 
-
-        PieView pieView = view.findViewById(R.id.bar_view);
+        pieView = view.findViewById(R.id.bar_view);
         ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
-        pieHelperArrayList.add(new PieHelper(map.get("P assets")));
-        pieHelperArrayList.add(new PieHelper(map.get("P expenses")));
-
+        pieHelperArrayList.add(new PieHelper(map.get(Graph.P_KEY_ASSETS)));
+        pieHelperArrayList.add(new PieHelper(map.get(Graph.P_KEY_EXPENSES)));
         pieView.setDate(pieHelperArrayList);
 
-
+        initialisationListenerPie(map);
     }
+
+
+    private void initialisationListenerPie(HashMap<String,Float> map){
+        mTextViewInformation=view.findViewById(R.id.text_asset_information);
+        mTextViewAllSum=view.findViewById(R.id.text_asset_allSum);
+        pieView.setOnPieClickListener(index -> {
+            StringBuilder stringBuilder=new StringBuilder();
+
+            if (index==1){
+
+                mTextViewInformation.setTextColor(getResources().getColor(R.color.Purple));
+                stringBuilder.append(map.get(Graph.P_KEY_EXPENSES)+"%"+" "
+                        +textSumExpenses+"("+map.get(Graph.KEY_ALL_EXPENSES)+")");
+                mTextViewInformation.setText(stringBuilder);
+
+            }else if (index==0){
+                mTextViewInformation.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                stringBuilder.append(map.get(Graph.P_KEY_ASSETS)+"%"+" "
+                        +textSumAssets+"("+map.get(Graph.KEY_ALL_ASSETS)+")");
+                mTextViewInformation.setText(stringBuilder);
+            }
+            mTextViewAllSum.setText(String.valueOf(map.get(Graph.KEY_EXIST_ASSETS)));
+        });
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -161,7 +182,6 @@ public class MonetaryAssets extends Fragment implements IViewPurse,View.OnClickL
         ed.putBoolean(START_KEY,STAT);
         ed.apply();
     }
-
 
 }
 

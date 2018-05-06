@@ -22,7 +22,6 @@ public class BlankFragmentInformation extends Fragment {
 
     private DataPoint[] points;
     private static int STAT;
-
     private final String KEY="index";
     private boolean INDEX=false;
     private ArrayList<Double>listX=new ArrayList<>();
@@ -50,7 +49,6 @@ public class BlankFragmentInformation extends Fragment {
         if (savedInstanceState!=null){
             INDEX=savedInstanceState.getBoolean(KEY,false);
             listX=(ArrayList<Double>) savedInstanceState.getSerializable("listX");
-
             graf();
         }
 
@@ -59,7 +57,6 @@ public class BlankFragmentInformation extends Fragment {
             TimeValuteCheck(STAT);
             INDEX=true;
         }
-
         return view;
     }
 
@@ -81,7 +78,6 @@ public class BlankFragmentInformation extends Fragment {
         }else {
 
             try {
-
                 Bundle bundle=getArguments();
                 STAT=bundle.getInt("stat");
 
@@ -103,7 +99,6 @@ public class BlankFragmentInformation extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
 
@@ -114,7 +109,6 @@ public class BlankFragmentInformation extends Fragment {
         for (int i = 0; i <points.length ; i++) {
             points[i]=new DataPoint(i,listX.get(i));
         }
-
 
         graphView=(GraphView)view.findViewById(R.id.graphInformation);
 
@@ -127,7 +121,6 @@ public class BlankFragmentInformation extends Fragment {
         graphView.getViewport().setXAxisBoundsManual(true);
         graphView.getViewport().setMinX(4);
         graphView.getViewport().setMaxX(80);
-
 
         graphView.getViewport().setScalable(true);
         graphView.getViewport().setScalableY(true);
@@ -174,17 +167,12 @@ public class BlankFragmentInformation extends Fragment {
                     listX = stringArrayListHashMap.get("KZT");
                 }
 
-
-
                 graf();
             }).start();
 
-
         });
 
-
     }
-
 }
 
 
