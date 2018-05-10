@@ -1,9 +1,5 @@
 package s.hfad.com.myapplicationpaveltest;
 
-
-import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
-
 public class ValutaModel {
 
      String name;
@@ -16,8 +12,6 @@ public class ValutaModel {
         this.photoId = photoId;
     }
 }
-
-
 
 
 

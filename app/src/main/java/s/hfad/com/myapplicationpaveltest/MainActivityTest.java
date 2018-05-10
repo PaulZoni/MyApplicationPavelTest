@@ -2,13 +2,16 @@ package s.hfad.com.myapplicationpaveltest;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,13 +58,16 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     protected EditText editText;
     protected Spinner spinnerLeft;
     protected Spinner spinnerRight;
-
-     Button buttonSum;
+    private CollapsingToolbarLayout collapsing;
+    private NestedScrollView  scrollView;
+    private LinearLayout linearLayout1All;
+    private Button buttonSum;
     private List<ValutaModel> persons;
 
-    View view;
+    private View view;
     public MainActivityTest() {
         mKeyWord=new KeyWord();
+
     }
 
 
@@ -81,7 +87,7 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         activateToast();
         settings();
         floatingButton();
-
+        initializationComponent();
         return view;
     }
 
@@ -206,48 +212,36 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     public void lisnerAdapterPerson(){
 
-        adapter.setListener(new RVAdapter.Listener() {
-            @Override
-            public void onClick(int position) {
-
-                loadingPager(position);
-            }
-        });
+        adapter.setListener(position -> loadingPager(position));
     }
 
 
-    public void loadingPager(int position){
-        CollapsingToolbarLayout collapsing=view.findViewById(R.id.toolbar_collapsing);
-        LinearLayout linearLayout=view.findViewById(R.id.layout_assets_info_1);
-        NestedScrollView  scrollView=view.findViewById(R.id.nestedScrollView_converter);
-        LinearLayout linearLayout1All=view.findViewById(R.id.layout_assets_info_all);
+    private void initializationComponent(){
+        collapsing=view.findViewById(R.id.toolbar_collapsing);
+        scrollView=view.findViewById(R.id.nestedScrollView_converter);
+        linearLayout1All=view.findViewById(R.id.layout_assets_info_all);
 
+    }
+
+    private void fragmentInformationStatusTurnedOn(){
         scrollView.setLayoutParams(new CoordinatorLayout.LayoutParams(0,0));
-
-
         AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) collapsing.getLayoutParams();
         p.setScrollFlags(0);
-
         linearLayout1All.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT));
+    }
 
-        //collapsing.setLayoutParams(p);
-        //collapsing.setLayoutParams(new AppBarLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                //ViewGroup.LayoutParams.WRAP_CONTENT,
-                //1.0f));
+    public void loadingPager(int position){
 
-
-        //linearLayout.setLayoutParams(new LinearLayout.LayoutParams(AppBarLayout.LayoutParams.MATCH_PARENT,
-                //AppBarLayout.LayoutParams.MATCH_PARENT,1));
-
+        fragmentInformationStatusTurnedOn();
 
         android.support.v4.app.FragmentManager manager=getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
         BlankFragmentPager fragment3=new BlankFragmentPager();
         Bundle bundle=new Bundle();
-
         bundle.putSerializable(TAG_1,position);
         fragment3.setArguments(bundle);
+
         transaction.replace(R.id.layout_assets_info_1,fragment3);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -352,9 +346,17 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         STAT_TIME=preferences.getBoolean(START_KEY_TIME,false);
     }
 
+
     @Override
     public void onBackPressed() {
-        loadingFragment();
+        //loadingFragment();//нужно, так как фрагмент загружаетца времянно
+
+        FragmentManager manager=getFragmentManager();
+        Fragment fragment=manager.findFragmentById(R.id.homeContainer);
+        fragment = new MainActivityTest();
+        manager.beginTransaction()
+                .replace(R.id.homeContainer, fragment)
+                .commit();
     }
 
 

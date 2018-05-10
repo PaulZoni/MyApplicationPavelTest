@@ -14,11 +14,20 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.API.ChoiceAPI;
 
 
 public class ParsingNewsRetrofit {
 
     private  ArrayList<Article> article;
+    public final static int NON_PARS = -1;
+    private  int pasition;
+    private ChoiceAPI mChoiceAPI;
+    private Call<ModelNews> resp;
+
+    public ParsingNewsRetrofit(int position) {
+        this.pasition=position;
+    }
 
 
     public Observable<ArrayList<Article>> getParser() {
@@ -37,10 +46,51 @@ public class ParsingNewsRetrofit {
         return retrofit;
     }
 
-    public ArrayList<Article> parser()  {
+
+    private ArrayList<Article> parser()  {
         Retrofit retrofit=buildingUrlRetro();
-        final APIService servis=retrofit.create(APIService.class);
-        Call<ModelNews> resp=servis.callBack();
+        mChoiceAPI=new ChoiceAPI(retrofit);
+        switch (pasition){
+
+            case 0:
+                resp = mChoiceAPI.getAPIServiceCanada();
+                break;
+            case 1:
+                resp = mChoiceAPI.getAPIServiceFrance();
+                break;
+            case 2:
+                resp = mChoiceAPI.getAPIServiceAustralia();
+                break;
+            case 3:
+                resp = mChoiceAPI.getAPIServiceRussia();
+                break;
+            case 4:
+                resp = mChoiceAPI.getAPIServiceABCNews();
+                break;
+            case 5:
+                resp = mChoiceAPI.getAPIServiceArsTechnica();
+                break;
+            case 6:
+                resp = mChoiceAPI.getAPIServiceAssociatedPress();
+                break;
+            case 7:
+                resp = mChoiceAPI.getAPIServiceBBCNews();
+                break;
+            case 8:
+                resp = mChoiceAPI.getAPIServiceBloomberg();
+                break;
+            case 9:
+                resp = mChoiceAPI.getAPIServiceInfoMoney();
+                break;
+
+            case NON_PARS:
+                 resp = mChoiceAPI.getAPIServiceRussia();
+                break;
+
+            default:
+                resp = mChoiceAPI.getAPIServiceRussia();
+                break;
+        }
 
         try {
             Response<ModelNews> modelNews=resp.execute();
@@ -48,9 +98,10 @@ public class ParsingNewsRetrofit {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return article;
     }
+
+
 
     private  OkHttpClient.Builder getUnsafeOkHttpClient() {
         try {

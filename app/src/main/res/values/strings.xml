@@ -57,6 +57,16 @@
         <item>Cash expenses</item>
     </string-array>
 
+    <string name="ABCNews">ABC News</string>
+    <string name="Canada">Canada</string>
+    <string name="France">France</string>
+    <string name="Australia">Australia</string>
+    <string name="Russia">Russia</string>
+    <string name="ArsTechnica">Ars Technica</string>
+    <string name="AssociatedPress">Associated Press</string>
+    <string name="BBCNews">BBC News</string>
+    <string name="Bloomberg">Bloomberg</string>
+    <string name="InfoMoney">InfoMoney</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ActionA">Добавить</string>
@@ -72,3 +82,21 @@
     <string name="ollAssets">От всей суммы за весь период что было приобретено</string>
 
 </resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

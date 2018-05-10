@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,8 +50,9 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
         mNewsHandler.start();
     }
 
+    @NonNull
     @Override
-    public MenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MenuViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_card_view_home,parent,false);
         menuViewHolder=new MenuViewHolder(view);
 
@@ -63,7 +65,7 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
         private static final int MESSAGE_DOWNLOAD = 0;
         private ConcurrentMap<T,Integer> mRequestMap = new ConcurrentHashMap<>();
 
-        public NewsHandler(String name,Handler uiHandler) {
+        NewsHandler(String name, Handler uiHandler) {
             super(name);
             this.uiHandler=uiHandler;
         }
@@ -86,24 +88,24 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
             };
         }
 
-        public void ui(T target){
-
+        void ui(T target){
             uiHandler.post(() -> {
                 MenuViewHolder holder= (MenuViewHolder) target;
                 int position= mRequestMap.get(target);
                 holder.textHomePage.setText(mMenus.get(position).text);
+
                 Picasso.with(mContext).load(mMenus.get(position).photoId)
                         .placeholder(R.drawable.home_page_photo)
                         .error(R.drawable.home_page_photo)
                         .into(holder.imageHomePage);
+
             });
         }
 
-        public void quay(T holder, int position){
+        void quay(T holder, int position){
             mRequestMap.put(holder,position);
             mHandler.obtainMessage(MESSAGE_DOWNLOAD,holder).sendToTarget();
         }
-
     }
 
     @SuppressLint("HandlerLeak")

@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -24,6 +26,8 @@ import java.util.regex.Pattern;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.Activity.Activity_Web;
+import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterNewsSelect;
+import s.hfad.com.myapplicationpaveltest.modelAsets.ListNewsStrings;
 import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.Article;
 import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.ParsingNewsRetrofit;
 import s.hfad.com.myapplicationpaveltest.R;
@@ -37,23 +41,30 @@ public class BlankFragmentHome extends Fragment {
     private View view;
     private NestedScrollView mScrollView;
     private FloatingActionButton mFloatingActionButton;
+    private RecyclerView recyclerViewNewsSelect;
+    private AdapterNewsSelect adapterNewsSelect;
+    private ListNewsStrings mListNewsStrings;
+    private LinearLayoutManager manager;
+    private TextView mTextViewNewsName;
 
     public BlankFragmentHome() {
         // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_blank_fragment_home, container, false);
-
+        initializationComponent();
+        mListNewsStrings = new ListNewsStrings(getContext());
         if (isNetWorkAvailable()){
-            parsinNews();
+            parsingNews(ParsingNewsRetrofit.NON_PARS);
         }else {
             initializationMenu(null);
         }
 
-        initializationComponent();
+        initializationSelectNewsRecyclerView();
         scrollFunction();
         return view;
     }
@@ -62,6 +73,8 @@ public class BlankFragmentHome extends Fragment {
     private void initializationComponent(){
         mFloatingActionButton = view.findViewById(R.id.scrollViewButtonHome);
         mScrollView = view.findViewById(R.id.nestedScrollView);
+        recyclerViewNewsSelect = view.findViewById(R.id.recyclerView_selectNews);
+        mTextViewNewsName = view.findViewById(R.id.textView_newsName);
     }
 
     private void scrollFunction(){
@@ -102,9 +115,27 @@ public class BlankFragmentHome extends Fragment {
 
     }
 
+    private void initializationSelectNewsRecyclerView(){
+
+        manager=new LinearLayoutManager(view.getContext(),LinearLayoutManager.HORIZONTAL,true);
+        recyclerViewNewsSelect.setLayoutManager(manager);
+
+        recyclerViewNewsSelect.setHasFixedSize(true);
+        recyclerViewNewsSelect.setNestedScrollingEnabled(false);
+
+        adapterNewsSelect=new AdapterNewsSelect(mListNewsStrings.getStringList());
+        recyclerViewNewsSelect.setAdapter(adapterNewsSelect);
+        adapterNewsSelect.setListenerAdapterNewsSelect(this::loadingPosition);
+    }
+
+
+    private void loadingPosition(int position){
+        parsingNews(position);
+    }
+
     private void initializationMenu(ArrayList<Article> parser){
         List<Menu> mMenus=new ArrayList<>();
-
+        initializationNewsName(parser.get(0).getSource().getName());
         if (parser!=null){
             for (int i = 0; i <parser.size() ; i++) {
                 String title;
@@ -112,7 +143,7 @@ public class BlankFragmentHome extends Fragment {
                 if (testWrongs(parser.get(i).getDescription())){
 
                     if (testWrongs(parser.get(i).getTitle())){
-                        title= String.valueOf(R.string.noTitle);
+                        title= String.valueOf(getString(R.string.noTitle));
                     }else {
                         title=parser.get(i).getTitle();
                     }
@@ -136,12 +167,17 @@ public class BlankFragmentHome extends Fragment {
         rv.setLayoutManager(llm);
         adapterHome=new AdapterHome(getActivity(),mMenus);
         rv.setAdapter(adapterHome);
-        listnerAdapterMqnu();
+        listenerAdapterMenu();
     }
 
-    private void parsinNews(){
+    private void initializationNewsName(String name) {
+        mTextViewNewsName.setText(name);
+    }
 
-        new ParsingNewsRetrofit().getParser()
+
+    private void parsingNews(int position){
+
+        new ParsingNewsRetrofit(position).getParser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::initializationMenu);
@@ -162,7 +198,7 @@ public class BlankFragmentHome extends Fragment {
         return false;
     }
 
-    public void listnerAdapterMqnu(){
+    public void listenerAdapterMenu(){
         adapterHome.setListener((position,url) -> {
 
             Intent intent= Activity_Web.newIntentActivityWeb(getContext(),url);

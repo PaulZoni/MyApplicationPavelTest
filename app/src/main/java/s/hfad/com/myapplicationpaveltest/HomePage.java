@@ -11,9 +11,10 @@ import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentHome;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity  {
 
     private BottomNavigationView mBottomNavigationView;
+
 
 
 
