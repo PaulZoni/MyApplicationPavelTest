@@ -107,6 +107,7 @@ public class BlankFragmentHome extends Fragment {
 
     }
 
+
     private boolean isNetWorkAvailable(){
         ConnectivityManager connectivityManager=(ConnectivityManager)getActivity()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
