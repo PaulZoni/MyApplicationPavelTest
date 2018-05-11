@@ -1,7 +1,10 @@
 package s.hfad.com.myapplicationpaveltest.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -11,10 +14,15 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -36,7 +44,9 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Menu;
 
 public class BlankFragmentHome extends Fragment {
 
-
+    private final String KEY_PREFERENCES = "keyPreferences";
+    private final String KEY_POSITION = "keyPosition";
+    private int indicatePosition;
     private AdapterHome adapterHome;
     private View view;
     private NestedScrollView mScrollView;
@@ -46,6 +56,7 @@ public class BlankFragmentHome extends Fragment {
     private ListNewsStrings mListNewsStrings;
     private LinearLayoutManager manager;
     private TextView mTextViewNewsName;
+    private SharedPreferences mSharedPreferences;
 
     public BlankFragmentHome() {
         // Required empty public constructor
@@ -58,14 +69,16 @@ public class BlankFragmentHome extends Fragment {
         view=inflater.inflate(R.layout.fragment_blank_fragment_home, container, false);
         initializationComponent();
         mListNewsStrings = new ListNewsStrings(getContext());
+        loadPosition();
         if (isNetWorkAvailable()){
-            parsingNews(ParsingNewsRetrofit.NON_PARS);
+            parsingNews(indicatePosition);
         }else {
             initializationMenu(null);
         }
 
         initializationSelectNewsRecyclerView();
         scrollFunction();
+        createToolbarMenu();
         return view;
     }
 
@@ -130,7 +143,28 @@ public class BlankFragmentHome extends Fragment {
 
 
     private void loadingPosition(int position){
+        indicatePosition = position;
         parsingNews(position);
+    }
+
+
+    private void loadPosition(){
+        mSharedPreferences = view.getContext().getSharedPreferences(KEY_PREFERENCES, Context.MODE_PRIVATE);
+        try {
+            indicatePosition = mSharedPreferences.getInt(KEY_POSITION,0);
+
+        }catch (Exception e){
+            Log.e("load Position","Load position error");
+        }
+    }
+
+
+    private void savePosition(){
+        mSharedPreferences = view.getContext().getSharedPreferences(KEY_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt(KEY_POSITION,indicatePosition);
+        editor.apply();
+
     }
 
     private void initializationMenu(ArrayList<Article> parser){
@@ -207,4 +241,45 @@ public class BlankFragmentHome extends Fragment {
 
         });
     }
+
+    private void createToolbarMenu(){
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_news);
+        toolbar.setOnMenuItemClickListener(item -> {
+            createDialog();
+            return true;
+        });
+    }
+
+    private void createDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle(getString(R.string.are_you_sure));
+        builder.setPositiveButton(getString(R.string.Ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                savePosition();
+                Toast .makeText(view.getContext(),getText(R.string.positionSave),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.No), (dialog, which) -> dialog.cancel());
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

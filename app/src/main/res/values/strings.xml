@@ -5,7 +5,7 @@
     <string name="button_sum">Sum</string>
     <string name="stringUSD">USD</string>
     <string name="stringHome_page">home page</string>
-    <string name="Ok">Ok</string>
+    <string name="Ok">Да</string>
     <string name="All_transactions">All</string>
     <string name="action_settings">new time</string>
 
@@ -80,6 +80,10 @@
     <string name="noTitle">Нет описания</string>
     <string name="allsum">От всей суммы за весь период что было потрачено</string>
     <string name="ollAssets">От всей суммы за весь период что было приобретено</string>
+    <string name="SelectNews">Сделать текущую новостную ленту, лентой по умолчанию.</string>
+    <string name="are_you_sure">Вы уверены</string>
+    <string name="No">Нет</string>
+    <string name="positionSave">Страница закреплена</string>
 
 </resources>
 
