@@ -15,6 +15,7 @@ public class DBHelperExpenses extends SQLiteOpenHelper {
     public static final String KEY_VALUE_EXPENSES="valueExpenses";
     public static final String KEY_DATA_EXPENSES="dataExpenses";
     public static final String KEY_ID="_id";
+    public static final String KEY_LOCATION = "location_expenses";
 
     public DBHelperExpenses(Context context) {
         super(context, DATABASE_NAME_EXPENSES, null, DATABASE_VERSION_EXPENSES);
@@ -26,7 +27,8 @@ public class DBHelperExpenses extends SQLiteOpenHelper {
                 + " integer primary key,"
                 + KEY_COMMENT_EXPENSES + " text,"
                 + KEY_VALUE_EXPENSES +" text,"
-                + KEY_DATA_EXPENSES +" text" + " )");
+                + KEY_DATA_EXPENSES +" text,"
+                + KEY_LOCATION + " text" + " )");
     }
 
     @Override

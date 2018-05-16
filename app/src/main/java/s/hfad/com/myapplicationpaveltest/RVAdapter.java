@@ -1,7 +1,5 @@
 package s.hfad.com.myapplicationpaveltest;
 
-
-
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
@@ -32,8 +29,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
     }
 
 
-
-
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_card_view, viewGroup, false);
@@ -47,18 +42,10 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
         personViewHolder.personName.setText(persons.get(position).name);
         personViewHolder.personAge.setText(persons.get(position).value);
         personViewHolder.personPhoto.setImageResource(persons.get(position).photoId);
+        cardView.setOnClickListener(view -> {
 
-
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (listener!=null){
-                    listener.onClick(position);
-                }
-
-
-
+            if (listener!=null){
+                listener.onClick(position);
             }
         });
     }
@@ -67,7 +54,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
     public int getItemCount() {
         return persons.size();
     }
-
 
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
@@ -92,10 +78,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
     public void setListener(Listener listener){
         this.listener = listener;
     }
-
-
-
-
 }
 
 

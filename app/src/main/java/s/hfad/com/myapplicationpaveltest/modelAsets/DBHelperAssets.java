@@ -15,6 +15,7 @@ public class DBHelperAssets extends SQLiteOpenHelper {
     public static final String KEY_COMMENT="comment";
     public static final String KEY_VALUE="value";
     public static final String KEY_DATA="data";
+    public static final String KEY_LOCATION = "key_locations";
 
     public DBHelperAssets(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -28,7 +29,8 @@ public class DBHelperAssets extends SQLiteOpenHelper {
                 + " integer primary key,"
                 + KEY_COMMENT +" text,"
                 + KEY_VALUE + " text,"
-                + KEY_DATA + " text" + " )");
+                + KEY_DATA + " text,"
+                + KEY_LOCATION + " text" + " )");
 
     }
 

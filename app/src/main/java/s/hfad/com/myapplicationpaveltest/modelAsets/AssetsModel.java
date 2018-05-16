@@ -7,11 +7,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Location;
 
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import s.hfad.com.myapplicationpaveltest.R;
 
 public class AssetsModel {
 
@@ -19,20 +22,21 @@ public class AssetsModel {
     private SQLiteOpenHelper dbHelper;
     private ContentValues contentValues;
     private Cursor cursor;
-
-
     static private final String KEY_ASSETS="assets_key";
     static private final String KEY_EXPENSES="expenses_key";
     private int comentID;
     private int sumID;
     private int dataID;
-    //private static String string;
+    private int locationID;
     private Context context;
     private static String KeyDB;
+    private LoadingLocation locatr;
+    private Transaction mTransaction;
+
 
     public AssetsModel(Context context,String key){
         KeyDB=key;
-
+        locatr = new LoadingLocation(context);
         if (key.equals(KEY_ASSETS)){
             dbHelper=new DBHelperAssets(context);
 
@@ -46,16 +50,17 @@ public class AssetsModel {
 
 
     public void buttonOk(String sum,String coment){
-
         database=dbHelper.getWritableDatabase();
 
         if (KeyDB.equals(KEY_ASSETS)){
+            contentValues.put(DBHelperAssets.KEY_LOCATION, String.valueOf(locatr.getLocation()));
             contentValues.put(DBHelperAssets.KEY_COMMENT,coment);
             contentValues.put(DBHelperAssets.KEY_VALUE,sum);
             contentValues.put(DBHelperAssets.KEY_DATA,String.valueOf(new Date().toString()));
             database.insert(DBHelperAssets.TABLE_ASSETS,null,contentValues);
 
         }else if (KeyDB.equals(KEY_EXPENSES)){
+            contentValues.put(DBHelperExpenses.KEY_LOCATION, String.valueOf(locatr.getLocation()));
             contentValues.put(DBHelperExpenses.KEY_COMMENT_EXPENSES,coment);
             contentValues.put(DBHelperExpenses.KEY_VALUE_EXPENSES,sum);
             contentValues.put(DBHelperExpenses.KEY_DATA_EXPENSES,String.valueOf(new Date().toString()));
@@ -66,10 +71,8 @@ public class AssetsModel {
     }
 
 
-    public List<String> buttonAll(){
-
-            List<String>list=new ArrayList<>();
-
+    public List<Transaction> buttonAll(){
+            List<Transaction>list=new ArrayList<>();
             database=dbHelper.getWritableDatabase();
 
             if (KeyDB.equals(KEY_ASSETS)){
@@ -86,22 +89,26 @@ public class AssetsModel {
                     comentID = cursor.getColumnIndex(DBHelperAssets.KEY_COMMENT);
                     sumID = cursor.getColumnIndex(DBHelperAssets.KEY_VALUE);
                     dataID = cursor.getColumnIndex(DBHelperAssets.KEY_DATA);
+                    locationID = cursor.getColumnIndex(DBHelperAssets.KEY_LOCATION);
 
                 }else if (KeyDB.equals(KEY_EXPENSES)){
                     comentID = cursor.getColumnIndex(DBHelperExpenses.KEY_COMMENT_EXPENSES);
                     sumID = cursor.getColumnIndex(DBHelperExpenses.KEY_VALUE_EXPENSES);
                     dataID = cursor.getColumnIndex(DBHelperExpenses.KEY_DATA_EXPENSES);
+                    locationID = cursor.getColumnIndex(DBHelperExpenses.KEY_LOCATION);
                 }
 
                     do next: {
                         int i=0;
 
 
-                        String s="ПОТРАЧЕНО= " + cursor.getString(sumID)
-                                + " КОМЕНТАРИЙ= " + cursor.getString(comentID)
-                                + "ДАТА= " + cursor.getString(dataID)+ "\n";
+                        String sum = " ПОТРАЧЕНО: " + cursor.getString(sumID);
+                        String comment = " КОМЕНТАРИЙ: " + cursor.getString(comentID);
+                        String data = " ДАТА: " + cursor.getString(dataID);
+                        String location = cursor.getString(locationID);
+                        mTransaction = new Transaction(sum, data, comment, location);
 
-                        list.add(i,s);
+                        list.add(i,mTransaction);
 
                         i++;
                     } while (cursor.moveToNext());
@@ -113,7 +120,9 @@ public class AssetsModel {
         dbHelper.close();
 
         if (list.isEmpty()) {
-            list.add("Пусто");
+            String voidList = context.getString(R.string.voidList);
+            mTransaction = new Transaction(voidList, voidList, voidList, voidList);
+            list.add(mTransaction);
         }
         return list;
     }

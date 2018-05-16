@@ -59,8 +59,6 @@ public class BlankFragmentHome extends Fragment {
     private SharedPreferences mSharedPreferences;
 
     public BlankFragmentHome() {
-        // Required empty public constructor
-
     }
 
     @Override

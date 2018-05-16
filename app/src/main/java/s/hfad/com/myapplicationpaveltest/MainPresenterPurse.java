@@ -1,43 +1,35 @@
 package s.hfad.com.myapplicationpaveltest;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 import android.os.Handler;
-
-import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
+import s.hfad.com.myapplicationpaveltest.modelAsets.Transaction;
 
 
 public class MainPresenterPurse {
 
-    private final String STRING_WRONGS="fill in the field";
+    private final String STRING_WRONGS = "fill in the field";
     private final Handler handler;
     private IViewPurse view;
     private AssetsModel assetsModel;
+    private Context context;
 
 
-    Context context;
-
-
-    public MainPresenterPurse(IViewPurse view, Context context,String key){
-        this.view=view;
-        this.context=context;
-        assetsModel=new AssetsModel(context,key);
-        handler=new MayHandler(this);
+    public MainPresenterPurse(IViewPurse view, Context context, String key) {
+        this.view = view;
+        this.context = context;
+        assetsModel = new AssetsModel(context, key);
+        handler = new MayHandler(this);
     }
-
 
 
     public void buttonOnClick(View v){
@@ -69,7 +61,7 @@ public class MainPresenterPurse {
 
                 Thread thread=new Thread(() -> {
 
-                    List<String>s=new ArrayList<>();
+                    List<Transaction>s=new ArrayList<>();
                      s=assetsModel.buttonAll();
 
                     Message message=handler.obtainMessage(1,s);
@@ -109,7 +101,7 @@ public class MainPresenterPurse {
         public void handleMessage(Message msg) {
 
             MainPresenterPurse presenterPurse=mActiviti.get();
-            List<String> list=(List<String>)msg.obj;
+            List<Transaction> list=(List<Transaction>)msg.obj;
             MainActivityList.setList(list);
             Intent intent=new Intent(presenterPurse.context,MainActivityList.class);
             presenterPurse.context.startActivity(intent);

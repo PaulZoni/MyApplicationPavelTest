@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -19,13 +23,13 @@ import s.hfad.com.myapplicationpaveltest.R;
 public class Activity_Web extends AppCompatActivity {
 
     private String url;
-    private static final String TAG_URL=" s.hfad.com.myapplicationpaveltest.Activity/url_web.";
+    private static final String TAG_URL = " s.hfad.com.myapplicationpaveltest.Activity/url_web.";
     private ProgressBar mProgressBar;
     private WebView mWebView;
 
-    public static Intent newIntentActivityWeb(Context context,String url){
-        Intent intent=new Intent(context,Activity_Web.class);
-        intent.putExtra(TAG_URL,url);
+    public static Intent newIntentActivityWeb(Context context, String url) {
+        Intent intent = new Intent(context, Activity_Web.class);
+        intent.putExtra(TAG_URL, url);
         return intent;
     }
 
@@ -34,30 +38,30 @@ public class Activity_Web extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__web);
 
-        Intent intent=getIntent();
-        url=intent.getStringExtra(TAG_URL);
-        Log.e("Load",url);
+        Intent intent = getIntent();
+        url = intent.getStringExtra(TAG_URL);
+        Log.e("Load", url);
         loadingWeb();
-
+        createToolbarMenu();
     }
 
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void loadingWeb(){
-        mProgressBar=findViewById(R.id.progress_web);
+    private void loadingWeb() {
+        mProgressBar = findViewById(R.id.progress_web);
         mProgressBar.setMax(100);
 
-        mWebView=findViewById(R.id.page_web_view);
+        mWebView = findViewById(R.id.page_web_view);
         mWebView.getSettings().setJavaScriptEnabled(true);
 
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        mWebView.setWebChromeClient(new WebChromeClient() {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
 
-                if (newProgress==100){
-                  mProgressBar.setVisibility(View.GONE);
-                }else {
+                if (newProgress == 100) {
+                    mProgressBar.setVisibility(View.GONE);
+                } else {
                     mProgressBar.setVisibility(View.VISIBLE);
                     mProgressBar.setProgress(newProgress);
                 }
@@ -72,8 +76,8 @@ public class Activity_Web extends AppCompatActivity {
         webShow();
     }
 
-    private void webShow(){
-        mWebView.setWebViewClient(new WebViewClient(){
+    private void webShow() {
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return false;
@@ -82,8 +86,25 @@ public class Activity_Web extends AppCompatActivity {
 
         mWebView.loadUrl(url);
     }
-}
 
+
+    private void createToolbarMenu() {
+        Toolbar toolbar = findViewById(R.id.toolbar_web);
+        toolbar.inflateMenu(R.menu.menu_web);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                intent.putExtra(Intent.EXTRA_TEXT,url);
+                intent.setType("text/plain");
+                startActivity(intent);
+                return true;
+            }
+        });
+
+    }
+}
 
 
 

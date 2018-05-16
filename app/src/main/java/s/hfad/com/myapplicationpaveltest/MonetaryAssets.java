@@ -1,7 +1,9 @@
 package s.hfad.com.myapplicationpaveltest;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +26,11 @@ import im.dacer.androidcharts.PieView;
 import io.reactivex.Observable;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

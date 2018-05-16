@@ -349,7 +349,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     @Override
     public void onBackPressed() {
-        //loadingFragment();//нужно, так как фрагмент загружаетца времянно
 
         FragmentManager manager=getFragmentManager();
         Fragment fragment=manager.findFragmentById(R.id.homeContainer);
@@ -358,7 +357,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                 .replace(R.id.homeContainer, fragment)
                 .commit();
     }
-
 
 }
 
