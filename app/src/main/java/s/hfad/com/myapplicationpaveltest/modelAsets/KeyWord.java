@@ -24,7 +24,6 @@ public class KeyWord {
     private String[]result={"USD", "EUR", "CHF", "AUD", "AZN",
                             "GBP", "AMD", "BYN", "BGN", "BRL", "HUF", "HKD", "DKK", "INR", "KZT"};
 
-
     public String wordAnsver(String word){
         mList.add(USDWord);
         mList.add(EURWord);
@@ -43,21 +42,13 @@ public class KeyWord {
         mList.add(KZTWord);
 
         for (int i = 0; i <mList.size() ; i++) {
-
             for (int j = 0; j <mList.get(i).length ; j++) {
                 if (word.equals(mList.get(i)[j])){
                     return result[i];
 
                 }
             }
-
-
         }
-
         return "нет такого результата";
     }
-
-
-
-
 }

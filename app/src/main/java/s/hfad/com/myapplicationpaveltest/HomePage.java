@@ -6,16 +6,15 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-
 import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentHome;
+import s.hfad.com.myapplicationpaveltest.fragment.Expenses;
+import s.hfad.com.myapplicationpaveltest.fragment.MonetaryAssets;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
 
 public class HomePage extends AppCompatActivity  {
 
     private BottomNavigationView mBottomNavigationView;
-
-
 
 
     public interface OnBackPressedListener {

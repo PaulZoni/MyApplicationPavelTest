@@ -1,9 +1,9 @@
-package s.hfad.com.myapplicationpaveltest;
+package s.hfad.com.myapplicationpaveltest.fragment;
+
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,17 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
-
+import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import im.dacer.androidcharts.PieHelper;
 import im.dacer.androidcharts.PieView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,36 +29,39 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class Expenses extends Fragment implements IViewPurse,View.OnClickListener {
+public abstract class Monetary extends Fragment implements IViewPurse,View.OnClickListener {
 
-
+    private final String textSumExpenses="От всей суммы что было потрачено";
+    private final String textSumAssets="От всей суммы было приобретено";
+    private static final String START_KEY="START_KEY";
     private MainPresenterPurse presenter;
-
-    private FloatingActionButton buttonOk;
-    private FloatingActionButton buttonAll;
+    private SharedPreferences sPref;
+    static boolean STAT=false;
+    protected View view;
+    protected FloatingActionButton buttonOk;
+    protected FloatingActionButton buttonAll;
+    protected PieView pieView;
+    protected TextView mTextViewInformation;
+    protected TextView mTextViewAllSum;
     protected EditText editTextNumber;
     protected EditText editTextTx;
-    private View view;
+    protected Toolbar toolbar;
 
-    private static final String START_KEY="START_KEY";
-    SharedPreferences sPref;
-    static boolean STAT=false;
-    static private final String KEY_EXPENSES="expenses_key";
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-         view=inflater.inflate(R.layout.activity_expenses,container,false);
+        view=inflater.inflate(getLayoutID(),container,false);
 
         if (presenter==null){
-            presenter=new MainPresenterPurse(this,getContext(),KEY_EXPENSES);
+            presenter=new MainPresenterPurse(this,getContext(),KEY_VIEW());
         }
-        buttonOk=(FloatingActionButton)view.findViewById(R.id.actionButtonAdd);
+
+        initializationComponent();
         buttonOk.setOnClickListener(this);
-        buttonAll=(FloatingActionButton)view.findViewById(R.id.actionButtonAll);
+
         buttonAll.setOnClickListener(this);
 
-        Toolbar toolbar=(Toolbar)view.findViewById(R.id.toolbarAssets_expenses);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
@@ -75,44 +71,61 @@ public class Expenses extends Fragment implements IViewPurse,View.OnClickListene
         settings();
         setHasOptionsMenu(true);
 
-         return view;
+        return view;
     }
 
+    public abstract void initializationComponent();
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public abstract String KEY_VIEW();
 
-    public void settings(){
+    public abstract int getLayoutID();
+
+
+    private void settings(){
         sPref=getActivity().getPreferences(MODE_PRIVATE);
         STAT=sPref.getBoolean(START_KEY,false );
     }
 
 
+    private void graphV(){
 
-    public void graphV(){
-
-
-        new Graph(getContext(),KEY_EXPENSES).getGraph()
+        new Graph(getContext(),KEY_VIEW()).getGraph()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::graphBac);
-
     }
 
-    public void graphBac(HashMap<String,Float> map){
 
-
-        PieView pieView = view.findViewById(R.id.graph);
+    private void graphBac(HashMap<String,Float> map){
         ArrayList<PieHelper> pieHelperArrayList = new ArrayList<>();
-        pieHelperArrayList.add(new PieHelper(map.get("P assets")));
-        pieHelperArrayList.add(new PieHelper(map.get("P expenses")));
-
+        pieHelperArrayList.add(new PieHelper(map.get(Graph.P_KEY_ASSETS)));
+        pieHelperArrayList.add(new PieHelper(map.get(Graph.P_KEY_EXPENSES)));
         pieView.setDate(pieHelperArrayList);
-
-
+        initialisationListenerPie(map);
     }
+
+
+    private void initialisationListenerPie(HashMap<String,Float> map){
+        pieView.setOnPieClickListener(index -> {
+            StringBuilder stringBuilder=new StringBuilder();
+
+            if (index==1){
+
+                mTextViewInformation.setTextColor(getResources().getColor(R.color.Purple));
+                stringBuilder.append(map.get(Graph.P_KEY_EXPENSES)+"%"+" "
+                        +textSumExpenses+"("+map.get(Graph.KEY_ALL_EXPENSES)+")");
+                mTextViewInformation.setText(stringBuilder);
+
+            }else if (index==0){
+                mTextViewInformation.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                stringBuilder.append(map.get(Graph.P_KEY_ASSETS)+"%"+" "
+                        +textSumAssets+"("+map.get(Graph.KEY_ALL_ASSETS)+")");
+                mTextViewInformation.setText(stringBuilder);
+            }
+            mTextViewAllSum.setText(String.valueOf(map.get(Graph.KEY_EXIST_ASSETS)));
+        });
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -131,6 +144,7 @@ public class Expenses extends Fragment implements IViewPurse,View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onClick(View view) {
         presenter.buttonOnClick(view);
@@ -146,11 +160,9 @@ public class Expenses extends Fragment implements IViewPurse,View.OnClickListene
         return editTextTx=(EditText)view.findViewById(R.id.editTextAssets_text);
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-
 
         sPref=getActivity().getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed=sPref.edit();
@@ -158,18 +170,7 @@ public class Expenses extends Fragment implements IViewPurse,View.OnClickListene
         ed.apply();
     }
 
-
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,19 +1,14 @@
 package s.hfad.com.myapplicationpaveltest.modelAsets;
 
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.location.Location;
-
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import s.hfad.com.myapplicationpaveltest.R;
 
 public class AssetsModel {
@@ -22,8 +17,8 @@ public class AssetsModel {
     private SQLiteOpenHelper dbHelper;
     private ContentValues contentValues;
     private Cursor cursor;
-    static private final String KEY_ASSETS="assets_key";
-    static private final String KEY_EXPENSES="expenses_key";
+    public static  final String KEY_ASSETS="assets_key";
+    public  static final String KEY_EXPENSES="expenses_key";
     private int comentID;
     private int sumID;
     private int dataID;
@@ -101,7 +96,6 @@ public class AssetsModel {
                     do next: {
                         int i=0;
 
-
                         String sum = " ПОТРАЧЕНО: " + cursor.getString(sumID);
                         String comment = " КОМЕНТАРИЙ: " + cursor.getString(comentID);
                         String data = " ДАТА: " + cursor.getString(dataID);
@@ -139,7 +133,6 @@ public class AssetsModel {
         database.close();
         helper.close();
     }
-
 }
 
 

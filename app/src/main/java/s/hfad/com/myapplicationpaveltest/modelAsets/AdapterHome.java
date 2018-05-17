@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -13,18 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentHome;
 
 
 public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
@@ -111,21 +103,16 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
     @SuppressLint("HandlerLeak")
     @Override
     public void onBindViewHolder(MenuViewHolder holder, int position) {
-
-        Menu menu=mMenus.get(position);//?
-        holder.setUrl(menu.getUrl());//?
-
+        Menu menu=mMenus.get(position);
+        holder.setUrl(menu.getUrl());
 
         CardView cardView=holder.cardView;
         mNewsHandler.quay(holder,position);
 
         cardView.setOnClickListener(view -> {
-
             if (listener!=null){
                 listener.onClick(position,holder.getUrl());
             }
-
-
         });
     }
 

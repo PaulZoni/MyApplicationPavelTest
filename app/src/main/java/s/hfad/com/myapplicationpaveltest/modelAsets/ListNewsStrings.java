@@ -10,7 +10,6 @@ import s.hfad.com.myapplicationpaveltest.R;
 public class ListNewsStrings {
 
     private  List<String>mStringList;
-    //private FragmentActivity activity;
     private Context context;
 
     public ListNewsStrings(Context context) {
@@ -18,7 +17,6 @@ public class ListNewsStrings {
         this.context=context;
         initializationListStrings();
     }
-
 
 
     public List<String> getStringList() {
@@ -36,6 +34,5 @@ public class ListNewsStrings {
         mStringList.add(context.getString(R.string.BBCNews));
         mStringList.add(context.getString(R.string.Bloomberg));
         mStringList.add(context.getString(R.string.InfoMoney));
-
     }
 }

@@ -1,12 +1,10 @@
 package s.hfad.com.myapplicationpaveltest;
 
+
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -25,14 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.getbase.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.Parser.ParserValute;
@@ -63,11 +57,11 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     private LinearLayout linearLayout1All;
     private Button buttonSum;
     private List<ValutaModel> persons;
-
     private View view;
+
+
     public MainActivityTest() {
         mKeyWord=new KeyWord();
-
     }
 
 
@@ -116,66 +110,50 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
                         switch (answer) {
                             case "USD":
-
                                 positionChoice(0);
-
                                 break;
                             case "EUR":
                                 positionChoice(1);
-
                                 break;
-
                             case "CHF":
                                 positionChoice(2);
                                 break;
-
                             case "AUD":
                                 positionChoice(3);
                                 break;
-
                             case "AZN":
                                 positionChoice(4);
                                 break;
-
                             case "GBP":
                                 positionChoice(5);
                                 break;
-
                             case "AMD":
                                 positionChoice(6);
                                 break;
-
                             case "BYN":
                                 positionChoice(7);
                                 break;
-
                             case "BGN":
                                 positionChoice(8);
                                 break;
-
                             case "BRL":
                                 positionChoice(9);
                                 break;
-
                             case "HUF":
                                 positionChoice(10);
                                 break;
                             case "HKD":
                                 positionChoice(11);
                                 break;
-
                             case "DKK":
                                 positionChoice(12);
                                 break;
-
                             case "INR":
                                 positionChoice(13);
                                 break;
-
                             case "KZT":
                                 positionChoice(14);
                                 break;
-
                             default:
                                 Toast toast = Toast.makeText(getActivity(), "Вы ввели не правельный результат", Toast.LENGTH_SHORT);
                                 toast.show();
@@ -183,7 +161,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                         }
 
                     });
-
             AlertDialog alert = builder.create();
             alert.show();
         });
@@ -201,17 +178,17 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     }
 
     public void loadingPosition(Bundle b){
+        fragmentInformationStatusTurnedOn();
         android.support.v4.app.FragmentManager manager=getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
         BlankFragmentInformation frag=new BlankFragmentInformation();
         frag.setArguments(b);
-        transaction.replace(R.id.fragmentContainer,frag);
+        transaction.add(R.id.layout_assets_info_1,frag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    public void lisnerAdapterPerson(){
-
+    public void listenerAdapterPerson(){
         adapter.setListener(position -> loadingPager(position));
     }
 
@@ -232,7 +209,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     }
 
     public void loadingPager(int position){
-
         fragmentInformationStatusTurnedOn();
 
         android.support.v4.app.FragmentManager manager=getFragmentManager();
@@ -241,7 +217,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         Bundle bundle=new Bundle();
         bundle.putSerializable(TAG_1,position);
         fragment3.setArguments(bundle);
-
         transaction.replace(R.id.layout_assets_info_1,fragment3);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -279,15 +254,13 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                         persons.add(new ValutaModel("Индийских рупий", String.valueOf(strings.get("INR")), R.mipmap.indian_rupee_symbol));
                         persons.add(new ValutaModel("Казахстанских тенге", String.valueOf(strings.get("KZT")), R.mipmap.tenge));
 
-
                         RecyclerView rv = (RecyclerView)view.findViewById(R.id.rv);
                         LinearLayoutManager llm = new LinearLayoutManager(getContext());
                         rv.setLayoutManager(llm);
                         adapter = new RVAdapter(getActivity(),persons);
                         rv.setAdapter(adapter);
 
-                        lisnerAdapterPerson();
-
+                        listenerAdapterPerson();
                     });
 
         }catch (Exception e){
@@ -334,7 +307,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         preferences=getActivity().getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed=preferences.edit();
         ed.putBoolean(START_KEY_TIME,STAT_TIME);
@@ -349,7 +321,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     @Override
     public void onBackPressed() {
-
         FragmentManager manager=getFragmentManager();
         Fragment fragment=manager.findFragmentById(R.id.homeContainer);
         fragment = new MainActivityTest();

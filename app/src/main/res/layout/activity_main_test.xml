@@ -38,8 +38,10 @@
                 app:expandedTitleMarginEnd="64dp">
 
                <RelativeLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent">
+                   android:layout_width="300dp"
+                   android:layout_height="300dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="80dp">
 
                   <EditText
                       android:id="@+id/edit_number1"
@@ -88,17 +90,6 @@
                       android:background="@drawable/roundrect"
                       android:text="@string/button_sum" />
 
-                  <com.getbase.floatingactionbutton.FloatingActionButton
-                      android:id="@+id/buttonFind"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_alignParentBottom="true"
-                      android:layout_alignParentEnd="true"
-                      android:layout_alignParentRight="true"
-                      android:src="@android:drawable/ic_menu_search" />
-
-
-
                </RelativeLayout>
 
                <android.support.v7.widget.Toolbar
@@ -134,12 +125,6 @@
                 android:orientation="horizontal" />
          </android.support.v4.widget.NestedScrollView>
 
-
-
-
-
-
-
       </android.support.design.widget.CoordinatorLayout>
 
       <LinearLayout
@@ -156,6 +141,14 @@
    </LinearLayout>
 
 
+   <com.getbase.floatingactionbutton.FloatingActionButton
+       android:id="@+id/buttonFind"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentEnd="true"
+       android:layout_alignParentRight="true"
+       android:src="@android:drawable/ic_menu_search" />
 
 
 </RelativeLayout>

@@ -6,7 +6,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/gray"
-    tools:context="s.hfad.com.myapplicationpaveltest.Expenses">
+    tools:context="s.hfad.com.myapplicationpaveltest.fragment.Expenses">
 
 
     <include layout="@layout/told_bar"
@@ -35,6 +35,32 @@
         android:inputType="textMultiLine"
         android:lines="5"/>
 
+
+    <LinearLayout
+        android:id="@+id/layout_expenses_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/editTextAssets_text">
+
+
+        <TextView
+            android:id="@+id/text_expenses_information"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/text_expenses_allSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@android:color/background_dark"/>
+    </LinearLayout>
 
 
     <view

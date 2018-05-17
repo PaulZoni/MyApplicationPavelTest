@@ -102,7 +102,6 @@ public class ParsingNewsRetrofit {
     }
 
 
-
     private  OkHttpClient.Builder getUnsafeOkHttpClient() {
         try {
 
@@ -126,7 +125,6 @@ public class ParsingNewsRetrofit {
 
             final SSLContext sslContext = SSLContext.getInstance("SSL");
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-
 
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 

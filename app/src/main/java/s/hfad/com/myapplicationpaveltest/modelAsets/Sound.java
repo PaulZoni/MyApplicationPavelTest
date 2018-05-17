@@ -18,7 +18,6 @@ public class Sound implements SoundPool.OnLoadCompleteListener {
 
 
     public Sound(Context context) {
-
         mContext=context;
         mAssets=context.getAssets();
         mSoundPool=new SoundPool(MAX_SOUNDS, AudioManager.STREAM_MUSIC, 0);
@@ -28,13 +27,10 @@ public class Sound implements SoundPool.OnLoadCompleteListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void load()throws IOException {
-        //String[] s=mAssets.list(SOUNDS_FOLDER);
          soundId = mSoundPool.load(mContext.getAssets().openFd("00923.wav"), 0);
-
     }
 
     public static void play(){

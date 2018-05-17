@@ -15,8 +15,6 @@ public class Menu {
         this.photoId=photoId;
         this.url=url;
     }
-
-
 }
 
 
