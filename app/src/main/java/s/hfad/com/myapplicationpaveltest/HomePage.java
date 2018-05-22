@@ -1,8 +1,12 @@
 package s.hfad.com.myapplicationpaveltest;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +19,7 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 public class HomePage extends AppCompatActivity  {
 
     private BottomNavigationView mBottomNavigationView;
-
+    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
 
     public interface OnBackPressedListener {
         public void onBackPressed();
@@ -39,8 +43,6 @@ public class HomePage extends AppCompatActivity  {
         } else {
             super.onBackPressed();
         }
-
-
     }
 
 
@@ -58,15 +60,46 @@ public class HomePage extends AppCompatActivity  {
     }
 
     @Override
+   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+   }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkPermission();
+    }
+
+
+    private void checkPermission(){
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+            ActivityCompat.requestPermissions( this,
+                    new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION  },
+                    MY_PERMISSION_ACCESS_COARSE_LOCATION );
+
+        }else if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED ){
+
+            ActivityCompat.requestPermissions( this,
+                    new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION  },
+                    MY_PERMISSION_ACCESS_COARSE_LOCATION );
+        }
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         Sound.release();
     }
 
+
     public void loadingFragment(){
         android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
         Fragment fragment=manager.findFragmentById(R.id.homeContainer);
-
         fragment = new BlankFragmentHome();
         manager.beginTransaction()
                 .add(R.id.homeContainer, fragment)
@@ -82,7 +115,6 @@ public class HomePage extends AppCompatActivity  {
             FragmentManager manager=getSupportFragmentManager();
             Fragment fragment=manager.findFragmentById(R.id.homeContainer);
 
-
             switch (item.getItemId()){
 
                 case R.id.action_converter:
@@ -91,24 +123,19 @@ public class HomePage extends AppCompatActivity  {
                     manager.beginTransaction()
                             .replace(R.id.homeContainer, fragment)
                             .commit();
-
                     break;
                 case R.id.action_assets:
                     fragment = new MonetaryAssets();
                     manager.beginTransaction()
                             .replace(R.id.homeContainer, fragment)
                             .commit();
-
-
                     break;
                 case R.id.action_expenses:
                     fragment = new Expenses();
                     manager.beginTransaction()
                             .replace(R.id.homeContainer, fragment)
                             .commit();
-
                     break;
-
                 case R.id.action_news:
                     fragment = new BlankFragmentHome();
                     manager.beginTransaction()
@@ -117,7 +144,6 @@ public class HomePage extends AppCompatActivity  {
             }
             return true;
         });
-
     }
 }
 

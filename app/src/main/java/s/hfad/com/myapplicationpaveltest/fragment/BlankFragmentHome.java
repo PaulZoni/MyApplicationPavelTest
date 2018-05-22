@@ -2,9 +2,9 @@ package s.hfad.com.myapplicationpaveltest.fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,32 +17,28 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.getbase.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.Activity.Activity_Web;
+import s.hfad.com.myapplicationpaveltest.Interface.MVPView;
+import s.hfad.com.myapplicationpaveltest.Interface.PresenterNewsInterface;
+import s.hfad.com.myapplicationpaveltest.MyEnum.languageEnum;
+import s.hfad.com.myapplicationpaveltest.Presenter.PresenterNews;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterNewsSelect;
 import s.hfad.com.myapplicationpaveltest.modelAsets.ListNewsStrings;
 import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.Article;
-import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.ParsingNewsRetrofit;
 import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterHome;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Menu;
 
-public class BlankFragmentHome extends Fragment {
+public class BlankFragmentHome extends Fragment implements MVPView {
 
     private final String KEY_PREFERENCES = "keyPreferences";
     private final String KEY_POSITION = "keyPosition";
@@ -57,6 +53,8 @@ public class BlankFragmentHome extends Fragment {
     private LinearLayoutManager manager;
     private TextView mTextViewNewsName;
     private SharedPreferences mSharedPreferences;
+    private PresenterNewsInterface<MVPView> mNewsPresenter;
+    private languageEnum STAT_LANGUAGE;
 
     public BlankFragmentHome() {
     }
@@ -65,11 +63,16 @@ public class BlankFragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_blank_fragment_home, container, false);
+        mNewsPresenter = new PresenterNews();
+        mNewsPresenter.attachView(this);
+
         initializationComponent();
         mListNewsStrings = new ListNewsStrings(getContext());
         loadPosition();
         if (isNetWorkAvailable()){
-            parsingNews(indicatePosition);
+
+            mNewsPresenter.loadingNews(indicatePosition);
+
         }else {
             initializationMenu(null);
         }
@@ -102,7 +105,6 @@ public class BlankFragmentHome extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
 
@@ -124,7 +126,6 @@ public class BlankFragmentHome extends Fragment {
         }else {
             return true;
         }
-
     }
 
     private void initializationSelectNewsRecyclerView(){
@@ -143,7 +144,7 @@ public class BlankFragmentHome extends Fragment {
 
     private void loadingPosition(int position){
         indicatePosition = position;
-        parsingNews(position);
+        mNewsPresenter.loadingNews(position);
     }
 
 
@@ -163,16 +164,18 @@ public class BlankFragmentHome extends Fragment {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putInt(KEY_POSITION,indicatePosition);
         editor.apply();
-
     }
 
-    private void initializationMenu(ArrayList<Article> parser){
+
+    @Override
+    public void initializationMenu(ArrayList<Article> parser){
         List<Menu> mMenus=new ArrayList<>();
-        initializationNewsName(parser.get(0).getSource().getName());
+        if (parser!=null){
+            initializationNewsName(parser.get(0).getSource().getName());
+        }
         if (parser!=null){
             for (int i = 0; i <parser.size() ; i++) {
                 String title;
-
                 if (testWrongs(parser.get(i).getDescription())){
 
                     if (testWrongs(parser.get(i).getTitle())){
@@ -193,28 +196,28 @@ public class BlankFragmentHome extends Fragment {
             mMenus.add(new Menu("Network Unavailable",null,null));
         }
 
-
         RecyclerView rv = view.findViewById(R.id.LIst_homePage);
         rv.setHasFixedSize(true);
-        StaggeredGridLayoutManager llm = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager llm = checkOrientation();
         rv.setLayoutManager(llm);
         adapterHome=new AdapterHome(getActivity(),mMenus);
         rv.setAdapter(adapterHome);
-        listenerAdapterMenu();
+        if (isNetWorkAvailable()){
+            listenerAdapterMenu();
+        }
     }
+
+    private StaggeredGridLayoutManager checkOrientation(){
+        int parameter = 1;
+        int configuration = view.getResources().getConfiguration().orientation;
+        if (configuration == Configuration.ORIENTATION_LANDSCAPE)parameter = 2;
+        if (configuration == Configuration.ORIENTATION_PORTRAIT)parameter = 1;
+        return  new StaggeredGridLayoutManager(parameter,StaggeredGridLayoutManager.VERTICAL);
+    }
+
 
     private void initializationNewsName(String name) {
         mTextViewNewsName.setText(name);
-    }
-
-
-    private void parsingNews(int position){
-
-        new ParsingNewsRetrofit(position).getParser()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::initializationMenu);
-
     }
 
 
@@ -233,38 +236,65 @@ public class BlankFragmentHome extends Fragment {
 
     public void listenerAdapterMenu(){
         adapterHome.setListener((position,url) -> {
-
             Intent intent= Activity_Web.newIntentActivityWeb(getContext(),url);
             startActivity(intent);
-
-
         });
     }
+
 
     private void createToolbarMenu(){
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_news);
         toolbar.setOnMenuItemClickListener(item -> {
-            createDialog();
+            int id = item.getItemId();
+            switch (id){
+                case R.id.list_itemNews:
+                    createDialogSelectNews();
+                    break;
+                case R.id.languageTranslation:
+                    createDialogSelectLanguage();
+                    break;
+                case R.id.languageTranslationRun:
+                    mNewsPresenter.textParsing();
+            }
             return true;
         });
     }
 
-    private void createDialog(){
+
+    private void createDialogSelectNews(){
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(getString(R.string.are_you_sure));
-        builder.setPositiveButton(getString(R.string.Ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                savePosition();
-                Toast .makeText(view.getContext(),getText(R.string.positionSave),Toast.LENGTH_SHORT).show();
-            }
+        builder.setPositiveButton(getString(R.string.Ok), (dialog, which) -> {
+            savePosition();
+            Toast .makeText(view.getContext(),getText(R.string.positionSave),Toast.LENGTH_SHORT).show();
         });
 
         builder.setNegativeButton(getString(R.string.No), (dialog, which) -> dialog.cancel());
-
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+
+    private void createDialogSelectLanguage(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle(R.string.choiceLanguage);
+        builder.setSingleChoiceItems(R.array.targetLanguageArray, 1 , (dialog, which) -> {
+
+            switch (which){
+                case 0:
+                    STAT_LANGUAGE = languageEnum.RUS;
+                    break;
+                case 1:
+                    STAT_LANGUAGE = languageEnum.USA;
+                    break;
+                case 2:
+                    STAT_LANGUAGE = languageEnum.FRA;
+                    break;
+            }
+        });
+        builder.create();
+        builder.show();
     }
 }
 

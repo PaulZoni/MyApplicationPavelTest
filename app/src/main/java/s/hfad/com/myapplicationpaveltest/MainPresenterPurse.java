@@ -61,10 +61,9 @@ public class MainPresenterPurse {
 
                 Thread thread=new Thread(() -> {
 
-                    List<Transaction>s=new ArrayList<>();
-                     s=assetsModel.buttonAll();
-
-                    Message message=handler.obtainMessage(1,s);
+                    List<Transaction>listTR=new ArrayList<>();
+                    listTR=assetsModel.buttonAll();
+                    Message message=handler.obtainMessage(1,listTR);
                     handler.sendMessage(message);
                 });
                 thread.start();

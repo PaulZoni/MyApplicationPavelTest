@@ -114,7 +114,7 @@ public class MainActivityList extends Activity {
         public void onBindViewHolder(@NonNull ListHolder holder, int position) {
             CardView cardView = holder.mCardView;
             Transaction string=mStringList.get(position);
-            holder.mTextView_mainList.setText(string.getSum()+ string.getComment()+string.getData());
+            holder.mTextView_mainList.setText(string.getSum()+ string.getComment()+string.getData()+ string.getLocation());
             cardView.setOnClickListener(v -> createMapView(position));
         }
 

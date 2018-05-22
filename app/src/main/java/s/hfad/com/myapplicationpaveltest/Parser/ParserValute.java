@@ -19,17 +19,10 @@ public class ParserValute {
 
 
     public String inputParser() throws IOException {
-
-
-
-
-
         URL url = new URL("https://www.cbr-xml-daily.ru/daily_json.js");
         BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-
         StringBuilder stringBuilder=new StringBuilder();
         String inputLine;
-
 
         while ((inputLine = in.readLine()) != null) {
 

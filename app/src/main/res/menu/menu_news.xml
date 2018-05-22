@@ -4,6 +4,16 @@
     <item
         android:id="@+id/list_itemNews"
         android:title="@string/SelectNews">
-
     </item>
+
+    <item
+        android:id="@+id/languageTranslation"
+        android:title="@string/choiceLanguage">
+    </item>
+
+    <item
+        android:id="@+id/languageTranslationRun"
+        android:title="@string/translationText">
+    </item>
+
 </menu>

@@ -15,7 +15,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
-            android:layout_height="200dp"
+            android:layout_height="170dp"
             android:layout_width="match_parent"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -59,11 +59,7 @@
                     android:layout_height="?attr/actionBarSize">
 
                 </android.support.v7.widget.Toolbar>
-
             </android.support.design.widget.CollapsingToolbarLayout>
-
-
-
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
@@ -81,14 +77,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-
                     >
 
                 </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
-
 
 
     <com.getbase.floatingactionbutton.FloatingActionButton

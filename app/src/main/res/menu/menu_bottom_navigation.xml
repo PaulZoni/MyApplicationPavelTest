@@ -4,7 +4,7 @@
 
 
     <item
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/icons_home"
         android:id="@+id/action_news"
         android:enabled="true"
         app:showAsAction="ifRoom"
@@ -12,19 +12,19 @@
 
     <item
         android:id="@+id/action_converter"
-        android:icon="@android:drawable/ic_dialog_map"
+        android:icon="@drawable/icons_monetary"
         android:title="@string/Converter"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_assets"
-        android:icon="@android:drawable/ic_dialog_dialer"
+        android:icon="@drawable/icons_purse"
         android:title="@string/Assets"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_expenses"
-        android:icon="@android:drawable/ic_dialog_email"
+        android:icon="@drawable/icons_expenses"
         android:title="@string/expenses"
         android:enabled="true"
         app:showAsAction="ifRoom"/>

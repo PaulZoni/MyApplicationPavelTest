@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
 
    <LinearLayout
        android:id="@+id/layout_assets_info_all"
@@ -18,9 +14,7 @@
 
       <android.support.design.widget.CoordinatorLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-
-          >
+          android:layout_height="match_parent">
 
          <android.support.design.widget.AppBarLayout
 
@@ -53,7 +47,6 @@
                       android:inputType="number"
                       android:textSize="20sp"/>
 
-
                   <Spinner
                       android:id="@+id/spinner_left"
                       android:layout_width="120dp"
@@ -62,7 +55,6 @@
                       android:layout_toStartOf="@+id/edit_number1"
                       android:entries="@array/spinner_valuta" />
 
-
                   <Spinner
                       android:id="@+id/spinner_right"
                       android:layout_width="120dp"
@@ -70,7 +62,6 @@
                       android:layout_toRightOf="@+id/edit_number1"
                       android:layout_toEndOf="@+id/edit_number1"
                       android:entries="@array/spinner_valuta2" />
-
 
                   <TextView
                       android:id="@+id/textView"
@@ -101,9 +92,7 @@
 
                </android.support.v7.widget.Toolbar>
 
-
             </android.support.design.widget.CollapsingToolbarLayout>
-
 
          </android.support.design.widget.AppBarLayout>
 
@@ -115,29 +104,23 @@
              app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
-
-                android:name="s.hfad.com.myapplicationpaveltest.BlankFragmentValute"
                 android:id="@+id/fragmentContainer"
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/bar_layout"
-                android:orientation="horizontal" />
+                android:orientation="vertical" />
+
          </android.support.v4.widget.NestedScrollView>
+
+         <LinearLayout
+             android:id="@+id/layout_assets_info_1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:layout_gravity="bottom">
+         </LinearLayout>
 
       </android.support.design.widget.CoordinatorLayout>
 
-      <LinearLayout
-
-          android:id="@+id/layout_assets_info_1"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical"
-          android:layout_gravity="bottom"
-
-          >
-
-      </LinearLayout>
    </LinearLayout>
 
 
@@ -149,7 +132,6 @@
        android:layout_alignParentEnd="true"
        android:layout_alignParentRight="true"
        android:src="@android:drawable/ic_menu_search" />
-
 
 </RelativeLayout>
 

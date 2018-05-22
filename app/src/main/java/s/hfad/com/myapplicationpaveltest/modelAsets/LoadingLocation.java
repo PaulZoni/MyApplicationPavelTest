@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+
 
 public class LoadingLocation {
 
@@ -23,7 +25,6 @@ public class LoadingLocation {
     private LocationCallback locationCallback;
     private FusedLocationProviderClient client;
     private Location mLocation;
-
 
     public LoadingLocation(Context context) {
         mContext = context;
@@ -56,6 +57,7 @@ public class LoadingLocation {
     }
 
 
+
     private void loadingRequest() {
         LocationRequest request = LocationRequest.create();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -69,7 +71,7 @@ public class LoadingLocation {
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
+            Toast.makeText(mContext," Нет доступа к API Google",Toast.LENGTH_LONG).show();
             return;
         }
         client.getLastLocation().addOnSuccessListener((Activity) mContext, location -> {

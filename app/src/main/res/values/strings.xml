@@ -46,8 +46,6 @@
         <item>DKK</item>
         <item>INR</item>
         <item>KZT</item>
-
-
     </string-array>
 
 
@@ -55,6 +53,13 @@
         <item>Currency Converter</item>
         <item>Monetary assets</item>
         <item>Cash expenses</item>
+    </string-array>
+    
+    
+    <string-array name="targetLanguageArray">
+        <item>RUS</item>
+        <item>USD</item>
+        <item>FRA</item>
     </string-array>
 
     <string name="ABCNews">ABC News</string>
@@ -86,6 +91,8 @@
     <string name="positionSave">Страница закреплена</string>
     <string name="Share">Поделиться с ссылкой</string>
     <string name="voidList">Пусто</string>
+    <string name="choiceLanguage">Выбрать язык перевода</string>
+    <string name="translationText">Перевести Текст</string>
 
 </resources>
 

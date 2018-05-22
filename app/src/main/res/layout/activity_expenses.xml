@@ -11,7 +11,6 @@
 
     <include layout="@layout/told_bar"
         android:id="@+id/toolbarAssets_expenses">
-
     </include>
 
     <EditText
@@ -42,8 +41,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/editTextAssets_text">
-
-
         <TextView
             android:id="@+id/text_expenses_information"
             android:layout_width="300dp"
@@ -51,7 +48,6 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:textSize="16sp"/>
-
         <TextView
             android:id="@+id/text_expenses_allSum"
             android:layout_width="wrap_content"
@@ -83,26 +79,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-
         fab:fab_addButtonColorNormal="#fafafa"
         fab:fab_addButtonColorPressed="#f1f1f1"
         fab:fab_addButtonPlusIconColor="#808080"
-        fab:fab_labelStyle="@style/menu_labels_style"
-        >
-
+        fab:fab_labelStyle="@style/menu_labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/actionButtonAdd"
-            fab:fab_icon="@mipmap/star2"
+            fab:fab_icon="@drawable/ic_add_24dp"
             fab:fab_colorNormal="#4527f1"
             fab:fab_addButtonColorPressed="#9f40ec"
             fab:fab_title="@string/ActionA"
             fab:fab_size="normal"/>
-
-
-
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,10 +100,9 @@
             fab:fab_colorNormal="#4527f1"
             fab:fab_addButtonColorPressed="#9f40ec"
             fab:fab_title="@string/ActionB"
-            fab:fab_icon="@mipmap/full"
+            fab:fab_icon="@drawable/ic_present_to_all_black_24dp"
             fab:fab_size="normal"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
 
 </RelativeLayout>
