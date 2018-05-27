@@ -12,7 +12,6 @@ public class MonetaryAssets extends Monetary {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
@@ -23,7 +22,6 @@ public class MonetaryAssets extends Monetary {
         toolbar=view.findViewById(R.id.toolbarAssets);
         pieView = view.findViewById(R.id.bar_view);
         mTextViewInformation=view.findViewById(R.id.text_asset_information);
-        mTextViewAllSum=view.findViewById(R.id.text_asset_allSum);
     }
 
     @Override

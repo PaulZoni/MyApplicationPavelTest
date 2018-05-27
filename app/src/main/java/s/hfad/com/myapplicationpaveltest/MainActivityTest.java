@@ -4,6 +4,7 @@ package s.hfad.com.myapplicationpaveltest;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import s.hfad.com.myapplicationpaveltest.Interface.PresenterConverterInterface;
 import s.hfad.com.myapplicationpaveltest.Parser.ParserValute;
-import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentInformation;
 import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentValute;
 import s.hfad.com.myapplicationpaveltest.modelAsets.KeyWord;
 import static android.content.Context.MODE_PRIVATE;
@@ -38,11 +40,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MainActivityTest extends Fragment implements IView,View.OnClickListener,HomePage.OnBackPressedListener {
 
-    protected  static   HashMap<String,Double> v=new HashMap<>();
+
+    static private boolean STAT_LOADING_PAGER = false;
+    private HashMap<String,Double> currency=new HashMap<>();
     private static final String START_KEY_TIME="START_KEY";
     static boolean STAT_TIME=false;
+    private final String ERROR_NULL = "ERROR NULL";
     private SharedPreferences preferences;
-    private MainPresenter presenter;
+    private PresenterConverterInterface presenter;
     private RVAdapter adapter;
     private FloatingActionButton mFloatingActionButton;
     private KeyWord mKeyWord;
@@ -58,6 +63,8 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     private Button buttonSum;
     private List<ValutaModel> persons;
     private View view;
+    private Bundle mBundle;
+
 
 
     public MainActivityTest() {
@@ -66,29 +73,44 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          view=inflater.inflate(R.layout.activity_main_test, container, false);
-
-        loadingFragment();
+        initializationComponent();
+        checkLoadingFragmentPager();
 
         if (presenter==null){
-            presenter=new MainPresenter(this);
+            presenter=new MainPresenter(this, getContext());
         }
-        buttonSum=(Button)view.findViewById(R.id.button_Sum);
-        buttonSum.setOnClickListener(this);
 
-        activateToast();
         settings();
         floatingButton();
-        initializationComponent();
         return view;
+    }
+
+    private void checkLoadingFragmentPager(){
+        if (mBundle!=null && STAT_LOADING_PAGER){
+
+            loadingPager(0);
+
+        }else loadingFragment();
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState!=null){
+            mBundle = savedInstanceState;
+            STAT_LOADING_PAGER = savedInstanceState.getBoolean("loading");
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("loading",STAT_LOADING_PAGER);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public void floatingButton(){
@@ -159,7 +181,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                                 toast.show();
                                 break;
                         }
-
                     });
             AlertDialog alert = builder.create();
             alert.show();
@@ -167,37 +188,31 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     }
 
     public void loadingFragment(){
-        android.support.v4.app.FragmentManager manager=getFragmentManager();
-        Fragment fragment=manager.findFragmentById(R.id.fragmentContainer);
-        fragment = new BlankFragmentValute();
-        manager.beginTransaction()
-                .add(R.id.fragmentContainer, fragment)
-                .commit();
-
+        try {
+            android.support.v4.app.FragmentManager manager=getFragmentManager();
+            Fragment fragment=manager.findFragmentById(R.id.fragmentContainer);
+            fragment = new BlankFragmentValute();
+            manager.beginTransaction()
+                    .add(R.id.fragmentContainer, fragment)
+                    .commit();
+        }catch (Exception e){
+            Log.e(ERROR_NULL, String.valueOf(e));
+        }
         parserValute();
     }
 
-    public void loadingPosition(Bundle b){
-        fragmentInformationStatusTurnedOn();
-        android.support.v4.app.FragmentManager manager=getFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
-        BlankFragmentInformation frag=new BlankFragmentInformation();
-        frag.setArguments(b);
-        transaction.add(R.id.layout_assets_info_1,frag);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 
     public void listenerAdapterPerson(){
-        adapter.setListener(position -> loadingPager(position));
+        adapter.setListener(this::loadingPager);
     }
 
 
     private void initializationComponent(){
+        buttonSum = view.findViewById(R.id.button_Sum);
+        buttonSum.setOnClickListener(this);
         collapsing=view.findViewById(R.id.toolbar_collapsing);
         scrollView=view.findViewById(R.id.nestedScrollView_converter);
         linearLayout1All=view.findViewById(R.id.layout_assets_info_all);
-
     }
 
     private void fragmentInformationStatusTurnedOn(){
@@ -210,7 +225,7 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     public void loadingPager(int position){
         fragmentInformationStatusTurnedOn();
-
+        STAT_LOADING_PAGER = true;
         android.support.v4.app.FragmentManager manager=getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
         BlankFragmentPager fragment3=new BlankFragmentPager();
@@ -220,12 +235,11 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         transaction.replace(R.id.layout_assets_info_1,fragment3);
         transaction.addToBackStack(null);
         transaction.commit();
+
     }
 
     public void positionChoice(int position){
-        Bundle bundle=new Bundle();
-        bundle.putInt("stat",position);
-        loadingPosition(bundle);
+        loadingPager(position);
     }
 
     public void parserValute(){
@@ -235,8 +249,8 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(strings -> {
-
-                        MainPresenter.setValue(strings);
+                        currency = strings;
+                        presenter.setValue(strings);
                         persons = new ArrayList<>();
                         persons.add(new ValutaModel("Доллар США", String.valueOf(strings.get("USD")), R.mipmap.usd));
                         persons.add(new ValutaModel("Валюта еврозоны Евро", String.valueOf(strings.get("EUR")), R.mipmap.euro));
@@ -254,7 +268,7 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                         persons.add(new ValutaModel("Индийских рупий", String.valueOf(strings.get("INR")), R.mipmap.indian_rupee_symbol));
                         persons.add(new ValutaModel("Казахстанских тенге", String.valueOf(strings.get("KZT")), R.mipmap.tenge));
 
-                        RecyclerView rv = (RecyclerView)view.findViewById(R.id.rv);
+                        RecyclerView rv = view.findViewById(R.id.rv);
                         LinearLayoutManager llm = new LinearLayoutManager(getContext());
                         rv.setLayoutManager(llm);
                         adapter = new RVAdapter(getActivity(),persons);
@@ -270,14 +284,6 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     }
 
 
-    public void activateToast(){
-        CharSequence text="Вы активировали конвертер!";
-        int duration=Toast.LENGTH_SHORT;
-        Toast toastTexst=Toast.makeText(getActivity(),text,duration);
-        toastTexst.show();
-    }
-
-
     @Override
     public void onClick(View view) {
         presenter.onGetButtonClicked();
@@ -286,22 +292,22 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     @Override
     public TextView getTextView() {
-        return textView=(TextView)view.findViewById(R.id.textView);
+        return textView = view.findViewById(R.id.textView);
     }
 
     @Override
     public EditText getTextEdit() {
-        return editText=(EditText)view.findViewById(R.id.edit_number1);
+        return editText = view.findViewById(R.id.edit_number1);
     }
 
     @Override
     public Spinner getLeftSpiner() {
-        return spinnerLeft=(Spinner)view.findViewById(R.id.spinner_left);
+        return spinnerLeft = view.findViewById(R.id.spinner_left);
     }
 
     @Override
     public Spinner getRightSpiner() {
-        return spinnerRight=(Spinner)view.findViewById(R.id.spinner_right);
+        return spinnerRight = view.findViewById(R.id.spinner_right);
     }
 
     @Override
@@ -321,14 +327,16 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     @Override
     public void onBackPressed() {
+        STAT_LOADING_PAGER = false;
         FragmentManager manager=getFragmentManager();
-        Fragment fragment=manager.findFragmentById(R.id.homeContainer);
-        fragment = new MainActivityTest();
-        manager.beginTransaction()
-                .replace(R.id.homeContainer, fragment)
-                .commit();
+        if (manager!=null){
+            Fragment fragment=manager.findFragmentById(R.id.homeContainer);
+            fragment = new MainActivityTest();
+            manager.beginTransaction()
+                    .replace(R.id.homeContainer, fragment)
+                    .commit();
+        }
     }
-
 }
 
 

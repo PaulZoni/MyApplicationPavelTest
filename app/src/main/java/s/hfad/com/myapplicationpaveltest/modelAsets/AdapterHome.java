@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
     private Context mContext;
     private View view;
     private MenuViewHolder menuViewHolder;
+    private final String ERROR_NULL = "ERROR_NULL";
 
     public static interface Listener {
         public void onClick(int position,String url);
@@ -66,8 +68,6 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
         protected void onLooperPrepared() {
             super.onLooperPrepared();
             mHandler=new Handler(getLooper()){
-
-
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
@@ -96,13 +96,18 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
 
         void quay(T holder, int position){
             mRequestMap.put(holder,position);
-            mHandler.obtainMessage(MESSAGE_DOWNLOAD,holder).sendToTarget();
+            try {
+                mHandler.obtainMessage(MESSAGE_DOWNLOAD,holder).sendToTarget();
+            }catch (NullPointerException e){
+                Log.e(ERROR_NULL, String.valueOf(e));
+            }
+
         }
     }
 
     @SuppressLint("HandlerLeak")
     @Override
-    public void onBindViewHolder(MenuViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
         Menu menu=mMenus.get(position);
         holder.setUrl(menu.getUrl());
 
@@ -122,7 +127,7 @@ public class AdapterHome extends RecyclerView.Adapter<MenuViewHolder>  {
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 

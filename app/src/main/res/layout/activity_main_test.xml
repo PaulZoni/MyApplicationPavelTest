@@ -17,10 +17,9 @@
           android:layout_height="match_parent">
 
          <android.support.design.widget.AppBarLayout
-
              android:id="@+id/bar_layout"
              android:layout_width="match_parent"
-             android:layout_height="300dp"
+             android:layout_height="230dp"
              android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -28,14 +27,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="exitUntilCollapsed|scroll"
+                app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginStart="48dp"
-                app:expandedTitleMarginEnd="64dp">
+                app:expandedTitleMarginEnd="64dp"
+                android:background="@color/cardview_dark_background">
 
                <RelativeLayout
                    android:layout_width="300dp"
                    android:layout_height="300dp"
                    android:layout_gravity="center"
-                   android:layout_marginTop="80dp">
+                   android:layout_marginTop="70dp">
 
                   <EditText
                       android:id="@+id/edit_number1"
@@ -97,7 +98,6 @@
          </android.support.design.widget.AppBarLayout>
 
          <android.support.v4.widget.NestedScrollView
-
              android:id="@+id/nestedScrollView_converter"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -110,16 +110,15 @@
                 android:orientation="vertical" />
 
          </android.support.v4.widget.NestedScrollView>
-
-         <LinearLayout
-             android:id="@+id/layout_assets_info_1"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:orientation="vertical"
-             android:layout_gravity="bottom">
-         </LinearLayout>
-
       </android.support.design.widget.CoordinatorLayout>
+
+      <LinearLayout
+          android:id="@+id/layout_assets_info_1"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          android:layout_gravity="bottom">
+      </LinearLayout>
 
    </LinearLayout>
 

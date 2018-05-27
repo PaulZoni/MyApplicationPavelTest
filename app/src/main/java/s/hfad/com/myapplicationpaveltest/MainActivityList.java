@@ -3,6 +3,7 @@ package s.hfad.com.myapplicationpaveltest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -42,7 +43,7 @@ public class MainActivityList extends Activity {
 
         mRecyclerView=(RecyclerView)findViewById(R.id.recyclerView_mainList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         updateList();
     }
 
@@ -79,6 +80,12 @@ public class MainActivityList extends Activity {
         mRecyclerView.setAdapter(mListAdapter);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+    }
 
     private class ListHolder extends RecyclerView.ViewHolder{
         TextView mTextView_mainList;

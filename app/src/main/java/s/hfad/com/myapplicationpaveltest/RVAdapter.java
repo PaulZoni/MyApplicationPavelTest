@@ -1,6 +1,7 @@
 package s.hfad.com.myapplicationpaveltest;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
 
-    LayoutInflater inflater;
-    List<ValutaModel> persons;
+    private LayoutInflater inflater;
+    private List<ValutaModel> persons;
 
     private Listener listener;
 
@@ -29,15 +30,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
     }
 
 
+    @NonNull
     @Override
-    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_card_view, viewGroup, false);
         PersonViewHolder pvh = new PersonViewHolder(v);
         return pvh;
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int position) {
+    public void onBindViewHolder(@NonNull PersonViewHolder personViewHolder, int position) {
         CardView cardView=personViewHolder.cv;
         personViewHolder.personName.setText(persons.get(position).name);
         personViewHolder.personAge.setText(persons.get(position).value);
@@ -63,15 +65,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
         ImageView personPhoto;
         PersonViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.person_name);
-            personAge = (TextView)itemView.findViewById(R.id.person_age);
-            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
+            cv = itemView.findViewById(R.id.cv);
+            personName = itemView.findViewById(R.id.person_name);
+            personAge = itemView.findViewById(R.id.person_age);
+            personPhoto = itemView.findViewById(R.id.person_photo);
         }
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 

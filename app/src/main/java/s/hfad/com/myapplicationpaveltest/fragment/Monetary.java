@@ -1,7 +1,9 @@
 package s.hfad.com.myapplicationpaveltest.fragment;
 
 
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -42,10 +44,10 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
     protected FloatingActionButton buttonAll;
     protected PieView pieView;
     protected TextView mTextViewInformation;
-    protected TextView mTextViewAllSum;
     protected EditText editTextNumber;
     protected EditText editTextTx;
     protected Toolbar toolbar;
+    private View inflater;
 
 
     @Override
@@ -59,14 +61,13 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
 
         initializationComponent();
         buttonOk.setOnClickListener(this);
-
         buttonAll.setOnClickListener(this);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
-
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         graphV();
         settings();
         setHasOptionsMenu(true);
@@ -113,16 +114,17 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
 
                 mTextViewInformation.setTextColor(getResources().getColor(R.color.Purple));
                 stringBuilder.append(map.get(Graph.P_KEY_EXPENSES)+"%"+" "
-                        +textSumExpenses+"("+map.get(Graph.KEY_ALL_EXPENSES)+")");
+                        +textSumExpenses+"("+map.get(Graph.KEY_ALL_EXPENSES)+")"
+                        + map.get(Graph.KEY_EXIST_ASSETS));
                 mTextViewInformation.setText(stringBuilder);
 
             }else if (index==0){
                 mTextViewInformation.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 stringBuilder.append(map.get(Graph.P_KEY_ASSETS)+"%"+" "
-                        +textSumAssets+"("+map.get(Graph.KEY_ALL_ASSETS)+")");
+                        +textSumAssets+"("+map.get(Graph.KEY_ALL_ASSETS)+")"
+                        + map.get(Graph.KEY_EXIST_ASSETS));
                 mTextViewInformation.setText(stringBuilder);
             }
-            mTextViewAllSum.setText(String.valueOf(map.get(Graph.KEY_EXIST_ASSETS)));
         });
     }
 
@@ -146,24 +148,37 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
 
 
     @Override
+    public void dialogAdd(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        inflater = getLayoutInflater().inflate(R.layout.dialog_add,null);
+        builder.setView(inflater);
+        builder.setPositiveButton(R.string.app_name_Ok,((dialog, which) ->{
+            presenter.addInDialog();
+        } ));
+        builder.create();
+        builder.show();
+    }
+
+    @Override
     public void onClick(View view) {
         presenter.buttonOnClick(view);
     }
 
     @Override
     public EditText getEditTextNumber(){
-        return editTextNumber=(EditText)view.findViewById(R.id.editTextAssets_sum);
+        return editTextNumber=(EditText)inflater.findViewById(R.id.editTextAssets_sum);
     }
 
     @Override
     public EditText getEditTextTx() {
-        return editTextTx=(EditText)view.findViewById(R.id.editTextAssets_text);
+        return editTextTx=(EditText)inflater.findViewById(R.id.editTextAssets_text);
     }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         sPref=getActivity().getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor ed=sPref.edit();
         ed.putBoolean(START_KEY,STAT);

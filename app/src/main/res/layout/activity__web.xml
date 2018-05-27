@@ -10,14 +10,12 @@
         android:id="@+id/toolbar_web"
         android:background="@color/cardview_dark_background"
         android:layout_width="match_parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true">
-
     </android.support.v7.widget.Toolbar>
 
     <ProgressBar
-
         android:id="@+id/progress_web"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,5 +32,4 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/progress_web">
     </WebView>
-
 </RelativeLayout>

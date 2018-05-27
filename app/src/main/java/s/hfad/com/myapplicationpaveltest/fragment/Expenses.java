@@ -22,7 +22,6 @@ public class Expenses extends Monetary {
         toolbar = view.findViewById(R.id.toolbarAssets_expenses);
         pieView = view.findViewById(R.id.graph);
         mTextViewInformation=view.findViewById(R.id.text_expenses_information);
-        mTextViewAllSum=view.findViewById(R.id.text_expenses_allSum);
     }
 
     @Override

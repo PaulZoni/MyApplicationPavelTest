@@ -21,6 +21,7 @@ public class HomePage extends AppCompatActivity  {
     private BottomNavigationView mBottomNavigationView;
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
 
+
     public interface OnBackPressedListener {
         public void onBackPressed();
     }
@@ -50,13 +51,10 @@ public class HomePage extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-
         Thread soundThread=new Thread(()-> new Sound(this));
         soundThread.start();
-
         loadingFragment();
         buttonNavigationLisner();
-
     }
 
     @Override
@@ -104,8 +102,6 @@ public class HomePage extends AppCompatActivity  {
         manager.beginTransaction()
                 .add(R.id.homeContainer, fragment)
                 .commit();
-
-
     }
 
 
@@ -118,7 +114,6 @@ public class HomePage extends AppCompatActivity  {
             switch (item.getItemId()){
 
                 case R.id.action_converter:
-
                     fragment = new MainActivityTest();
                     manager.beginTransaction()
                             .replace(R.id.homeContainer, fragment)

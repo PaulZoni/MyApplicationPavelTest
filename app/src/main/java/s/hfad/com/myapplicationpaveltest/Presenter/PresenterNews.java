@@ -1,13 +1,10 @@
 package s.hfad.com.myapplicationpaveltest.Presenter;
 
 
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import java.util.ArrayList;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.Interface.MVPView;

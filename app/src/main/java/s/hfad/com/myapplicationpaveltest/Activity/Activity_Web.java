@@ -3,14 +3,10 @@ package s.hfad.com.myapplicationpaveltest.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -72,7 +68,6 @@ public class Activity_Web extends AppCompatActivity {
                 super.onReceivedTitle(view, title);
             }
         });
-
         webShow();
     }
 
@@ -91,18 +86,13 @@ public class Activity_Web extends AppCompatActivity {
     private void createToolbarMenu() {
         Toolbar toolbar = findViewById(R.id.toolbar_web);
         toolbar.inflateMenu(R.menu.menu_web);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-
-                intent.putExtra(Intent.EXTRA_TEXT,url);
-                intent.setType("text/plain");
-                startActivity(intent);
-                return true;
-            }
+        toolbar.setOnMenuItemClickListener(item -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT,url);
+            intent.setType("text/plain");
+            startActivity(intent);
+            return true;
         });
-
     }
 }
 

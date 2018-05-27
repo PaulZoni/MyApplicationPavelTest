@@ -11,19 +11,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import io.reactivex.Observable;
 
 public class TimeValuteValue {
 
-    Context context;
-
-    public TimeValuteValue(Context context) {
-        this.context = context;
-    }
     private HashMap<String,Double> value;
+    private Context context;
+
+    public TimeValuteValue(Context context, HashMap<String, Double> value) {
+        this.context = context;
+        this.value = value;
+    }
+
     private ArrayList<Double> USDList;
     private ArrayList<Double> EURList;
     private ArrayList<Double> CHFList;
@@ -41,10 +40,10 @@ public class TimeValuteValue {
     private ArrayList<Double> KZTList;
     private HashMap<String,ArrayList<Double>>timeValue;
 
-    @SuppressWarnings("unchecked")
+
     public HashMap<String, ArrayList<Double>> timeVValue(){
 
-        value=MainPresenter.getValue();
+        //value=MainPresenter.getValue();
         USDList=new ArrayList<>();
         EURList=new ArrayList<>();
         CHFList=new ArrayList<>();
@@ -61,7 +60,6 @@ public class TimeValuteValue {
         INRList=new ArrayList<>();
         KZTList=new ArrayList<>();
         timeValue=new HashMap<>();
-
 
         if (MainActivityTest.STAT_TIME){
             timeValue=input(context,timeValue);
@@ -84,7 +82,6 @@ public class TimeValuteValue {
         }
         MainActivityTest.STAT_TIME=true;
 
-
         try {
 
             String[] key={"USD","EUR","CHF",
@@ -102,7 +99,7 @@ public class TimeValuteValue {
                     "KZT"};
 
 
-            ArrayList<ArrayList<Double>> list=new ArrayList();
+            ArrayList<ArrayList<Double>> list=new ArrayList<>();
             list.add(USDList);
             list.add(EURList);
             list.add(CHFList);
@@ -121,10 +118,7 @@ public class TimeValuteValue {
 
             ArrayList<ArrayList<Double>>lists2=new ArrayList<>();
             for (int i = 0; i <list.size() ; i++) {
-
-
                 lists2.add(i,classification(list.get(i),value,key[i]));
-
             }
 
             timeValue.clear();
@@ -149,15 +143,11 @@ public class TimeValuteValue {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return timeValue;
     }
 
 
-
-
-    public  ArrayList<Double>  classification(ArrayList<Double> list,HashMap<String,Double> value,String key){
-
+    private ArrayList<Double>  classification(ArrayList<Double> list, HashMap<String, Double> value, String key){
 
         if (list.isEmpty()){
             list.add(value.get(key));
@@ -173,7 +163,7 @@ public class TimeValuteValue {
 
 
     @SuppressWarnings("unchecked")
-    public HashMap input(Context context, HashMap<String,ArrayList<Double>> list) {
+    private HashMap<String,ArrayList<Double>> input(Context context, HashMap<String, ArrayList<Double>> list) {
 
         try {
             FileInputStream fileInputStream = context.openFileInput("Mani.ser");
@@ -183,18 +173,17 @@ public class TimeValuteValue {
             fileInputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
 
 
-
-    public HashMap output(Context context,HashMap<String,ArrayList<Double>> list) {
+    private void output(Context context, HashMap<String, ArrayList<Double>> list) {
 
         try {
             FileOutputStream fileOutputStream = context.openFileOutput("Mani.ser", Context.MODE_PRIVATE);
@@ -206,19 +195,12 @@ public class TimeValuteValue {
             e.printStackTrace();
         }
 
-
-        return null;
     }
 
     public Observable <HashMap<String,ArrayList<Double>>> getTimeValte() {
         return Observable.create(observableEmitter ->{
 
-
             observableEmitter.onNext(timeVValue());
-
         });
     }
-
-
-
 }
