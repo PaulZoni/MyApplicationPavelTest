@@ -113,8 +113,6 @@ public class BlankFragmentInformation extends Fragment implements MVPViewFragmen
 
     @Override
     public void graf(){
-
-
         points=new DataPoint[ listX.size()];
         for (int i = 0; i <points.length ; i++) {
             points[i]=new DataPoint(i,listX.get(i));

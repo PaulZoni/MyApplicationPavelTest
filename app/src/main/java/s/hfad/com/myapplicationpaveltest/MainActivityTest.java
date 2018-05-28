@@ -38,10 +38,12 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.KeyWord;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class MainActivityTest extends Fragment implements IView,View.OnClickListener,HomePage.OnBackPressedListener {
+public class MainActivityTest extends Fragment implements IView,View.OnClickListener,HomePage.OnBackPressedListener,
+        BlankFragmentPager.CheckPositions {
 
 
     static private boolean STAT_LOADING_PAGER = false;
+    private int STAT_LOADNG_PAGETR_POSITION = 0;
     private HashMap<String,Double> currency=new HashMap<>();
     private static final String START_KEY_TIME="START_KEY";
     static boolean STAT_TIME=false;
@@ -64,6 +66,7 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     private List<ValutaModel> persons;
     private View view;
     private Bundle mBundle;
+    private BlankFragmentPager fragmentPager;
 
 
 
@@ -77,6 +80,8 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                              Bundle savedInstanceState) {
          view=inflater.inflate(R.layout.activity_main_test, container, false);
         initializationComponent();
+        fragmentPager=new BlankFragmentPager();
+        fragmentPager.setCheckPositions(MainActivityTest.this);
         checkLoadingFragmentPager();
 
         if (presenter==null){
@@ -91,7 +96,7 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     private void checkLoadingFragmentPager(){
         if (mBundle!=null && STAT_LOADING_PAGER){
 
-            loadingPager(0);
+            loadingPager(STAT_LOADNG_PAGETR_POSITION);
 
         }else loadingFragment();
     }
@@ -103,13 +108,15 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
         if (savedInstanceState!=null){
             mBundle = savedInstanceState;
-            STAT_LOADING_PAGER = savedInstanceState.getBoolean("loading");
+            STAT_LOADING_PAGER = savedInstanceState.getBoolean("SavePager");
+            STAT_LOADNG_PAGETR_POSITION = savedInstanceState.getInt("SaveSatPosition");
         }
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        savedInstanceState.putBoolean("loading",STAT_LOADING_PAGER);
+        savedInstanceState.putBoolean("SavePager",STAT_LOADING_PAGER);
+        savedInstanceState.putInt("SaveSatPosition",STAT_LOADNG_PAGETR_POSITION);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -228,14 +235,12 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         STAT_LOADING_PAGER = true;
         android.support.v4.app.FragmentManager manager=getFragmentManager();
         android.support.v4.app.FragmentTransaction transaction=manager.beginTransaction();
-        BlankFragmentPager fragment3=new BlankFragmentPager();
         Bundle bundle=new Bundle();
         bundle.putSerializable(TAG_1,position);
-        fragment3.setArguments(bundle);
-        transaction.replace(R.id.layout_assets_info_1,fragment3);
+        fragmentPager.setArguments(bundle);
+        transaction.replace(R.id.layout_assets_info_1,fragmentPager);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 
     public void positionChoice(int position){
@@ -336,6 +341,12 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
                     .replace(R.id.homeContainer, fragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void positions(int posit) {
+        Log.e("Это нужная позиуия",String.valueOf(posit));
+        STAT_LOADNG_PAGETR_POSITION = posit;
     }
 }
 

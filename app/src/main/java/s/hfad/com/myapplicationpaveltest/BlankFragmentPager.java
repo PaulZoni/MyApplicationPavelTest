@@ -24,8 +24,22 @@ public class BlankFragmentPager extends Fragment {
     private  int maxPageCount = 15;
     private int positions;
     private View view;
+    private ViewPager mViewPager;
+    private CheckPositions mCheckPositions;
+    private FragmentManager fragmentManager;
+
+    interface CheckPositions{
+        void positions(int posit);
+    }
+
+
     public BlankFragmentPager() {
         // Required empty public constructor
+    }
+
+
+    public void setCheckPositions(CheckPositions cHPositions){
+        mCheckPositions = cHPositions;
     }
 
 
@@ -33,6 +47,7 @@ public class BlankFragmentPager extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_blank_fragment_pager, container, false);
+        initializationComponent();
         timeValueLoading();
         return view;
     }
@@ -42,6 +57,66 @@ public class BlankFragmentPager extends Fragment {
         super.onCreate(savedInstanceState);
         //setRetainInstance(true);
     }
+
+
+
+
+    private void initializationComponent(){
+        mViewPager = view.findViewById(R.id.view_pager);
+    }
+
+
+    private void createPageChangeListener(){
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (mCheckPositions!=null){
+                    mCheckPositions.positions(position);
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+
+    public void timeValueLoading() {
+        valuta = LoadingGraf.getValuta();
+        if (getArguments()!=null){
+            positions=getArguments().getInt(MainActivityTest.TAG_1);
+        }
+        if (getActivity()!=null){
+             fragmentManager=getActivity().getSupportFragmentManager();
+        }
+        mViewPager.setOffscreenPageLimit(1);
+        createPageChangeListener();
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+            @Override
+            public Fragment getItem(int position) {
+                listX = checkValue(position);
+                return BlankFragmentInformation.newInstance(listX);
+
+            }
+
+            @Override
+            public int getCount() {
+                return maxPageCount;
+            }
+
+        });
+        mViewPager.setCurrentItem(positions,true);
+    }
+
 
     private ArrayList<Double> checkValue(int stats){
 
@@ -93,33 +168,6 @@ public class BlankFragmentPager extends Fragment {
         }
         return listX;
     }
-
-    public void timeValueLoading() {
-            valuta = LoadingGraf.getValuta();
-            positions=getArguments().getInt(MainActivityTest.TAG_1);
-            ViewPager mViewPager = view.findViewById(R.id.view_pager);
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-            mViewPager.setOffscreenPageLimit(1);
-
-            mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
-                @Override
-                public Fragment getItem(int position) {
-                    listX = checkValue(position);
-                    return BlankFragmentInformation.newInstance(listX);
-
-                }
-
-                @Override
-                public int getCount() {
-                    return maxPageCount;
-                }
-
-            });
-
-            mViewPager.setCurrentItem(positions,true);
-    }
-
-
 
 
     @Override
