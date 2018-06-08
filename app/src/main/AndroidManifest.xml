@@ -7,12 +7,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="com.example.mapdemo.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
+
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -27,12 +32,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <receiver android:name="s.hfad.com.myapplicationpaveltest.service_and_receivers.SMSMonitor"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="31221312">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.permission.BROADCAST_SMS"/>
+                <action android:name="android.permission.READ_SMS"/>
+            </intent-filter>
+        </receiver>
+
         <meta-data
-
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyA_F0HzGNnmeKqiECbXogEXo00huOANltY"
-            />
-
+            android:value="AIzaSyA_F0HzGNnmeKqiECbXogEXo00huOANltY"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -40,7 +52,6 @@
         <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -53,6 +64,8 @@
             tools:ignore="InnerclassSeparator">
         </activity>
 
+        <service android:name="s.hfad.com.myapplicationpaveltest.service_and_receivers.SmsService">
+        </service>
     </application>
 
 </manifest>

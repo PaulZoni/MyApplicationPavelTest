@@ -15,6 +15,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import s.hfad.com.myapplicationpaveltest.MyEnum.languageEnum;
 import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentHome;
@@ -26,6 +27,7 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 @SuppressLint("ParcelCreator")
 public class HomePage extends AppCompatActivity implements BlankFragmentHome.DialogSelectLanguage, Parcelable {
 
+    private static final int PERMISSION_REQUEST_CODE = 123;
     private BottomNavigationView mBottomNavigationView;
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
     private int STAT_CHECK_ITEM=0;
@@ -111,6 +113,13 @@ public class HomePage extends AppCompatActivity implements BlankFragmentHome.Dia
                     new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION  },
                     MY_PERMISSION_ACCESS_COARSE_LOCATION );
         }
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS);
+        if (permissionStatus != PackageManager.PERMISSION_GRANTED)
+         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS},PERMISSION_REQUEST_CODE);
+
+        int permissionStatusBackground = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_BOOT_COMPLETED);
+        if (permissionStatusBackground != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED},PERMISSION_REQUEST_CODE);
     }
 
 
