@@ -4,7 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class Article {
+public class Article implements Cloneable {
+    @Override
+    public Article clone() throws CloneNotSupportedException {
+        final  Article article =(Article)super.clone();
+        return article;
+    }
 
     @SerializedName("source")
     @Expose

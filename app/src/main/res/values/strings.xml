@@ -93,6 +93,8 @@
     <string name="voidList">Пусто</string>
     <string name="choiceLanguage">Выбрать язык перевода</string>
     <string name="translationText">Перевести Текст</string>
+    <string name="selectLanguage">Выберете язык</string>
+    <string name="SumInTheMoment">В Денег в наличии</string>
 
 </resources>
 

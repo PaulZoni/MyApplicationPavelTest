@@ -3,9 +3,9 @@ package s.hfad.com.myapplicationpaveltest.MyEnum;
 
 public enum languageEnum {
 
-    RUS("RUS"),
-    USA("USA"),
-    FRA("FRA");
+    RUS("ru"),
+    USA("en"),
+    FRA("fr");
     private String description;
 
     languageEnum(String description) {

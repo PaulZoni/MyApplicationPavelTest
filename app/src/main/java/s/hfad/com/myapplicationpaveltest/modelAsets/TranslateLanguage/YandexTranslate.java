@@ -7,17 +7,73 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
+import java.util.ArrayList;
 import io.reactivex.Observable;
+import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.Article;
 
 public class YandexTranslate {
 
+    private int size;
+    public YandexTranslate(int size) {
+        this.size = size;
+    }
 
-    public Observable<String>getTranslateText(String text,String format){
+    public Observable<String>getTranslateText(ArrayList<Article> text,
+                                              int position,
+                                              String languageEnum){
+        String language;
+        language = selectLanguage(position,languageEnum);
+        ArrayList<Article> list = text;
         return Observable.create(observableEmitter ->{
+            for (int i = 0; i <size ; i++) {
+                observableEmitter.onNext(regulationTranslate(list.get(i).getDescription(),language));
+            }
 
-            observableEmitter.onNext(regulationTranslate(text,format));
         });
+    }
+
+    private String selectLanguage(int position, String languageEnum) {
+        if (languageEnum==null)languageEnum ="ru";
+        String language;
+        switch (position){
+            case 0:
+                language = "en-"+languageEnum;
+                break;
+            case 1:
+                language = "fr-"+languageEnum;
+                break;
+            case 2:
+                language = "en-"+languageEnum;
+                break;
+            case 3:
+                language = "ru-"+languageEnum;
+                break;
+            case 4:
+                language = "en-"+languageEnum;
+                break;
+            case 5:
+                language = "en-"+languageEnum;
+                break;
+            case 6:
+                language = "en-"+languageEnum;
+                break;
+            case 7:
+                language = "en-"+languageEnum;
+                break;
+            case 8:
+                language = "en-"+languageEnum;
+                break;
+            case 9:
+                language = "en-"+languageEnum;
+                break;
+            case -1:
+                language = "en-"+languageEnum;
+                break;
+            default:
+                language = "en-"+languageEnum;
+                break;
+        }
+        return language;
     }
 
     private String regulationTranslate(String text,String format){
@@ -34,10 +90,10 @@ public class YandexTranslate {
 
     private String translate(String text,String lang,String format,String options,String cal) throws IOException {
 
-        String url2 = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20180518T213902Z.c6aef9f1d7e1c1b9.b7205913e2fd2690ee538d23a3e353ebaf26420e"
+        String url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20180518T213902Z.c6aef9f1d7e1c1b9.b7205913e2fd2690ee538d23a3e353ebaf26420e"
                 +"&text="+ URLEncoder.encode(text,"UTF-8")+"&lang="+lang;
 
-        URL url1 = new URL(url2);
+        URL url1 = new URL(url);
         HttpURLConnection httpConnection = (HttpURLConnection) url1.openConnection();
         int rc = httpConnection.getResponseCode();
 
@@ -46,7 +102,7 @@ public class YandexTranslate {
             BufferedReader buffReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
             StringBuilder strBuilder = new StringBuilder();
             while ((line = buffReader.readLine()) != null) {
-                strBuilder.append(line + '\n');
+                strBuilder.append(line).append('\n');
             }
 
             return strBuilder.toString();

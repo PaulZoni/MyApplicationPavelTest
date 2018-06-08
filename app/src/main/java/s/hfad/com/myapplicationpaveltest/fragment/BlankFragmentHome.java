@@ -1,5 +1,7 @@
 package s.hfad.com.myapplicationpaveltest.fragment;
 
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,14 +24,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import s.hfad.com.myapplicationpaveltest.Activity.Activity_Web;
+import s.hfad.com.myapplicationpaveltest.HomePage;
 import s.hfad.com.myapplicationpaveltest.Interface.MVPView;
 import s.hfad.com.myapplicationpaveltest.Interface.PresenterNewsInterface;
-import s.hfad.com.myapplicationpaveltest.MyEnum.languageEnum;
 import s.hfad.com.myapplicationpaveltest.Presenter.PresenterNews;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterNewsSelect;
 import s.hfad.com.myapplicationpaveltest.modelAsets.ListNewsStrings;
@@ -42,6 +45,7 @@ public class BlankFragmentHome extends Fragment implements MVPView {
 
     private final String KEY_PREFERENCES = "keyPreferences";
     private final String KEY_POSITION = "keyPosition";
+    private final String SAVED_LANGUAGE = "saved_language";
     private int indicatePosition;
     private AdapterHome adapterHome;
     private View view;
@@ -54,9 +58,26 @@ public class BlankFragmentHome extends Fragment implements MVPView {
     private TextView mTextViewNewsName;
     private SharedPreferences mSharedPreferences;
     private PresenterNewsInterface<MVPView> mNewsPresenter;
-    private languageEnum STAT_LANGUAGE;
+    private String STAT_LANGUAGE;
+
+
+
+    private DialogSelectLanguage mDialogSelectLanguage;
+    public interface DialogSelectLanguage extends Serializable {
+        void createDialogSelectLanguage();
+        String getStatLanguage();
+    }
+
+    public void setDialogSelectLanguage() {
+
+        if (getArguments().getParcelable(HomePage.KEY_BUNDLE_HOME)!=null) {
+            mDialogSelectLanguage = (DialogSelectLanguage) getArguments().getParcelable(HomePage.KEY_BUNDLE_HOME);
+        }
+    }
+
 
     public BlankFragmentHome() {
+
     }
 
     @Override
@@ -65,7 +86,7 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         view=inflater.inflate(R.layout.fragment_blank_fragment_home, container, false);
         mNewsPresenter = new PresenterNews();
         mNewsPresenter.attachView(this);
-
+        setDialogSelectLanguage();
         initializationComponent();
         mListNewsStrings = new ListNewsStrings(getContext());
         loadPosition();
@@ -101,6 +122,7 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
+
 
 
     @Override
@@ -153,7 +175,7 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         mSharedPreferences = view.getContext().getSharedPreferences(KEY_PREFERENCES, Context.MODE_PRIVATE);
         try {
             indicatePosition = mSharedPreferences.getInt(KEY_POSITION,0);
-
+            STAT_LANGUAGE = mSharedPreferences.getString(SAVED_LANGUAGE,"");
         }catch (Exception e){
             Log.e("load Position","Load position error");
         }
@@ -165,11 +187,19 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putInt(KEY_POSITION,indicatePosition);
         editor.apply();
+        editor.commit();
     }
 
+    private void saveLanguage(){
+        mSharedPreferences = view.getContext().getSharedPreferences(KEY_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(SAVED_LANGUAGE,STAT_LANGUAGE);
+        editor.apply();
+
+    }
 
     @Override
-    public void initializationMenu(ArrayList<Article> parser){
+    public void initializationMenu(List<Article> parser){
         List<Menu> mMenus=new ArrayList<>();
         if (parser!=null){
             initializationNewsName(parser.get(0).getSource().getName());
@@ -253,10 +283,12 @@ public class BlankFragmentHome extends Fragment implements MVPView {
                     createDialogSelectNews();
                     break;
                 case R.id.languageTranslation:
-                    createDialogSelectLanguage();
+                    mDialogSelectLanguage.createDialogSelectLanguage();
                     break;
                 case R.id.languageTranslationRun:
-                    mNewsPresenter.textParsing();
+                    STAT_LANGUAGE = mDialogSelectLanguage.getStatLanguage();
+                    mNewsPresenter.textParsing(STAT_LANGUAGE);
+                    saveLanguage();
             }
             return true;
         });
@@ -274,28 +306,6 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         builder.setNegativeButton(getString(R.string.No), (dialog, which) -> dialog.cancel());
         AlertDialog alert = builder.create();
         alert.show();
-    }
-
-
-    private void createDialogSelectLanguage(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle(R.string.choiceLanguage);
-        builder.setSingleChoiceItems(R.array.targetLanguageArray, 1 , (dialog, which) -> {
-
-            switch (which){
-                case 0:
-                    STAT_LANGUAGE = languageEnum.RUS;
-                    break;
-                case 1:
-                    STAT_LANGUAGE = languageEnum.USA;
-                    break;
-                case 2:
-                    STAT_LANGUAGE = languageEnum.FRA;
-                    break;
-            }
-        });
-        builder.create();
-        builder.show();
     }
 }
 

@@ -10,4 +10,5 @@
     <color name="dark_gray">#9E9E9E</color>
     <color name="Brown">#D7CCC8</color>
     <color name="Purple">#AB47BC</color>
+    <color name="dark">#000000</color>
 </resources>

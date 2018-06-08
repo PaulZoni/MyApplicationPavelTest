@@ -2,8 +2,6 @@ package s.hfad.com.myapplicationpaveltest;
 
 
 import android.content.Context;
-import android.util.Log;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,8 +40,6 @@ public class TimeValuteValue {
 
 
     public HashMap<String, ArrayList<Double>> timeVValue(){
-
-        //value=MainPresenter.getValue();
         USDList=new ArrayList<>();
         EURList=new ArrayList<>();
         CHFList=new ArrayList<>();
@@ -83,7 +79,6 @@ public class TimeValuteValue {
         MainActivityTest.STAT_TIME=true;
 
         try {
-
             String[] key={"USD","EUR","CHF",
                     "AUD",
                     "AZN",
@@ -97,7 +92,6 @@ public class TimeValuteValue {
                     "DKK",
                     "INR",
                     "KZT"};
-
 
             ArrayList<ArrayList<Double>> list=new ArrayList<>();
             list.add(USDList);
@@ -120,7 +114,6 @@ public class TimeValuteValue {
             for (int i = 0; i <list.size() ; i++) {
                 lists2.add(i,classification(list.get(i),value,key[i]));
             }
-
             timeValue.clear();
             timeValue.put("USD",lists2.get(0));
             timeValue.put("EUR",lists2.get(1));
@@ -137,7 +130,6 @@ public class TimeValuteValue {
             timeValue.put("DKK",lists2.get(12));
             timeValue.put("INR",lists2.get(13));
             timeValue.put("KZT",lists2.get(14));
-
             output(context,timeValue);
 
         }catch (Exception e){
@@ -164,7 +156,6 @@ public class TimeValuteValue {
 
     @SuppressWarnings("unchecked")
     private HashMap<String,ArrayList<Double>> input(Context context, HashMap<String, ArrayList<Double>> list) {
-
         try {
             FileInputStream fileInputStream = context.openFileInput("Mani.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -173,7 +164,6 @@ public class TimeValuteValue {
             fileInputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -182,9 +172,7 @@ public class TimeValuteValue {
     }
 
 
-
     private void output(Context context, HashMap<String, ArrayList<Double>> list) {
-
         try {
             FileOutputStream fileOutputStream = context.openFileOutput("Mani.ser", Context.MODE_PRIVATE);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -194,7 +182,6 @@ public class TimeValuteValue {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public Observable <HashMap<String,ArrayList<Double>>> getTimeValte() {

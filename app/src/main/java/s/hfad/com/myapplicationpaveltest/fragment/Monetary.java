@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -47,32 +48,35 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
     protected EditText editTextNumber;
     protected EditText editTextTx;
     protected Toolbar toolbar;
+    protected TextView allSumMoneyInTheMoment;
     private View inflater;
+    protected HashMap<String,Float> map;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(getLayoutID(),container,false);
-
         if (presenter==null){
             presenter=new MainPresenterPurse(this,getContext(),KEY_VIEW());
         }
-
         initializationComponent();
         buttonOk.setOnClickListener(this);
         buttonAll.setOnClickListener(this);
-
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         graphV();
         settings();
         setHasOptionsMenu(true);
-
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     public abstract void initializationComponent();
@@ -80,6 +84,13 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
     public abstract String KEY_VIEW();
 
     public abstract int getLayoutID();
+
+    private void textSumInTheMoment(){
+        String textAllSum = view.getContext().getResources()
+                .getString(R.string.SumInTheMoment)+": "+String.valueOf(map.get(Graph.KEY_EXIST_ASSETS));
+        allSumMoneyInTheMoment.setTextColor(view.getContext().getResources().getColor(R.color.dark));
+        allSumMoneyInTheMoment.setText(textAllSum);
+    }
 
 
     private void settings(){
@@ -89,7 +100,6 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
 
 
     private void graphV(){
-
         new Graph(getContext(),KEY_VIEW()).getGraph()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -103,6 +113,8 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
         pieHelperArrayList.add(new PieHelper(map.get(Graph.P_KEY_EXPENSES)));
         pieView.setDate(pieHelperArrayList);
         initialisationListenerPie(map);
+        this.map = map;
+        textSumInTheMoment();
     }
 
 
@@ -111,18 +123,15 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
             StringBuilder stringBuilder=new StringBuilder();
 
             if (index==1){
-
                 mTextViewInformation.setTextColor(getResources().getColor(R.color.Purple));
                 stringBuilder.append(map.get(Graph.P_KEY_EXPENSES)+"%"+" "
-                        +textSumExpenses+"("+map.get(Graph.KEY_ALL_EXPENSES)+")"
-                        + map.get(Graph.KEY_EXIST_ASSETS));
+                        +textSumExpenses+"("+map.get(Graph.KEY_ALL_EXPENSES)+")");
                 mTextViewInformation.setText(stringBuilder);
 
             }else if (index==0){
                 mTextViewInformation.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 stringBuilder.append(map.get(Graph.P_KEY_ASSETS)+"%"+" "
-                        +textSumAssets+"("+map.get(Graph.KEY_ALL_ASSETS)+")"
-                        + map.get(Graph.KEY_EXIST_ASSETS));
+                        +textSumAssets+"("+map.get(Graph.KEY_ALL_ASSETS)+")");
                 mTextViewInformation.setText(stringBuilder);
             }
         });
@@ -184,7 +193,6 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
         ed.putBoolean(START_KEY,STAT);
         ed.apply();
     }
-
 }
 
 

@@ -51,7 +51,6 @@ public class ParsingNewsRetrofit {
         Retrofit retrofit=buildingUrlRetro();
         mChoiceAPI=new ChoiceAPI(retrofit);
         switch (pasition){
-
             case 0:
                 resp = mChoiceAPI.getAPIServiceCanada();
                 break;
@@ -82,11 +81,9 @@ public class ParsingNewsRetrofit {
             case 9:
                 resp = mChoiceAPI.getAPIServiceInfoMoney();
                 break;
-
             case NON_PARS:
                  resp = mChoiceAPI.getAPIServiceRussia();
                 break;
-
             default:
                 resp = mChoiceAPI.getAPIServiceRussia();
                 break;
@@ -107,6 +104,7 @@ public class ParsingNewsRetrofit {
 
             final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
+
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
                         }

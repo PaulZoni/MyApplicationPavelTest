@@ -3,6 +3,7 @@ package s.hfad.com.myapplicationpaveltest;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -67,6 +68,9 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
     private View view;
     private Bundle mBundle;
     private BlankFragmentPager fragmentPager;
+    private AppBarLayout.LayoutParams layoutParams;
+    private CoordinatorLayout coordinator;
+    private AppBarLayout mAppBarLayout;
 
 
 
@@ -220,14 +224,28 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
         collapsing=view.findViewById(R.id.toolbar_collapsing);
         scrollView=view.findViewById(R.id.nestedScrollView_converter);
         linearLayout1All=view.findViewById(R.id.layout_assets_info_all);
+        layoutParams = (AppBarLayout.LayoutParams) collapsing.getLayoutParams();
+        coordinator = view.findViewById(R.id.coordinator_converter);
+        mAppBarLayout = view.findViewById(R.id.bar_layout);
+
+    }
+
+    private void statusTurnedOnLend(){
+        scrollView.setLayoutParams(new CoordinatorLayout.LayoutParams(0,0));
+        layoutParams.setScrollFlags(0);
+        coordinator.setLayoutParams(new LinearLayout.LayoutParams(0,0));
+    }
+    private void statusTurnedOnPortrait(){
+        scrollView.setLayoutParams(new CoordinatorLayout.LayoutParams(0,0));
+        layoutParams.setScrollFlags(0);
+        linearLayout1All.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT));
     }
 
     private void fragmentInformationStatusTurnedOn(){
-        scrollView.setLayoutParams(new CoordinatorLayout.LayoutParams(0,0));
-        AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) collapsing.getLayoutParams();
-        p.setScrollFlags(0);
-        linearLayout1All.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT));
+        if (checkOrientationVerical())statusTurnedOnPortrait();
+        else statusTurnedOnLend();
+
     }
 
     public void loadingPager(int position){
@@ -345,8 +363,13 @@ public class MainActivityTest extends Fragment implements IView,View.OnClickList
 
     @Override
     public void positions(int posit) {
-        Log.e("Это нужная позиуия",String.valueOf(posit));
         STAT_LOADNG_PAGETR_POSITION = posit;
+    }
+
+    private boolean checkOrientationVerical(){
+        int orientation;
+        orientation = getResources().getConfiguration().orientation;
+        return orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 }
 

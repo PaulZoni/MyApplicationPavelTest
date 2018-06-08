@@ -1,10 +1,13 @@
 package s.hfad.com.myapplicationpaveltest.Presenter;
 
 
+import android.util.Log;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.Interface.MVPView;
@@ -18,6 +21,7 @@ public class PresenterNews implements PresenterNewsInterface<MVPView> {
     private MVPView mvpView;
     private ParsingNewsRetrofit mParsingNewsRetrofit;
     private ArrayList<Article> listNews;
+    private int positionNewsChoice;
 
 
     public PresenterNews() {
@@ -32,12 +36,13 @@ public class PresenterNews implements PresenterNewsInterface<MVPView> {
 
     @Override
     public void loadingNews(int position) {
+        positionNewsChoice= position;
         mParsingNewsRetrofit = new ParsingNewsRetrofit(position);
         mParsingNewsRetrofit.getParser()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list1 -> {
-                    listNews =list1;
+                    listNews = list1;
                     mvpView.initializationMenu(list1);
                 });
     }
@@ -47,39 +52,52 @@ public class PresenterNews implements PresenterNewsInterface<MVPView> {
         return listNews;
     }
 
+
     @Override
-    public void textParsing(){
-        StringBuilder allDescription = new StringBuilder();
-        StringBuilder allTitle = new StringBuilder();
-        if (listNews!=null){
-            for (int i = 0; i <listNews.size(); i++) {
-                allDescription.append(":").append(listNews.get(i).getDescription());
-                allTitle.append(":").append(listNews.get(i).getTitle());
+    public void textParsing(String languageEnum){
+        List<String> allDescription = new ArrayList<>();
+            new YandexTranslate(listNews.size())
+                    .getTranslateText(listNews,positionNewsChoice,languageEnum)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(s -> {
+                        int x = 0;
+                        allDescription.add(x++,s);
+                        if (allDescription.size()==10){
+                            text(allDescription);
+                        }
+
+                    });
+
+    }
+
+
+    private void text(List<String> str){
+        List<String> allDescription = new ArrayList<>();
+        List<Article> articleListTranslate = new ArrayList<>();
+        JSONParser parser = new JSONParser();
+        JSONObject object = null;
+        for (int i = 0; i<str.size() ; i++) {
+            try {
+                object = (JSONObject) parser.parse(str.get(i));
+                org.json.simple.JSONArray objectText = (org.json.simple.JSONArray) object.get("text");
+                allDescription.add(objectText.toJSONString());
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
         }
-        String trans = "|"+allDescription+"|"+allTitle+"|";
-
-         new YandexTranslate()
-                 .getTranslateText(trans,"en-ru")
-                 .subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe(this::text);
-    }
-
-    private void text(String str){
-
-        JSONParser parser = new JSONParser();
-        JSONObject object = null;
-        try {
-            object = (JSONObject) parser.parse(str);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        int j = 0;
+        for (int i = allDescription.size(); i>0 ; i--) {
+            try {
+                articleListTranslate.add(listNews.get(j).clone());
+            } catch (CloneNotSupportedException e) {
+                Log.e("waring","Clone do not work");
+            }
+            articleListTranslate.get(j).setDescription(allDescription.get(i-1));
+            j++;
         }
-        StringBuilder sb = new StringBuilder();
-        String answer = (String) object.get("text");
-        System.out.println(answer);
-
+        mvpView.initializationMenu(articleListTranslate);
     }
 }
 

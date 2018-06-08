@@ -22,6 +22,7 @@ public class MonetaryAssets extends Monetary {
         toolbar=view.findViewById(R.id.toolbarAssets);
         pieView = view.findViewById(R.id.bar_view);
         mTextViewInformation=view.findViewById(R.id.text_asset_information);
+        allSumMoneyInTheMoment = view.findViewById(R.id.allAssetsInTheMoment);
     }
 
     @Override
@@ -33,6 +34,7 @@ public class MonetaryAssets extends Monetary {
     public int getLayoutID() {
         return R.layout.activity_monetary_assets;
     }
+
 }
 
 

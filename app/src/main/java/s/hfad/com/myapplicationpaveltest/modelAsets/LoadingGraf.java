@@ -31,7 +31,6 @@ public  class LoadingGraf {
 
     }
 
-
     public static HashMap<String, ArrayList<Double>> getValuta() {
         return valuta;
     }
