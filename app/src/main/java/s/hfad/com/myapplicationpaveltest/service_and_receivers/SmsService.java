@@ -10,20 +10,31 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import s.hfad.com.myapplicationpaveltest.HomePage;
 import s.hfad.com.myapplicationpaveltest.R;
+import s.hfad.com.myapplicationpaveltest.modelAsets.loadOutIn.SerializableFile;
 
 public class SmsService extends IntentService {
+    private SerializableFile mSerializableFile;
+    private  String senderSMS;
     public SmsService() {
         super("SMS Service");
+        mSerializableFile = new SerializableFile(this);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        String sms_body = null;
+        senderSMS = mSerializableFile.inPut();
+        if (senderSMS==null)senderSMS = "";
+        String[] messages  = null;
         if (intent != null) {
-            sms_body = intent.getExtras().getString(SMSMonitor.KEY_SMS_INTENT);
+            messages = (String[]) intent.getExtras().get(SMSMonitor.KEY_SMS_INTENT);
+            checkMS(messages);
         }
-        showNotification(sms_body);
-        //outPut(sms_body);
+    }
+
+    private void checkMS(String[] messages) {
+        if (messages[0].equals(senderSMS)){
+            showNotification(messages[1]);
+        }
     }
 
     @Override

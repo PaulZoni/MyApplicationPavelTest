@@ -95,6 +95,8 @@
     <string name="translationText">Перевести Текст</string>
     <string name="selectLanguage">Выберете язык</string>
     <string name="SumInTheMoment">В Денег в наличии</string>
+    <string name="selectAddress">Выбрать адресата SMS</string>
+    <string name="textDialogSelectAddress">Укажите в поле название вашего банка</string>
 
 </resources>
 

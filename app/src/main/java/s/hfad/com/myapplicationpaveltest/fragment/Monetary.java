@@ -51,6 +51,8 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
     protected TextView allSumMoneyInTheMoment;
     private View inflater;
     protected HashMap<String,Float> map;
+    private EditText mEditTextSelectAddress;
+    public String textAddress;
 
 
     @Override
@@ -151,6 +153,9 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
             case R.id.action_settings:
                 presenter.newTime();
                 break;
+            case R.id.select_address:
+                dialogSelectAddress();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -175,12 +180,12 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
 
     @Override
     public EditText getEditTextNumber(){
-        return editTextNumber=(EditText)inflater.findViewById(R.id.editTextAssets_sum);
+        return editTextNumber = inflater.findViewById(R.id.editTextAssets_sum);
     }
 
     @Override
     public EditText getEditTextTx() {
-        return editTextTx=(EditText)inflater.findViewById(R.id.editTextAssets_text);
+        return editTextTx = inflater.findViewById(R.id.editTextAssets_text);
     }
 
 
@@ -192,6 +197,19 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
         SharedPreferences.Editor ed=sPref.edit();
         ed.putBoolean(START_KEY,STAT);
         ed.apply();
+    }
+
+    public void dialogSelectAddress(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        inflater = getLayoutInflater().inflate(R.layout.select_address,null);
+        builder.setView(inflater);
+        builder.setPositiveButton(R.string.app_name_Ok,((dialog, which) ->{
+            mEditTextSelectAddress = inflater.findViewById(R.id.editTextSelectAddress);
+                textAddress = mEditTextSelectAddress.getText().toString();
+                presenter.writeSMSAddress(textAddress);
+        } ));
+        builder.create();
+        builder.show();
     }
 }
 

@@ -1,6 +1,5 @@
 package s.hfad.com.myapplicationpaveltest;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
@@ -13,6 +12,7 @@ import java.util.List;
 import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 import s.hfad.com.myapplicationpaveltest.modelAsets.Transaction;
+import s.hfad.com.myapplicationpaveltest.modelAsets.loadOutIn.SerializableFile;
 
 
 public class MainPresenterPurse {
@@ -98,6 +98,14 @@ public class MainPresenterPurse {
             Intent intent=new Intent(presenterPurse.context,MainActivityList.class);
             presenterPurse.context.startActivity(intent);
         }
+    }
+
+    public void writeSMSAddress(String address){
+        SerializableFile serializableFile = new SerializableFile(context);
+        Thread thread = new Thread(()->{
+            serializableFile.outPut(address);
+        });
+        thread.start();
     }
 }
 

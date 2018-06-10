@@ -25,7 +25,8 @@ import s.hfad.com.myapplicationpaveltest.modelAsets.Sound;
 
 
 @SuppressLint("ParcelCreator")
-public class HomePage extends AppCompatActivity implements BlankFragmentHome.DialogSelectLanguage, Parcelable {
+public class HomePage extends AppCompatActivity implements BlankFragmentHome.DialogSelectLanguage,
+        Parcelable {
 
     private static final int PERMISSION_REQUEST_CODE = 123;
     private BottomNavigationView mBottomNavigationView;
@@ -37,6 +38,7 @@ public class HomePage extends AppCompatActivity implements BlankFragmentHome.Dia
     private SharedPreferences mPreferences;
     private Bundle bundle;
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -46,7 +48,6 @@ public class HomePage extends AppCompatActivity implements BlankFragmentHome.Dia
     public void writeToParcel(Parcel dest, int flags) {
 
     }
-
 
     public interface OnBackPressedListener {
         public void onBackPressed();
