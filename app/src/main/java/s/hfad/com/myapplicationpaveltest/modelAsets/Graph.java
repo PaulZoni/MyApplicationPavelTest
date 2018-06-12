@@ -5,11 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import io.reactivex.Observable;
 
 
@@ -76,7 +73,6 @@ public class Graph {
         listExp=sum(listExp);
 
         listX=P(listAss,listExp);
-
         cursor.close();
         dbHelperExp.close();
         dbHelperAss.close();
@@ -96,7 +92,6 @@ public class Graph {
         }else{
             listX.add(0);
         }
-
         return listX;
     }
 
@@ -122,7 +117,6 @@ public class Graph {
             observableEmitter.onNext(graf());
         });
     }
-
 }
 
 

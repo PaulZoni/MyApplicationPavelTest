@@ -1,6 +1,5 @@
 package s.hfad.com.myapplicationpaveltest.modelAsets;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -38,30 +37,30 @@ public class AssetsModel {
         }else if (key.equals(KEY_EXPENSES)){
             dbHelper=new DBHelperExpenses(context);
         }
-
         contentValues = new ContentValues();
         this.context=context;
     }
 
 
-    public void buttonOk(String sum,String coment){
+    public void buttonOk(String sum,String comment){
         database=dbHelper.getWritableDatabase();
+        int i = 0;
+        while (locatr.getLocation() == null | i<3000 )i++;
 
-        if (KeyDB.equals(KEY_ASSETS)){
+        if (KeyDB.equals(KEY_ASSETS)) {
             contentValues.put(DBHelperAssets.KEY_LOCATION, String.valueOf(locatr.getLocation()));
-            contentValues.put(DBHelperAssets.KEY_COMMENT,coment);
-            contentValues.put(DBHelperAssets.KEY_VALUE,sum);
-            contentValues.put(DBHelperAssets.KEY_DATA,String.valueOf(new Date().toString()));
-            database.insert(DBHelperAssets.TABLE_ASSETS,null,contentValues);
+            contentValues.put(DBHelperAssets.KEY_COMMENT, comment);
+            contentValues.put(DBHelperAssets.KEY_VALUE, sum);
+            contentValues.put(DBHelperAssets.KEY_DATA, String.valueOf(new Date().toString()));
+            database.insert(DBHelperAssets.TABLE_ASSETS, null, contentValues);
 
-        }else if (KeyDB.equals(KEY_EXPENSES)){
+        } else if (KeyDB.equals(KEY_EXPENSES)) {
             contentValues.put(DBHelperExpenses.KEY_LOCATION, String.valueOf(locatr.getLocation()));
-            contentValues.put(DBHelperExpenses.KEY_COMMENT_EXPENSES,coment);
-            contentValues.put(DBHelperExpenses.KEY_VALUE_EXPENSES,sum);
-            contentValues.put(DBHelperExpenses.KEY_DATA_EXPENSES,String.valueOf(new Date().toString()));
-            database.insert(DBHelperExpenses.TABLE_EXPENSES,null,contentValues);
+            contentValues.put(DBHelperExpenses.KEY_COMMENT_EXPENSES, comment);
+            contentValues.put(DBHelperExpenses.KEY_VALUE_EXPENSES, sum);
+            contentValues.put(DBHelperExpenses.KEY_DATA_EXPENSES, String.valueOf(new Date().toString()));
+            database.insert(DBHelperExpenses.TABLE_EXPENSES, null, contentValues);
         }
-
         dbHelper.close();
     }
 
@@ -76,7 +75,6 @@ public class AssetsModel {
             }else if (KeyDB.equals(KEY_EXPENSES)){
                 cursor=database.query(DBHelperExpenses.TABLE_EXPENSES,null,null,null,null,null,null);
             }
-
 
             if (cursor.moveToFirst()) {
 
@@ -95,7 +93,6 @@ public class AssetsModel {
 
                     do next: {
                         int i=0;
-
                         String sum = " ПОТРАЧЕНО: " + cursor.getString(sumID);
                         String comment = " КОМЕНТАРИЙ: " + cursor.getString(comentID);
                         String data = " ДАТА: " + cursor.getString(dataID);
@@ -106,7 +103,6 @@ public class AssetsModel {
 
                         i++;
                     } while (cursor.moveToNext());
-
                 return list;
             }
 

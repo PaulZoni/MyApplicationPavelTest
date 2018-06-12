@@ -1,14 +1,12 @@
 package s.hfad.com.myapplicationpaveltest.modelAsets;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -57,48 +55,24 @@ public class LoadingLocation {
     }
 
 
-
     private void loadingRequest() {
-        LocationRequest request = LocationRequest.create();
-        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        request.setNumUpdates(1);
-        request.setInterval(0);
-        setLocationCallback();
-
         client = LocationServices.getFusedLocationProviderClient(mContext);
 
         if (ActivityCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(mContext," Нет доступа к API Google",Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, " Нет доступа к API Google", Toast.LENGTH_LONG).show();
             return;
         }
-        client.getLastLocation().addOnSuccessListener((Activity) mContext, location -> {
-            Log.e("Location", String.valueOf(location));
+
+        client.getLastLocation().addOnSuccessListener(location -> {
             location.getLatitude();
             location.getLongitude();
-            setLocation(location);
+            mLocation = location;
         });
-        //client.requestLocationUpdates(request,locationCallback, Looper.myLooper());
 
     }
-
-    private void setLocation(Location location){
-        mLocation = location;
-    }
-
-    private void setLocationCallback(){
-        locationCallback = new LocationCallback(){
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                Log.e("Location", String.valueOf(locationResult.getLocations()));
-
-            }
-        };
-    }
-
 }
 
 
