@@ -10,9 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
 
@@ -20,7 +17,6 @@ public class LoadingLocation {
 
     private Context mContext;
     private GoogleApiClient mClient;
-    private LocationCallback locationCallback;
     private FusedLocationProviderClient client;
     private Location mLocation;
 
@@ -57,7 +53,6 @@ public class LoadingLocation {
 
     private void loadingRequest() {
         client = LocationServices.getFusedLocationProviderClient(mContext);
-
         if (ActivityCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -71,7 +66,6 @@ public class LoadingLocation {
             location.getLongitude();
             mLocation = location;
         });
-
     }
 }
 

@@ -62,12 +62,18 @@ public class MainPresenterPurse {
             int sum= Integer.parseInt(view.getEditTextNumber().getText().toString());
             String value= String.valueOf(sum);
             String comment=view.getEditTextTx().getText().toString();
-            assetsModel.buttonOk(value,comment);
-            Sound.play();
-
+            threadAdd(comment, value);
             view.getEditTextNumber().setText(null);
             view.getEditTextTx().setText(null);
         }
+    }
+
+    private void threadAdd(String comment, String value){
+        Thread thread = new Thread(()->{
+            assetsModel.buttonOk(value,comment);
+            Sound.play();
+        });
+        thread.start();
     }
 
     public void newTime(){

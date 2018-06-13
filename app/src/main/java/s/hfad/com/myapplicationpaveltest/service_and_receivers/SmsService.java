@@ -73,15 +73,13 @@ public class SmsService extends IntentService {
     }
 
     private float existBalanceCheck(String statSms){
-        String s;
-        Pattern pattern = Pattern.compile(":");
-        Matcher matcher =pattern.matcher(statSms);
-        if (matcher.find()){
-            int indexL;
-            indexL = statSms.indexOf(":");
-            s = statSms.substring(indexL+1);
-            s = s.substring(0 , s.length() -1);
-            return Float.parseFloat(s);
+        Pattern pattern = Pattern.compile("Баланс:");
+        Matcher matcher = pattern.matcher(statSms);
+        if (matcher.find()) {
+            String[] smsWord = statSms.split(" ");
+            String sum = smsWord[smsWord.length - 1];
+            String sum$ = sum.substring(0, sum.length() - 1);
+            return Float.parseFloat(sum$);
         }
         return 0;
     }
