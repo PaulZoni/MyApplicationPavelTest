@@ -88,12 +88,16 @@ public class MainActivityList extends Activity {
     }
 
     private class ListHolder extends RecyclerView.ViewHolder{
-        TextView mTextView_mainList;
-        CardView mCardView;
+        private TextView mTextView_mainList;
+        private TextView textView_title_commentValue;
+        private TextView textView_title_data_exist;
+        private CardView mCardView;
 
-        public ListHolder(View itemView) {
+        ListHolder(View itemView) {
             super(itemView);
-            mTextView_mainList=itemView.findViewById(R.id.textView_ActivityList);
+            mTextView_mainList = itemView.findViewById(R.id.textView_ActivityList);
+            textView_title_commentValue  = itemView.findViewById(R.id.textView_title_commentValue);
+            textView_title_data_exist  = itemView.findViewById(R.id.textView_title_data_exist);
             mCardView = itemView.findViewById(R.id.card_viewActivityList);
         }
     }
@@ -103,13 +107,14 @@ public class MainActivityList extends Activity {
         private List<Transaction>mStringList;
         private Context mContext;
 
-        public ListAdapter(List<Transaction> stringList,Context context) {
+        ListAdapter(List<Transaction> stringList, Context context) {
             mStringList = stringList;
             this.mContext=context;
         }
 
+        @NonNull
         @Override
-        public ListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             View view = layoutInflater.inflate(R.layout.layout_activity_lisr, parent, false);
@@ -120,8 +125,10 @@ public class MainActivityList extends Activity {
         @Override
         public void onBindViewHolder(@NonNull ListHolder holder, int position) {
             CardView cardView = holder.mCardView;
-            Transaction string=mStringList.get(position);
-            holder.mTextView_mainList.setText(string.getSum()+ string.getComment()+string.getData()+ string.getLocation());
+            Transaction transaction=mStringList.get(position);
+            holder.mTextView_mainList.setText(transaction.getSum());
+            holder.textView_title_commentValue.setText(transaction.getComment());
+            holder.textView_title_data_exist.setText(transaction.getData());
             cardView.setOnClickListener(v -> createMapView(position));
         }
 

@@ -93,9 +93,9 @@ public class AssetsModel {
 
                     do next: {
                         int i=0;
-                        String sum = " ПОТРАЧЕНО: " + cursor.getString(sumID);
-                        String comment = " КОМЕНТАРИЙ: " + cursor.getString(comentID);
-                        String data = " ДАТА: " + cursor.getString(dataID);
+                        String sum = cursor.getString(sumID);
+                        String comment = cursor.getString(comentID);
+                        String data = cursor.getString(dataID);
                         String location = cursor.getString(locationID);
                         mTransaction = new Transaction(sum, data, comment, location);
 

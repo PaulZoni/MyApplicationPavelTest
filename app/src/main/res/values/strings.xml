@@ -97,6 +97,9 @@
     <string name="SumInTheMoment">В Денег в наличии</string>
     <string name="selectAddress">Выбрать адресата SMS</string>
     <string name="textDialogSelectAddress">Укажите в поле название вашего банка</string>
+    <string name="text_title">Потрачено</string>
+    <string name="text_title_comment">КОМЕНТАРИЙ:</string>
+    <string name="text_title_data">Дата:</string>
 
 </resources>
 
