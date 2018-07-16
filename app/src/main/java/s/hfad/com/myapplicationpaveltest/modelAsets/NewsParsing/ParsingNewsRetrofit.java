@@ -32,7 +32,6 @@ public class ParsingNewsRetrofit {
 
     public Observable<ArrayList<Article>> getParser() {
         return Observable.create(observableEmitter ->{
-
             observableEmitter.onNext(parser());
         });
     }

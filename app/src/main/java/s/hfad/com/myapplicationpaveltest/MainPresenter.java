@@ -39,15 +39,12 @@ public class MainPresenter implements PresenterConverterInterface {
         if (value.isEmpty()){
             vive.getTextView().setText("Нет соединения с интернетом");
         }else {
-
             SUM=model.sumTest(SPLeft,SPRight,value,sumText);
             vive.getTextView().setText(String.valueOf(SUM));
         }
-
     }
 
     private void loadGraf(HashMap<String, Double> value){
-
         LoadingGraf loadingGraf = new LoadingGraf(mContext,value);
         loadingGraf.timeValueLoading();
     }

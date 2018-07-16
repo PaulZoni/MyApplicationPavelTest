@@ -22,7 +22,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
-
 import s.hfad.com.myapplicationpaveltest.modelAsets.Transaction;
 
 public class MainActivityList extends Activity {
@@ -41,7 +40,7 @@ public class MainActivityList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
 
-        mRecyclerView=(RecyclerView)findViewById(R.id.recyclerView_mainList);
+        mRecyclerView = findViewById(R.id.recyclerView_mainList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         updateList();

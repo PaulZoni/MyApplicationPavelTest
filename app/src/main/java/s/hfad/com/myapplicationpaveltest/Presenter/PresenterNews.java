@@ -66,7 +66,6 @@ public class PresenterNews implements PresenterNewsInterface<MVPView> {
                         if (allDescription.size()==10){
                             text(allDescription);
                         }
-
                     });
 
     }

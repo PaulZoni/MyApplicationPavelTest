@@ -10,6 +10,7 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -71,7 +72,7 @@ public class BlankFragmentHome extends Fragment implements MVPView {
     public void setDialogSelectLanguage() {
 
         if (getArguments().getParcelable(HomePage.KEY_BUNDLE_HOME)!=null) {
-            mDialogSelectLanguage = (DialogSelectLanguage) getArguments().getParcelable(HomePage.KEY_BUNDLE_HOME);
+            mDialogSelectLanguage = getArguments().getParcelable(HomePage.KEY_BUNDLE_HOME);
         }
     }
 
@@ -81,7 +82,7 @@ public class BlankFragmentHome extends Fragment implements MVPView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_blank_fragment_home, container, false);
         mNewsPresenter = new PresenterNews();

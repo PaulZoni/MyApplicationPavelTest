@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
-
-
 import io.reactivex.Observable;
 
 
@@ -23,11 +21,8 @@ public class ParserValute {
         String inputLine;
 
         while ((inputLine = in.readLine()) != null) {
-
             stringBuilder.append(inputLine);
-
         }
-
         return String.valueOf(stringBuilder);
     }
 
@@ -38,8 +33,6 @@ public class ParserValute {
 
         Object obj = parser.parse(string);
         JSONObject jsonObj = (JSONObject) obj;
-
-
 
         JSONObject jsonObj2= (JSONObject) jsonObj.get("Valute");
 
@@ -92,14 +85,12 @@ public class ParserValute {
 
         JSONObject jsonObjKZT= (JSONObject)jsonObj2.get("KZT");
         value.put ("KZT",(double) jsonObjKZT.get("Value"));
-
         return value;
     }
 
 
     public Observable<HashMap<String,Double>> getParser() {
         return Observable.create(observableEmitter ->{
-
             observableEmitter.onNext(parser(inputParser()));
         });
     }

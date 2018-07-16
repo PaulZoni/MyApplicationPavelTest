@@ -78,7 +78,6 @@ public class Activity_Web extends AppCompatActivity {
                 return false;
             }
         });
-
         mWebView.loadUrl(url);
     }
 
