@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.fragment;
+package s.hfad.com.myapplicationpaveltest.view;
 
 
 import android.app.AlertDialog;
@@ -29,17 +29,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import s.hfad.com.myapplicationpaveltest.activity.Activity_Web;
-import s.hfad.com.myapplicationpaveltest.activity.HomePage;
+
 import s.hfad.com.myapplicationpaveltest.Interface.MVPView;
 import s.hfad.com.myapplicationpaveltest.Interface.PresenterNewsInterface;
-import s.hfad.com.myapplicationpaveltest.presenter.PresenterNews;
 import s.hfad.com.myapplicationpaveltest.model_assets.AdapterNewsSelect;
 import s.hfad.com.myapplicationpaveltest.model_assets.ListNewsStrings;
 import s.hfad.com.myapplicationpaveltest.model_assets.news_parsing.Article;
 import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.model_assets.AdapterHome;
 import s.hfad.com.myapplicationpaveltest.model_assets.Menu;
+import s.hfad.com.myapplicationpaveltest.presenters.PresenterNews;
 
 public class BlankFragmentHome extends Fragment implements MVPView {
 
@@ -225,7 +224,8 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         }
 
         RecyclerView rv = view.findViewById(R.id.LIst_homePage);
-        rv.setHasFixedSize(true);
+        rv.setNestedScrollingEnabled(false);
+        rv.setHasFixedSize(false);
         StaggeredGridLayoutManager llm = checkOrientation();
         rv.setLayoutManager(llm);
         adapterHome=new AdapterHome(getActivity(),mMenus);

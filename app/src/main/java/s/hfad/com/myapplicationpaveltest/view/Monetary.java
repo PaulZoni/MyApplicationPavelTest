@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.fragment;
+package s.hfad.com.myapplicationpaveltest.view;
 
 
 import android.app.AlertDialog;
@@ -26,7 +26,7 @@ import im.dacer.androidcharts.PieView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.Interface.IViewPurse;
-import s.hfad.com.myapplicationpaveltest.presenter.MainPresenterPurse;
+import s.hfad.com.myapplicationpaveltest.presenters.MainPresenterPurse;
 import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.model_assets.Graph;
 

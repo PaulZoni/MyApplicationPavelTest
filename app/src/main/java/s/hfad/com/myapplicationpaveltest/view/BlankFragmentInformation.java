@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.fragment;
+package s.hfad.com.myapplicationpaveltest.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +15,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import s.hfad.com.myapplicationpaveltest.Interface.MVPViewFragmentInformation;
 import s.hfad.com.myapplicationpaveltest.Interface.PresenterFragmentInformationInterface;
-import s.hfad.com.myapplicationpaveltest.presenter.PresenterFragmentInformation;
+import s.hfad.com.myapplicationpaveltest.presenters.PresenterFragmentInformation;
 import s.hfad.com.myapplicationpaveltest.R;
 
 

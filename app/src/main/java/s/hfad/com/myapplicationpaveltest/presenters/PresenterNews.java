@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.presenter;
+package s.hfad.com.myapplicationpaveltest.presenters;
 
 
 import android.util.Log;

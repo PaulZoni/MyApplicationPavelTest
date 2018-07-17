@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.fragment;
+package s.hfad.com.myapplicationpaveltest.view;
 
 
 import android.app.AlertDialog;
@@ -33,13 +33,13 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import s.hfad.com.myapplicationpaveltest.Interface.IView;
-import s.hfad.com.myapplicationpaveltest.presenter.MainPresenter;
 import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.model_assets.ValutaModel;
 import s.hfad.com.myapplicationpaveltest.Interface.PresenterConverterInterface;
-import s.hfad.com.myapplicationpaveltest.activity.HomePage;
-import s.hfad.com.myapplicationpaveltest.parser.ParserValute;
+import s.hfad.com.myapplicationpaveltest.model_assets.ParserValute;
 import s.hfad.com.myapplicationpaveltest.model_assets.KeyWord;
+import s.hfad.com.myapplicationpaveltest.presenters.MainPresenter;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -300,6 +300,8 @@ public class MainFragmentValueCurrency extends Fragment implements IView,View.On
                         persons.add(new ValutaModel("Казахстанских тенге", String.valueOf(strings.get("KZT")), R.mipmap.tenge));
 
                         RecyclerView rv = view.findViewById(R.id.rv);
+                        rv.setNestedScrollingEnabled(false);
+                        rv.setHasFixedSize(false);
                         LinearLayoutManager llm = new LinearLayoutManager(getContext());
                         rv.setLayoutManager(llm);
                         adapter = new RVAdapter(getActivity(),persons);

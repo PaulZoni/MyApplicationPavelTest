@@ -1,9 +1,8 @@
-package s.hfad.com.myapplicationpaveltest.presenter;
+package s.hfad.com.myapplicationpaveltest.presenters;
 
 
 import android.content.Context;
 import java.util.HashMap;
-
 import s.hfad.com.myapplicationpaveltest.Interface.IView;
 import s.hfad.com.myapplicationpaveltest.Interface.PresenterConverterInterface;
 import s.hfad.com.myapplicationpaveltest.model_assets.ModelSUM;

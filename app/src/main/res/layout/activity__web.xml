@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="s.hfad.com.myapplicationpaveltest.activity.Activity_Web">
+    tools:context="s.hfad.com.myapplicationpaveltest.view.Activity_Web">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_web"

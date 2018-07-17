@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import s.hfad.com.myapplicationpaveltest.fragment.MainFragmentValueCurrency;
+import s.hfad.com.myapplicationpaveltest.view.MainFragmentValueCurrency;
 
 public class TimeValuteValue {
 

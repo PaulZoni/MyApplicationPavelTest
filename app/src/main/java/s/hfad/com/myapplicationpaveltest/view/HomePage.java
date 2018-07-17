@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.activity;
+package s.hfad.com.myapplicationpaveltest.view;
 
 
 import android.Manifest;
@@ -18,12 +18,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import s.hfad.com.myapplicationpaveltest.fragment.MainFragmentValueCurrency;
 import s.hfad.com.myapplicationpaveltest.my_enum.languageEnum;
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentHome;
-import s.hfad.com.myapplicationpaveltest.fragment.Expenses;
-import s.hfad.com.myapplicationpaveltest.fragment.MonetaryAssets;
 import s.hfad.com.myapplicationpaveltest.model_assets.Sound;
 
 

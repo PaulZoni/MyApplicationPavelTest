@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.activity;
+package s.hfad.com.myapplicationpaveltest.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+
 import s.hfad.com.myapplicationpaveltest.R;
 
 public class Activity_Web extends AppCompatActivity {

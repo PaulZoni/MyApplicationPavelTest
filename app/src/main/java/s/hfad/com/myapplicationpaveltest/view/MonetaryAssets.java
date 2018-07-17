@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.fragment;
+package s.hfad.com.myapplicationpaveltest.view;
 
 
 import android.support.annotation.Nullable;

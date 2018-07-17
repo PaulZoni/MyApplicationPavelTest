@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.parser;
+package s.hfad.com.myapplicationpaveltest.model_assets;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

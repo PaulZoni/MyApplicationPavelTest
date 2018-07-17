@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import s.hfad.com.myapplicationpaveltest.activity.HomePage;
+import s.hfad.com.myapplicationpaveltest.view.HomePage;
 import s.hfad.com.myapplicationpaveltest.R;
 import s.hfad.com.myapplicationpaveltest.model_assets.AssetsModel;
 import s.hfad.com.myapplicationpaveltest.model_assets.Graph;

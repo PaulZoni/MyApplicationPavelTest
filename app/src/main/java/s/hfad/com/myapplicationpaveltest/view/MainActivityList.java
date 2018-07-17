@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.activity;
+package s.hfad.com.myapplicationpaveltest.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

@@ -1,4 +1,4 @@
-package s.hfad.com.myapplicationpaveltest.presenter;
+package s.hfad.com.myapplicationpaveltest.presenters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import s.hfad.com.myapplicationpaveltest.Interface.IViewPurse;
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.activity.MainActivityList;
+import s.hfad.com.myapplicationpaveltest.view.MainActivityList;
 import s.hfad.com.myapplicationpaveltest.model_assets.AssetsModel;
 import s.hfad.com.myapplicationpaveltest.model_assets.Sound;
 import s.hfad.com.myapplicationpaveltest.model_assets.Transaction;
