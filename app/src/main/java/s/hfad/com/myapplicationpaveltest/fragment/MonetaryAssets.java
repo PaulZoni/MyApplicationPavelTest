@@ -4,7 +4,7 @@ package s.hfad.com.myapplicationpaveltest.fragment;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
+import s.hfad.com.myapplicationpaveltest.model_assets.AssetsModel;
 
 
 public class MonetaryAssets extends Monetary {
@@ -13,7 +13,6 @@ public class MonetaryAssets extends Monetary {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Override
     public void initializationComponent() {
@@ -34,15 +33,4 @@ public class MonetaryAssets extends Monetary {
     public int getLayoutID() {
         return R.layout.activity_monetary_assets;
     }
-
 }
-
-
-
-
-
-
-
-
-
-

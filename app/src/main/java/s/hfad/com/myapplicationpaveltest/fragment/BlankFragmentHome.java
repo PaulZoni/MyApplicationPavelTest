@@ -1,7 +1,6 @@
 package s.hfad.com.myapplicationpaveltest.fragment;
 
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,17 +29,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import s.hfad.com.myapplicationpaveltest.Activity.Activity_Web;
-import s.hfad.com.myapplicationpaveltest.HomePage;
+import s.hfad.com.myapplicationpaveltest.activity.Activity_Web;
+import s.hfad.com.myapplicationpaveltest.activity.HomePage;
 import s.hfad.com.myapplicationpaveltest.Interface.MVPView;
 import s.hfad.com.myapplicationpaveltest.Interface.PresenterNewsInterface;
-import s.hfad.com.myapplicationpaveltest.Presenter.PresenterNews;
-import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterNewsSelect;
-import s.hfad.com.myapplicationpaveltest.modelAsets.ListNewsStrings;
-import s.hfad.com.myapplicationpaveltest.modelAsets.NewsParsing.Article;
+import s.hfad.com.myapplicationpaveltest.presenter.PresenterNews;
+import s.hfad.com.myapplicationpaveltest.model_assets.AdapterNewsSelect;
+import s.hfad.com.myapplicationpaveltest.model_assets.ListNewsStrings;
+import s.hfad.com.myapplicationpaveltest.model_assets.news_parsing.Article;
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.modelAsets.AdapterHome;
-import s.hfad.com.myapplicationpaveltest.modelAsets.Menu;
+import s.hfad.com.myapplicationpaveltest.model_assets.AdapterHome;
+import s.hfad.com.myapplicationpaveltest.model_assets.Menu;
 
 public class BlankFragmentHome extends Fragment implements MVPView {
 
@@ -60,8 +59,6 @@ public class BlankFragmentHome extends Fragment implements MVPView {
     private SharedPreferences mSharedPreferences;
     private PresenterNewsInterface<MVPView> mNewsPresenter;
     private String STAT_LANGUAGE;
-
-
 
     private DialogSelectLanguage mDialogSelectLanguage;
     public interface DialogSelectLanguage extends Serializable {
@@ -123,7 +120,6 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
-
 
 
     @Override
@@ -309,18 +305,5 @@ public class BlankFragmentHome extends Fragment implements MVPView {
         alert.show();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

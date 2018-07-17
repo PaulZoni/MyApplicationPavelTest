@@ -3,5 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/view_pager"
-    tools:context="s.hfad.com.myapplicationpaveltest.BlankFragmentPager">
+    tools:context="s.hfad.com.myapplicationpaveltest.fragment.BlankFragmentPager">
 </android.support.v4.view.ViewPager>

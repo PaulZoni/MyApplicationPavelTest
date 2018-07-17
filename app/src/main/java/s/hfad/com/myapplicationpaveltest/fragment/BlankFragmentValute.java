@@ -15,17 +15,12 @@ import s.hfad.com.myapplicationpaveltest.R;
  */
 public class BlankFragmentValute extends Fragment {
 
-
-    public BlankFragmentValute() {
-        // Required empty public constructor
-    }
-
+    public BlankFragmentValute() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_blank_fragment_valute, container, false);
     }
-
 }

@@ -25,10 +25,10 @@ import im.dacer.androidcharts.PieHelper;
 import im.dacer.androidcharts.PieView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import s.hfad.com.myapplicationpaveltest.IViewPurse;
-import s.hfad.com.myapplicationpaveltest.MainPresenterPurse;
+import s.hfad.com.myapplicationpaveltest.Interface.IViewPurse;
+import s.hfad.com.myapplicationpaveltest.presenter.MainPresenterPurse;
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
+import s.hfad.com.myapplicationpaveltest.model_assets.Graph;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -212,14 +212,6 @@ public abstract class Monetary extends Fragment implements IViewPurse,View.OnCli
         builder.show();
     }
 }
-
-
-
-
-
-
-
-
 
 
 

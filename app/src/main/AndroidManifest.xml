@@ -49,17 +49,17 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".HomePage">
+        <activity android:name=".activity.HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivityList">
+        <activity android:name=".activity.MainActivityList">
         </activity>
 
         <activity
-            android:name=".Activity.Activity_Web"
+            android:name=".activity.Activity_Web"
             android:configChanges="keyboardHidden|orientation|screenSize"
             tools:ignore="InnerclassSeparator">
         </activity>

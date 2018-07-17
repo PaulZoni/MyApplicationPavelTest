@@ -4,7 +4,7 @@ package s.hfad.com.myapplicationpaveltest.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
+import s.hfad.com.myapplicationpaveltest.model_assets.AssetsModel;
 
 
 public class Expenses extends Monetary {
@@ -36,24 +36,4 @@ public class Expenses extends Monetary {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

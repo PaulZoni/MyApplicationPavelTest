@@ -15,28 +15,24 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.util.ArrayList;
 import s.hfad.com.myapplicationpaveltest.Interface.MVPViewFragmentInformation;
 import s.hfad.com.myapplicationpaveltest.Interface.PresenterFragmentInformationInterface;
-import s.hfad.com.myapplicationpaveltest.Presenter.PresenterFragmentInformation;
+import s.hfad.com.myapplicationpaveltest.presenter.PresenterFragmentInformation;
 import s.hfad.com.myapplicationpaveltest.R;
-
 
 
 public class BlankFragmentInformation extends Fragment implements MVPViewFragmentInformation {
 
-
-    private DataPoint[] points;
-    private static int STAT;
+    private static final String ARG_ID = "frag_id";
     private final String KEY="index";
+    private static int STAT;
+    private DataPoint[] points;
     private boolean INDEX=false;
     private ArrayList<Double>listX=new ArrayList<>();
     private GraphView graphView;
-    private static final String ARG_ID = "frag_id";
     private View view;
     private TextView mTextViewInformation;
     private PresenterFragmentInformationInterface<MVPViewFragmentInformation>  presenter;
 
-    public BlankFragmentInformation() {
-        // Required empty public constructor
-    }
+    public BlankFragmentInformation() {}
 
     public static BlankFragmentInformation newInstance(ArrayList<Double> position){
         Bundle build=new Bundle();
@@ -77,7 +73,6 @@ public class BlankFragmentInformation extends Fragment implements MVPViewFragmen
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        //setRetainInstance(true);
         super.onCreate(savedInstanceState);
         if (getArguments().getSerializable(ARG_ID)!=null){
             try {
@@ -98,18 +93,16 @@ public class BlankFragmentInformation extends Fragment implements MVPViewFragmen
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY,INDEX);
         outState.putSerializable("listX",listX);
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
     }
-
 
     @Override
     public void graf(){
@@ -140,23 +133,4 @@ public class BlankFragmentInformation extends Fragment implements MVPViewFragmen
         return mTextViewInformation.findViewById(R.id.text_information_currency);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

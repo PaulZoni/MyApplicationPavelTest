@@ -10,11 +10,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import s.hfad.com.myapplicationpaveltest.HomePage;
+import s.hfad.com.myapplicationpaveltest.activity.HomePage;
 import s.hfad.com.myapplicationpaveltest.R;
-import s.hfad.com.myapplicationpaveltest.modelAsets.AssetsModel;
-import s.hfad.com.myapplicationpaveltest.modelAsets.Graph;
-import s.hfad.com.myapplicationpaveltest.modelAsets.loadOutIn.SerializableFile;
+import s.hfad.com.myapplicationpaveltest.model_assets.AssetsModel;
+import s.hfad.com.myapplicationpaveltest.model_assets.Graph;
+import s.hfad.com.myapplicationpaveltest.model_assets.load_outIn.SerializableFile;
 
 public class SmsService extends IntentService {
     private SerializableFile mSerializableFile;
@@ -86,7 +86,6 @@ public class SmsService extends IntentService {
 
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-
         return super.onStartCommand(intent, flags, startId);
     }
 

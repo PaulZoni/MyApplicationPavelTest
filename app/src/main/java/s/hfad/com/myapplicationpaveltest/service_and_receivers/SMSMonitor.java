@@ -1,5 +1,6 @@
 package s.hfad.com.myapplicationpaveltest.service_and_receivers;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ public class SMSMonitor extends BroadcastReceiver {
     private Context mContext;
 
 
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
